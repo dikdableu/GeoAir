@@ -18,28 +18,359 @@ import { Container, Header, Content, Card, CardItem, Thumbnail, Left, Body, Righ
 import Constants from 'expo-constants';
 import * as Location from 'expo-location';
 import * as Permissions from 'expo-permissions';
-import OneValue from './indexValue/OneValue'
-import TwoValue from './indexValue/TwoValue'
-import ThreeValue from './indexValue/ThreeValue'
-import FourValue from './indexValue/FourValue'
-import FiveValue from './indexValue/FiveValue'
-import SixValue from './indexValue/SixValue'
+import Value from './indexValue/Value'
 import PTRView from 'react-native-pull-to-refresh';
 import { material, iOSUIKit } from 'react-native-typography'
 
 
+const conditionWeather = [
+     {
+       id: 200,
+       weather: "Orage",
+       description: "orage avec pluie légère",
+       icon: "11d"
+     },
+     {
+       id: 201,
+       weather: "Orage",
+       description: "orage avec pluie ",
+       icon: "11d"
+     },
+     {
+       id: 202,
+       weather: "Orage",
+       description: "orage avec forte pluie",
+       icon: "11d"
+     },
+     {
+       id: 210,
+       weather: "Orage",
+       description: "orage léger",
+       icon: "11d"
+     },
+     {
+       id: 211,
+       weather: "Orage",
+       description: "orage",
+       icon: "11d"
+     },
+     {
+       id: 212,
+       weather: "Orage",
+       description: "fort orage",
+       icon: "11d"
+     },
+     {
+       id: 221,
+       weather: "Orage",
+       description: "orage",
+       icon: "11d"
+     },
+     {
+       id: 230,
+       weather: "Orage",
+       description: "orage avec bruine légère",
+       icon: "11d"
+     },
+     {
+       id: 231,
+       weather: "Orage",
+       description: "orage avec bruine ",
+       icon: "11d"
+     },
+     {
+       id: 232,
+       weather: "Orage",
+       description: "orage avec forte bruine",
+       icon: "11d"
+     },
+     {
+       id: 300,
+       weather: "Drizzle",
+       description: "bruine d'intensité légère",
+       icon: "09d"
+     },
+     {
+       id: 301,
+       weather: "Drizzle",
+       description: "bruine",
+       icon: "09d"
+     },
+     {
+       id: 302,
+       weather: "Drizzle",
+       description: "bruine de forte intensité",
+       icon: "09d"
+     },
+     {
+       id: 310,
+       weather: "Drizzle",
+       description: "bruine d'intensité légère et pluie",
+       icon: "09d"
+     },
+     {
+       id: 311,
+       weather: "Drizzle",
+       description: "bruine et pluie",
+       icon: "09d"
+     },
+     {
+       id: 312,
+       weather: "Drizzle",
+       description: "forte bruine pluie forte",
+       icon: "09d"
+     },
+     {
+       id: 313,
+       weather: "Drizzle",
+       description: "brèves averses et bruine",
+       icon: "09d"
+     },
+     {
+       id: 314,
+       weather: "Drizzle",
+       description: "fortes averses pluie forte",
+       icon: "09d"
+     },
+     {
+       id: 321,
+       weather: "Drizzle",
+       description: "brèves bruine",
+       icon: "09d"
+     },
+     {
+       id: 500,
+       weather: "Rain",
+       description: "légère pluie",
+       icon: "10d"
+     },
+     {
+       id: 501,
+       weather: "Rain",
+       description: "pluie modéré",
+       icon: "10d"
+     },
+     {
+       id: 502,
+       weather: "Rain",
+       description: "pluie de forte intensité",
+       icon: "10d"
+     },
+     {
+       id: 503,
+       weather: "Rain",
+       description: "très forte pluie",
+       icon: "10d"
+     },
+     {
+       id: 504,
+       weather: "Rain",
+       description: "pluie extrème",
+       icon: "10d"
+     },
+     {
+       id: 511,
+       weather: "Rain",
+       description: "pluie verglaçante",
+       icon: "10d"
+     },
+     {
+       id: 520,
+       weather: "520",
+       description: "pluie légère par intermitence",
+       icon: "10d"
+     },
+     {
+       id: 521,
+       weather: "Rain",
+       description: "pluie par intermitence",
+       icon: "10d"
+     },
+     {
+       id: 522,
+       weather: "Rain",
+       description: "forte pluie par intermitence",
+       icon: "10d"
+     },
+     {
+       id: 531,
+       weather: "Rain",
+       description: "forte pluie par intermitence",
+       icon: "10d"
+     },
+     {
+       id: 600,
+       weather: "Snow",
+       description: "faible chute de neige",
+       icon: "13d"
+     },
+     {
+       id: 601,
+       weather: "Snow",
+       description: "neige",
+       icon: "13d"
+     },
+     {
+       id: 602,
+       weather: "Snow",
+       description: "forte chute de neige",
+       icon: "13d"
+     },
+     {
+       id: 611,
+       weather: "Snow",
+       description: "neige fondue",
+       icon: "13d"
+     },
+     {
+       id: 612,
+       weather: "Snow",
+       description: "faible chute de neige fondu",
+       icon: "13d"
+     },
+     {
+       id: 613,
+       weather: "Snow",
+       description: "brève chute de neige fondu",
+       icon: "13d"
+     },
+     {
+       id: 615,
+       weather: "Snow",
+       description: "légère plui et chute de neige",
+       icon: "13d"
+     },
+     {
+       id: 616,
+       weather: "Snow",
+       description: "neige et pluie",
+       icon: "13d"
+     },
+     {
+       id: 620,
+       weather: "Snow",
+       description: "brève chute de neige de faible intensité",
+       icon: "13d"
+     },
+     {
+       id: 621,
+       weather: "Snow",
+       description: "brève chute de neige",
+       icon: "13d"
+     },
+     {
+       id: 622,
+       weather: "Snow",
+       description: "forte chute de neige par intermitence",
+       icon: "13d"
+     },
+     {
+       id: 701,
+       weather: "Mist",
+       description: "brouillard",
+       icon: "50d"
+     },
+     {
+       id: 711,
+       weather: "Smoke",
+       description: "fumée",
+       icon: "50d"
+     },
+     {
+       id: 721,
+       weather: "Haze",
+       description: "brume",
+       icon: "50d"
+     },
+     {
+       id: 731,
+       weather: "Dust",
+       description: "Sable/poussière",
+       icon: "50d"
+     },
+     {
+       id: 741,
+       weather: "Fog",
+       description: "brouillard",
+       icon: "50d"
+     },
+     {
+       id: 751,
+       weather: "Sand",
+       description: "sable",
+       icon: "50d"
+     },
+     {
+       id: 761,
+       weather: "Dust",
+       description: "poussière",
+       icon: "50d"
+     },
+     {
+       id: 701,
+       weather: "Ash",
+       description: "cendre volcanic/cendre",
+       icon: "50d"
+     },
+     {
+       id: 771,
+       weather: "Squall",
+       description: "bourrasque",
+       icon: "50d"
+     },
+     {
+       id: 781,
+       weather: "Tornado",
+       description: "tornade",
+       icon: "50d"
+     },
+     {
+       id: 800,
+       weather: "Clear",
+       description: "ciel dégagé",
+       icon: "50d"
+     },
+     {
+       id: 801,
+       weather: "Clouds",
+       description: "entre 11-25% de nuage",
+       icon: "02d"
+     },
+     {
+       id: 802,
+       weather: "Clouds",
+       description: "entre 25-50% de nuage",
+       icon: "03d"
+     },
+     {
+       id: 803,
+       weather: "Clouds",
+       description: "entre 50-84% de nuage",
+       icon: "04d"
+     },
+     {
+       id: 804,
+       weather: "Clouds",
+       description: "entre 85-100% de nuage",
+       icon: "04d"
+     },
+    ]
+
 class HomeView extends React.Component {
+  
    state = {
     location: null,
     loading: true,
     refreshing: true,
     responseApiAir: {},
     errorMessage: null,
-    note: null,
     dominant: '',
     responseApiMeteo: {},
+    color: null,
+    aqi: null,
   };
 
+   
   componentWillMount() {
     if (Platform.OS === 'android' && !Constants.isDevice) {
       this.setState({
@@ -62,54 +393,66 @@ class HomeView extends React.Component {
 
     let location = await Location.getCurrentPositionAsync({});
     this.setState({ location });
+    console.log(location)
     this._apiAir(this.state.location.coords.latitude,this.state.location.coords.longitude)
     
   };
 
-  _getNote = () => {
-      var tab = {
-        pm10: this.state.responseApiAir.measurements[2].value,
-        o3: this.state.responseApiAir.measurements[1].value,
-        no2: this.state.responseApiAir.measurements[0].value,
-      }
-     for(var index in tab){
-        if (tab[index] > this.state.note){
-          this.setState({note: tab[index]})
-          this.setState({dominant: index})       
-        }
-      } 
-    }
-
   _apiAir = (lat, long) => {
     this.setState({refreshing: true});
-    fetch('https://api.openaq.org/v1/latest?coordinates='+lat.toFixed(4)+','+long.toFixed(4)+'&radius=15000', {
+    fetch('https://api.waqi.info/feed/geo:'+lat+';'+long+'/?token=85ab63dee549b4825ea4e18973ba6076cbaf3dd4', {
       method: 'GET'})
-    .then((response) => response.json())
-    .then((responseJson) => {
-      this.setState({responseApiAir: responseJson.results[responseJson.results.length-1]});
-      
-      this._getNote()
-      return responseJson;
-    })
-    .then(() => fetch('https://api.openweathermap.org/data/2.5/weather?lat='+lat.toFixed(4)+'&lon='+long.toFixed(4), {
-      method: 'GET'}))
-    .then((response) => response.json())
-    .then((responseJson) => {
-      console.log(responseJson)
-      this.setState({responseApiMeteo: responseJson});
-      this.setState({loading: false});
-      this.setState({refreshing: false});
-      this._getNote()
-      return responseJson;
+    .then((responsewaqi) => responsewaqi.json())
+    .then((responseJsonWaqi) => {
+      this.setState({responseApiAir: responseJsonWaqi});
+      this._gaugeIndex();
+      fetch('https://api.openweathermap.org/data/2.5/weather?lat='+lat+'&lon='+long+'4&APPID=505c84426a182da1a7178151dccdb616', {
+      method: 'GET'})
+      .then((responseWeather) => responseWeather.json())
+      .then((responseJsonWeather) => {
+        console.log(responseJsonWeather)
+        this.setState({responseApiMeteo: responseJsonWeather})
+        this.setState({loading: false, refreshing: false})
+        return responseJsonWeather
+      })
+      return responseJsonWaqi;
     })
     .catch( error => {
       console.error(error);
     });
   }
   
-   
+  _gaugeIndex = () => {
+    var index = this.state.responseApiAir.data.aqi / 3
+     
+    if (index >= 100){
+      index = 100
+    }
+     
+    this.setState({aqi: index })
+    
+    if (this.state.responseApiAir.data.aqi >= 0 && this.state.responseApiAir.data.aqi <= 50){
+      this.setState({color: "#3DB82C"})
+    }
+    if (this.state.responseApiAir.data.aqi >= 51 && this.state.responseApiAir.data.aqi <= 100){
+      this.setState({color: "#E3D71B"})
+    }
+    if (this.state.responseApiAir.data.aqi >= 101 && this.state.responseApiAir.data.aqi <= 150){
+      this.setState({color: "#ECA100"})
+    }
+    if (this.state.responseApiAir.data.aqi >= 151 && this.state.responseApiAir.data.aqi <= 200){
+      this.setState({color: "#F94B1C"})
+    }
+    if (this.state.responseApiAir.data.aqi >= 201 && this.state.responseApiAir.data.aqi <= 299){
+      this.setState({color: "#8900E8"})
+    }
+    if (this.state.responseApiAir.data.aqi >= 300){
+      this.setState({color: "#7A0000"})
+    }
+  }
   
   render() {
+   
     if(this.state.loading){
       return (
       <View style={styles.container}>
@@ -123,53 +466,20 @@ class HomeView extends React.Component {
         refreshControl={
           <RefreshControl
             refreshing={this.state.refreshing}
-            onRefresh={() => {this._apiAir(this.state.location.coords.latitude,this.state.location.coords.longitude)}}
+            onRefresh={() => {this._getLocationAsync()}}
           />
          }
         >
+        
         <Card style={{flex:1, marginLeft: '2%', marginRight: '2%'}}>
-            
-                {(() => {
-                  console.log(this.state.note)
-                  if (this.state.note >= 0 && this.state.note <= 50){
-                    return (
-                      <OneValue value={this.state.note} city={this.state.responseApiAir.city} dom={this.state.dominant.toUpperCase()} pm10={this.state.responseApiAir.measurements[2].value} o3={this.state.responseApiAir.measurements[1].value} no2={this.state.responseApiAir.measurements[0].value}/>
-                    )
-                  }
-                  if (this.state.note >= 51 && this.state.note <= 100){
-                    return (
-                      <TwoValue value={this.state.note} city={this.state.responseApiAir.city} dom={this.state.dominant.toUpperCase()} pm10={this.state.responseApiAir.measurements[2].value} o3={this.state.responseApiAir.measurements[1].value} no2={this.state.responseApiAir.measurements[0].value}/>
-                    )
-                  }
-                  if (this.state.note >= 101 && this.state.note <= 150){
-                    return (
-                      <ThreeValue value={this.state.note} city={this.state.responseApiAir.city} dom={this.state.dominant.toUpperCase()} pm10={this.state.responseApiAir.measurements[2].value} o3={this.state.responseApiAir.measurements[1].value} no2={this.state.responseApiAir.measurements[0].value}/>
-                    )
-                  }
-                  if (this.state.note >= 151 && this.state.note <= 200){
-                    return (
-                      <FourValue value={this.state.note} city={this.state.responseApiAir.city} dom={this.state.dominant.toUpperCase()} pm10={this.state.responseApiAir.measurements[2].value} o3={this.state.responseApiAir.measurements[1].value} no2={this.state.responseApiAir.measurements[0].value}/>
-                    )
-                  }
-                  if (this.state.note >= 201 && this.state.note <= 299){
-                    return (
-                      <FiveValue value={this.state.note} city={this.state.responseApiAir.city} dom={this.state.dominant.toUpperCase()} pm10={this.state.responseApiAir.measurements[2].value} o3={this.state.responseApiAir.measurements[1].value} no2={this.state.responseApiAir.measurements[0].value}/>
-                    )
-                  }
-                  if (this.state.note >= 300){
-                    return (
-                      <SixValue value={this.state.note} city={this.state.responseApiAir.city} dom={this.state.dominant.toUpperCase()} pm10={this.state.responseApiAir.measurements[2].value} o3={this.state.responseApiAir.measurements[1].value} no2={this.state.responseApiAir.measurements[0].value}/>
-                    )
-                  }
-                })()}
-            
-            
+          <Value aqi={this.state.aqi} color={this.state.color} value={this.state.responseApiAir.data.aqi} city={this.state.responseApiAir.data.city.name} dom={this.state.responseApiAir.data.dominentpol} pm10={this.state.responseApiAir.data.iaqi.pm10.v} o3={this.state.responseApiAir.data.iaqi.o3.v} no2={this.state.responseApiAir.data.iaqi.no2.v} color={this.state.color} t={(this.state.responseApiMeteo.main.temp - 273.15).toFixed(1) + "°C"} p={this.state.responseApiMeteo.main.pressure} tr={(this.state.responseApiMeteo.main.feels_like - 273.15).toFixed(1) + "°C"} h={this.state.responseApiMeteo.main.humidity}/>
          </Card>
       </ScrollView>
     );
     }
   };
 }
+
 
 
 const styles = StyleSheet.create({
@@ -183,9 +493,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     textAlign: 'center',
   },
-  bon: {
-    
-  }
 });
 
 export default HomeView;
