@@ -1,6 +1,7 @@
 {
   "expo": {
     "name": "GeoAir",
+    "scheme": "GeoAir",
     "slug": "GeoAir",
     "privacy": "public",
     "sdkVersion": "35.0.0",

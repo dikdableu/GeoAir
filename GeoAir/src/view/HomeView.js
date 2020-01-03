@@ -14,13 +14,15 @@ import { AppRegistry,
   Text,
   Button,
   } from 'react-native';
-import { Container, Header, Content, Card, CardItem, Thumbnail, Left, Body, Right } from 'native-base';
+import { Container, Header, Content, Thumbnail, Left, Body, Right } from 'native-base';
 import Constants from 'expo-constants';
 import * as Location from 'expo-location';
 import * as Permissions from 'expo-permissions';
 import Value from './indexValue/Value'
 import PTRView from 'react-native-pull-to-refresh';
-import { material, iOSUIKit } from 'react-native-typography'
+import { material, iOSUIKit } from 'react-native-typography';
+import CardMeteo from "./CardMeteo.js"
+
 
 
 const conditionWeather = [
@@ -461,8 +463,7 @@ class HomeView extends React.Component {
     );
     }else{
       return (
-    
-        <ScrollView
+        <ScrollView style={{flex: 1}}
         refreshControl={
           <RefreshControl
             refreshing={this.state.refreshing}
@@ -470,10 +471,8 @@ class HomeView extends React.Component {
           />
          }
         >
-        
-        <Card style={{flex:1, marginLeft: '2%', marginRight: '2%'}}>
-          <Value aqi={this.state.aqi} color={this.state.color} value={this.state.responseApiAir.data.aqi} city={this.state.responseApiAir.data.city.name} dom={this.state.responseApiAir.data.dominentpol} pm10={this.state.responseApiAir.data.iaqi.pm10.v} o3={this.state.responseApiAir.data.iaqi.o3.v} no2={this.state.responseApiAir.data.iaqi.no2.v} color={this.state.color} t={(this.state.responseApiMeteo.main.temp - 273.15).toFixed(1) + "°C"} p={this.state.responseApiMeteo.main.pressure} tr={(this.state.responseApiMeteo.main.feels_like - 273.15).toFixed(1) + "°C"} h={this.state.responseApiMeteo.main.humidity}/>
-         </Card>
+        <CardMeteo aqi={this.state.aqi} color={this.state.color} value={this.state.responseApiAir.data.aqi} ville={this.state.responseApiMeteo.name + ", " + this.state.responseApiMeteo.sys.country} dom={this.state.responseApiAir.data.dominentpol} pm10={this.state.responseApiAir.data.iaqi.pm10.v} o3={this.state.responseApiAir.data.iaqi.o3.v} no2={this.state.responseApiAir.data.iaqi.no2.v} color={this.state.color} temperature={(this.state.responseApiMeteo.main.temp - 273.15).toFixed(1) + "°C"} p={this.state.responseApiMeteo.main.pressure + " hPa"} tr={(this.state.responseApiMeteo.main.feels_like - 273.15).toFixed(1) + "°C"} tmin={(this.state.responseApiMeteo.main.temp_min - 273.15).toFixed(1) + "°C"} tmax={(this.state.responseApiMeteo.main.temp_max - 273.15).toFixed(1) + "°C"} h={this.state.responseApiMeteo.main.humidity} wind={this.state.responseApiMeteo.wind.speed + "  m/s"} visibility={this.state.responseApiMeteo.visibility + " m"} sun={this.state.responseApiMeteo.sys.sunrise} moon={this.state.responseApiMeteo.sys.sunset}
+        />
       </ScrollView>
     );
     }
