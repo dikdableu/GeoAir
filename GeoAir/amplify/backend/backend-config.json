@@ -1,0 +1,9 @@
+{
+	"auth": {
+		"geoair86b25bc9": {
+			"service": "Cognito",
+			"providerPlugin": "awscloudformation",
+			"dependsOn": []
+		}
+	}
+}
