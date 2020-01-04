@@ -22,6 +22,7 @@ import Value from './indexValue/Value'
 import PTRView from 'react-native-pull-to-refresh';
 import { material, iOSUIKit } from 'react-native-typography';
 import CardMeteo from "./CardMeteo.js"
+import CardAir from "./CardAir.js"
 
 
 
@@ -369,7 +370,11 @@ class HomeView extends React.Component {
     dominant: '',
     responseApiMeteo: {},
     color: null,
+    colorPm10: null,
+    colorNo2: null,
+    colorO3: null,
     aqi: null,
+    condition: null
   };
 
    
@@ -384,6 +389,7 @@ class HomeView extends React.Component {
   }
 
   _getLocationAsync = async () => {
+    this.setState({refreshing: true});
     let { status } = await Permissions.askAsync(Permissions.LOCATION);
     if (status !== 'granted') {
       this.setState({
@@ -393,27 +399,26 @@ class HomeView extends React.Component {
     
    
 
-    let location = await Location.getCurrentPositionAsync({});
-    this.setState({ location });
+    var location = await Location.getCurrentPositionAsync({});
+    this.setState({ location: location });
     console.log(location)
     this._apiAir(this.state.location.coords.latitude,this.state.location.coords.longitude)
     
   };
 
   _apiAir = (lat, long) => {
-    this.setState({refreshing: true});
     fetch('https://api.waqi.info/feed/geo:'+lat+';'+long+'/?token=85ab63dee549b4825ea4e18973ba6076cbaf3dd4', {
       method: 'GET'})
     .then((responsewaqi) => responsewaqi.json())
     .then((responseJsonWaqi) => {
       this.setState({responseApiAir: responseJsonWaqi});
-      this._gaugeIndex();
+      this._colorIndex();
       fetch('https://api.openweathermap.org/data/2.5/weather?lat='+lat+'&lon='+long+'4&APPID=505c84426a182da1a7178151dccdb616', {
       method: 'GET'})
       .then((responseWeather) => responseWeather.json())
       .then((responseJsonWeather) => {
-        console.log(responseJsonWeather)
         this.setState({responseApiMeteo: responseJsonWeather})
+        this._iconMeteo()
         this.setState({loading: false, refreshing: false})
         return responseJsonWeather
       })
@@ -424,14 +429,21 @@ class HomeView extends React.Component {
     });
   }
   
-  _gaugeIndex = () => {
-    var index = this.state.responseApiAir.data.aqi / 3
-     
-    if (index >= 100){
-      index = 100
-    }
-     
-    this.setState({aqi: index })
+  _iconMeteo = () => {
+    conditionWeather.forEach( value => {
+        if(this.state.responseApiMeteo.weather[0].id == value.id){
+            var cond = {
+                description: value.description,
+                icon: "http://openweathermap.org/img/wn/"+ value.icon +"@2x.png",
+                id: value.id,
+                main: value.main
+            }
+        this.setState({condition: cond})
+        }
+    })
+  }
+  
+  _colorIndex = () => {
     
     if (this.state.responseApiAir.data.aqi >= 0 && this.state.responseApiAir.data.aqi <= 50){
       this.setState({color: "#3DB82C"})
@@ -451,10 +463,66 @@ class HomeView extends React.Component {
     if (this.state.responseApiAir.data.aqi >= 300){
       this.setState({color: "#7A0000"})
     }
+    
+    if (this.state.responseApiAir.data.iaqi.pm10.v >= 0 && this.state.responseApiAir.data.iaqi.pm10.v <= 50){
+      this.setState({colorPm10: "#3DB82C"})
+    }
+    if (this.state.responseApiAir.data.iaqi.pm10.v >= 51 && this.state.responseApiAir.data.iaqi.pm10.v <= 100){
+      this.setState({colorPm10: "#E3D71B"})
+    }
+    if (this.state.responseApiAir.data.iaqi.pm10.v >= 101 && this.state.responseApiAir.data.iaqi.pm10.v <= 150){
+      this.setState({colorPm10: "#ECA100"})
+    }
+    if (this.state.responseApiAir.data.iaqi.pm10.v >= 151 && this.state.responseApiAir.data.iaqi.pm10.v <= 200){
+      this.setState({colorPm10: "#F94B1C"})
+    }
+    if (this.state.responseApiAir.data.iaqi.pm10.v >= 201 && this.state.responseApiAir.data.iaqi.pm10.v <= 299){
+      this.setState({colorPm10: "#8900E8"})
+    }
+    if (this.state.responseApiAir.data.iaqi.pm10.v >= 300){
+      this.setState({colorPm10: "#7A0000"})
+    }
+    
+    if (this.state.responseApiAir.data.iaqi.o3.v >= 0 && this.state.responseApiAir.data.iaqi.o3.v <= 50){
+      this.setState({colorO3: "#3DB82C"})
+    }
+    if (this.state.responseApiAir.data.iaqi.o3.v >= 51 && this.state.responseApiAir.data.iaqi.o3.v <= 100){
+      this.setState({colorO3: "#E3D71B"})
+    }
+    if (this.state.responseApiAir.data.iaqi.o3.v >= 101 && this.state.responseApiAir.data.iaqi.o3.v <= 150){
+      this.setState({colorO3: "#ECA100"})
+    }
+    if (this.state.responseApiAir.data.iaqi.o3.v >= 151 && this.state.responseApiAir.data.iaqi.o3.v <= 200){
+      this.setState({colorO3: "#F94B1C"})
+    }
+    if (this.state.responseApiAir.data.iaqi.o3.v >= 201 && this.state.responseApiAir.data.iaqi.o3.v <= 299){
+      this.setState({colorO3: "#8900E8"})
+    }
+    if (this.state.responseApiAir.data.iaqi.o3.v >= 300){
+      this.setState({colorO3: "#7A0000"})
+    }
+    
+    if (this.state.responseApiAir.data.iaqi.no2.v >= 0 && this.state.responseApiAir.data.iaqi.no2.v <= 50){
+      this.setState({colorNo2: "#3DB82C"})
+    }
+    if (this.state.responseApiAir.data.iaqi.no2.v >= 51 && this.state.responseApiAir.data.iaqi.no2.v <= 100){
+      this.setState({colorNo2: "#E3D71B"})
+    }
+    if (this.state.responseApiAir.data.iaqi.no2.v >= 101 && this.state.responseApiAir.data.iaqi.no2.v <= 150){
+      this.setState({colorNo2: "#ECA100"})
+    }
+    if (this.state.responseApiAir.data.iaqi.no2.v >= 151 && this.state.responseApiAir.data.iaqi.no2.v <= 200){
+      this.setState({colorNo2: "#F94B1C"})
+    }
+    if (this.state.responseApiAir.data.iaqi.no2.v >= 201 && this.state.responseApiAir.data.iaqi.no2.v <= 299){
+      this.setState({colorNo2: "#8900E8"})
+    }
+    if (this.state.responseApiAir.data.iaqi.no2.v >= 300){
+      this.setState({colorNo2: "#7A0000"})
+    }
   }
   
   render() {
-   
     if(this.state.loading){
       return (
       <View style={styles.container}>
@@ -471,7 +539,9 @@ class HomeView extends React.Component {
           />
          }
         >
-        <CardMeteo aqi={this.state.aqi} color={this.state.color} value={this.state.responseApiAir.data.aqi} ville={this.state.responseApiMeteo.name + ", " + this.state.responseApiMeteo.sys.country} dom={this.state.responseApiAir.data.dominentpol} pm10={this.state.responseApiAir.data.iaqi.pm10.v} o3={this.state.responseApiAir.data.iaqi.o3.v} no2={this.state.responseApiAir.data.iaqi.no2.v} color={this.state.color} temperature={(this.state.responseApiMeteo.main.temp - 273.15).toFixed(1) + "°C"} p={this.state.responseApiMeteo.main.pressure + " hPa"} tr={(this.state.responseApiMeteo.main.feels_like - 273.15).toFixed(1) + "°C"} tmin={(this.state.responseApiMeteo.main.temp_min - 273.15).toFixed(1) + "°C"} tmax={(this.state.responseApiMeteo.main.temp_max - 273.15).toFixed(1) + "°C"} h={this.state.responseApiMeteo.main.humidity} wind={this.state.responseApiMeteo.wind.speed + "  m/s"} visibility={this.state.responseApiMeteo.visibility + " m"} sun={this.state.responseApiMeteo.sys.sunrise} moon={this.state.responseApiMeteo.sys.sunset}
+        <CardMeteo ville={this.state.responseApiMeteo.name + " , " + this.state.responseApiMeteo.sys.country} color={this.state.color} temperature={(this.state.responseApiMeteo.main.temp - 273.15).toFixed(1) + "°C"} p={this.state.responseApiMeteo.main.pressure + " hPa"} tr={(this.state.responseApiMeteo.main.feels_like - 273.15).toFixed(1) + "°C"} tmin={(this.state.responseApiMeteo.main.temp_min - 273.15).toFixed(1) + "°C"} tmax={(this.state.responseApiMeteo.main.temp_max - 273.15).toFixed(1) + "°C"} h={this.state.responseApiMeteo.main.humidity} wind={this.state.responseApiMeteo.wind.speed + "  m/s"} visibility={this.state.responseApiMeteo.visibility + " m"} sun={this.state.responseApiMeteo.sys.sunrise} moon={this.state.responseApiMeteo.sys.sunset} condition={this.state.condition}
+        />
+        <CardAir aqi={this.state.responseApiAir.data.aqi} color={this.state.color} value={this.state.responseApiAir.data.aqi} ville={this.state.responseApiAir.data.city.name} dom={this.state.responseApiAir.data.dominentpol} pm10={this.state.responseApiAir.data.iaqi.pm10.v} o3={this.state.responseApiAir.data.iaqi.o3.v} no2={this.state.responseApiAir.data.iaqi.no2.v} colorPm10={this.state.colorPm10} colorO3={this.state.colorO3} colorNo2={this.state.colorNo2}
         />
       </ScrollView>
     );
