@@ -39,6 +39,11 @@ class CardMeteo extends React.Component {
             <View style={{flex:1, marginTop: 30, flexDirection: "column"}}>
               <View style={{flex:1, color: "#4C4C4C", flexDirection: "row", justifyContent: 'space-around', alignItems: "center", height: 40}}><View ><Text><FontAwesome5 name={'sun'} color="#F5AE14" solid />{" " + sun.toLocaleTimeString()}</Text></View><View><Text><FontAwesome5 name={'moon'} color="#001DAF" solid />{" " + moon.toLocaleTimeString()}</Text></View></View>
             </View>
+            <View style={{flex:1, marginTop: 30, flexDirection: "column"}}>
+              <View style={{flex:1, borderBottomColor: '#E3E3E3', borderBottomWidth: 1, marginBottom: 20}}></View>
+              <View style={{flex:1, color: "#4C4C4C", flexDirection: "row", justifyContent: 'space-around', alignItems: "center", height: 40}}><View ><Image source={{uri: this.props.condition.icon}} style={{width:60, height: 60}}/></View><View><Text>{this.props.condition.description}</Text></View></View>
+              <View style={{flex:1, borderBottomColor: '#E3E3E3', borderBottomWidth: 1, marginTop: 20}}></View>
+            </View>
             <View style={{flex:4, marginTop: 30, flexDirection: "column"}}>
                 <View style={{flex:1, color: "#4C4C4C", flexDirection: "row", justifyContent: 'space-between', alignItems: "center", height: 40}}><View ><Text><Icon name="md-water" size={16} color="#1C9DFC" /> Humidité </Text></View><View><Text>{this.props.h + "%"}</Text></View></View>
                 <View style={{flex:1, borderBottomColor: '#E3E3E3', borderBottomWidth: 1}}></View>
