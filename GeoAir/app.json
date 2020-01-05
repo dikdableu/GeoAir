@@ -3,14 +3,14 @@
     "name": "GeoAir",
     "scheme": "geoair",
     "slug": "GeoAir",
-    "privacy": "public",
-    "sdkVersion": "35.0.0",
+    "privacy": "unlisted",
+    "sdkVersion": "36.0.0",
     "platforms": [
       "ios",
       "android",
       "web"
     ],
-    "version": "1.0.3",
+    "version": "1.0.4",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -27,6 +27,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.bastienchoisy.geoair",
+      "buildNumber": "1.0.4"
     }
   }
 }
