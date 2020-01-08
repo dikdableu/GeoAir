@@ -28,6 +28,9 @@
       "supportsTablet": true,
       "bundleIdentifier": "com.bastienchoisy.geoair",
       "buildNumber": "1.0.6"
+    },
+    "android": {
+      "package": "geoair.com",
     }
   }
 }
