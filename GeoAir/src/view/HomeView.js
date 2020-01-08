@@ -331,7 +331,7 @@ const conditionWeather = [
        id: 800,
        weather: "Clear",
        description: "ciel dégagé",
-       icon: "50d"
+       icon: "01d"
      },
      {
        id: 801,
@@ -374,7 +374,7 @@ class HomeView extends React.Component {
     colorNo2: null,
     colorO3: null,
     aqi: null,
-    condition: null
+    condition: null,
   };
 
    
@@ -526,7 +526,7 @@ class HomeView extends React.Component {
     if(this.state.loading){
       return (
       <View style={styles.container}>
-        <ActivityIndicator size="large" color="#0000ff" />
+        <ActivityIndicator style={{flex:1, alignItems: "center", justifyContent: "center"}} size="large" color="#0000ff" />
       </View>
     );
     }else{
