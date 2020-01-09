@@ -27,13 +27,13 @@ class CardSearch extends React.Component {
     return (
         <View style={{flex:1, flexDirection: "row", margin: 5, height: 90, borderRadius: 20, shadowColor: "#000", shadowOffset: { width: 0, height: 6, }, shadowOpacity: 0.39, shadowRadius: 8.30, elevation: 13, backgroundColor: "#fff"}}>
             <View style={{flex:1, paddingLeft: 10, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', alignContent: 'center', paddingTop: 5, paddingBottom: 5}}>
-                <View style={{flex:1}}>
+                <View style={{flex:5}}>
                     <Text style={{fontSize: 20}}>{this.props.temperature}</Text>
                 </View>
-                <View style={{flex:1, marginRight: 10, alignItems: "center", padding:10, borderRadius: 50, backgroundColor: colorAqi, borderColor: colorAqi, borderWidth: 1, color: "#FFF", shadowColor: "#000", shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.25, shadowRadius: 3.84, elevation: 5}}>
-                    <Text style={{ fontSize: 20, fontWeight: 'bold', color: 'white', shadowColor: "#000", shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.25, shadowRadius: 3.84, elevation: 5}}>{this.props.aqi}</Text>
+                <View style={{flex:3, marginRight: 10, alignItems: "center", justifyContent: 'center', padding:10, borderRadius: 50, backgroundColor: colorAqi, borderColor: colorAqi, borderWidth: 1, color: "#FFF", shadowColor: "#000", shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.25, shadowRadius: 3.84, elevation: 5}}>
+                    <Text style={{ fontSize: 20, alignItems: "center", justifyContent: 'center', fontWeight: 'bold', color: 'white', shadowColor: "#000", shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.25, shadowRadius: 3.84, elevation: 5}}>{this.props.aqi}</Text>
                 </View>
-                <View style={{flex:3, alignItems: "center"}}>
+                <View style={{flex:11, alignItems: "center"}}>
                     <Text>{this.props.ville}</Text>
                 </View>
             </View>
