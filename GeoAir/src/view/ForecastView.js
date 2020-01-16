@@ -35,6 +35,7 @@ class ForecastView extends React.Component {
   };
 
   componentWillMount() {
+    console.log(this.props.navigation.state.data)
     if (Platform.OS === 'android' && !Constants.isDevice) {
       this.setState({
         errorMessage: 'Oops, this will not work on Sketch in an Android emulator. Try it on your device!',
@@ -57,7 +58,6 @@ class ForecastView extends React.Component {
 
     var location = await Location.getCurrentPositionAsync({});
     this.setState({ location: location });
-    console.log(location)
     this._apiForecast(this.state.location.coords.latitude,this.state.location.coords.longitude)
     
   };
@@ -81,6 +81,7 @@ class ForecastView extends React.Component {
       if(this.state.charged){
         return (
           <SafeAreaView style={{flex: 1}}>
+          <Text>Météo à 5 jours</Text>
             <FlatList
               style={{flex:1}}
               data={this.state.listSearch}

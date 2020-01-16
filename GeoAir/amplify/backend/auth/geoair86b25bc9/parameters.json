@@ -49,7 +49,7 @@
     "hostedUIDomainName": "geoair86b25bc9-86b25bc9",
     "authProvidersUserPool": [],
     "hostedUIProviderMeta": "[]",
-    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"exp://kw-rk5.anonymous.geoair.exp.direct:80/\"],\"LogoutURLs\":[\"exp://kw-rk5.anonymous.geoair.exp.direct:80/\"]}",
     "userPoolGroupList": [],
-    "dependsOn": []
+    "dependsOn": [],
+    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"exp://kw-rk5.anonymous.geoair.exp.direct:80/\"],\"LogoutURLs\":[\"exp://kw-rk5.anonymous.geoair.exp.direct:80/\"]}"
 }

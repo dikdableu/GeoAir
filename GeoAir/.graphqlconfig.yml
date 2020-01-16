@@ -1,0 +1,15 @@
+projects:
+  geoair:
+    schemaPath: src/graphql/schema.json
+    includes:
+      - geoair
+    excludes:
+      - ./amplify/**
+    extensions:
+      amplify:
+        codeGenTarget: javascript
+        generatedFileName: ''
+        docsFilePath: src/graphql
+extensions:
+  amplify:
+    version: 3

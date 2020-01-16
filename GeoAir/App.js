@@ -2,28 +2,40 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import HomeView from './src/view/HomeView';
 import SearchView from './src/view/SearchView';
-import { createStackNavigator, createAppContainer } from "react-navigation";
+import ForecastView from './src/view/ForecastView';
+import { createAppContainer } from "react-navigation";
+import { createStackNavigator } from 'react-navigation-stack'
 import { createBottomTabNavigator } from "react-navigation-tabs";
-import { withAuthenticator, AmplifyTheme  } from 'aws-amplify-react-native';
+import { withAuthenticator, AmplifyTheme, Authenticator, SignUp, SignIn, ForgotPassword, ConfirmSignUp  } from 'aws-amplify-react-native';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 import Amplify from 'aws-amplify';
+import { Auth } from 'aws-amplify';
 import { config } from './config/config.js';
 
 Amplify.configure(config.cognito);
 
+const Home = createStackNavigator({
+  Home: HomeView,
+  Forecast: ForecastView,
+})
+
+const Search = createStackNavigator({
+  Search: SearchView,
+  Home: HomeView,
+})
 
 const TabNavigator = createBottomTabNavigator({
-  Home: {screen: HomeView,
+  Home: {screen: Home,
     navigationOptions: {
          tabBarIcon: ({focused}) => { // On définit le rendu de nos icônes par les images récemment ajoutés au projet
            return <FontAwesome5 name={'list-alt'} style={focused ? styles.iconActive : styles.icon} brand />
          }
        }
      },
-  Search: {screen: SearchView,
+  Search: {screen: Search,
     navigationOptions: {
          tabBarIcon: ({focused}) => { // On définit le rendu de nos icônes par les images récemment ajoutés au projet
            return <FontAwesome5 name={'search'} style={focused ? styles.iconActive : styles.icon} brand />
@@ -48,23 +60,20 @@ const styles = StyleSheet.create({
   },
 })
 
+
+
 const AppContainer = createAppContainer(TabNavigator);
 
 class App extends React.Component {
   render() {
-    return <AppContainer />;
+    return (<AppContainer />);
   }
 }
 
 Amplify.I18n.setLanguage('fr');
 
-const Button = Object.assign({}, AmplifyTheme.button, { backgroundColor: '#337ab7' })
-const buttonDisabled = Object.assign({}, AmplifyTheme.buttonDisabled, { backgroundColor: '#337ab700' })
-const Footer = Object.assign({}, AmplifyTheme.sectionFooterLink, { color: '#337ab7' })
-const Theme = Object.assign({}, AmplifyTheme, {
-  button: Button,
-  buttonDisabled: buttonDisabled,
-  sectionFooterLink: Footer
+export default withAuthenticator(App, {
+  signUpConfig: {
+    defaultCountryCode: "33"
+  },
 })
-
-export default withAuthenticator(App, false, [], null, Theme )
