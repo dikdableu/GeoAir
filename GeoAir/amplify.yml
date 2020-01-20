@@ -6,7 +6,8 @@ frontend:
         - npm install
     build:
       commands: 
-        - npm run build
+        - expo build:ios
+        - expo build:android
   artifacts:
     baseDirectory: /
     files:
