@@ -6,6 +6,7 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "eject": "expo eject"
+    "build": "expo build:ios && expo build:android"
   },
   "dependencies": {
     "@aws-amplify/api": "^2.1.2",
