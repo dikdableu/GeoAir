@@ -3,6 +3,7 @@ frontend:
   phases:
     preBuild:
       commands:
+        - cd GeoAir
         - npm install
     build:
       commands: 
