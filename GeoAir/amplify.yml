@@ -5,6 +5,7 @@ frontend:
       commands:
         - cd GeoAir
         - npm install
+        - yarn add expo-cli
     build:
       commands: 
         - expo build:ios
