@@ -31,7 +31,7 @@
     },
     "android": {
       "package": "com.bastienchoisy.geoair",
-      "versionCode": 1,
+      "versionCode": "1.0.6",
       "permissions": [
         "LOCATION",
       ]
