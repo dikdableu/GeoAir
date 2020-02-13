@@ -169,26 +169,9 @@ class SearchView extends React.Component {
           <SafeAreaView style={{flex: 1}} forceInset={{ bottom: 'never' }}>
             <View style={{flex: 2, justifyContent: 'center'}}>
               <SearchBar
-                round
-                lightTheme
-                platform={platform}
                 searchIcon={{ size: 24 }}
-                placeholder='Ville,Pays ou CodePostal,Pays'
                 onChangeText={this._updateSearch}
                 value={this.state.search}
-              />
-            </View>
-            <View style={{flex:2, justifyContent: 'space-around', paddingTop: 8, paddingLeft: 2, paddingRight: 2}}>
-              <SegmentedControlTab
-                values={['Ville', 'CodePostale']}
-                selectedIndex={this.state.selectedIndex}
-                tabsContainerStyle={{flex:1, borderColor: "#7E7E7E", marginLeft:2, marginRight:2}}
-                borderRadius={25}
-                tabStyle={{borderColor: "#AEAEAE",}}
-                activeTabStyle={{borderColor: "#7E7E7E", backgroundColor: "none",borderWidth:2}}
-                activeTabTextStyle={{color: "#7E7E7E",fontWeight: 'bold',}}
-                tabTextStyle={{color: "#AEAEAE"}}
-                onTabPress={this._handleIndexChange}
               />
             </View>
             <View style={{flex: 2, justifyContent: 'center'}}>
@@ -210,26 +193,9 @@ class SearchView extends React.Component {
           <SafeAreaView style={{flex: 1}} forceInset={{ bottom: 'never' }}>
             <View style={{flex: 2, justifyContent: 'center'}}>
               <SearchBar
-                round
-                lightTheme
-                platform={platform}
                 searchIcon={{ size: 24 }}
-                placeholder='Ville,Pays ou CodePostal,Pays'
                 onChangeText={this._updateSearch}
                 value={this.state.search}
-              />
-            </View>
-            <View style={{flex:2, justifyContent: 'space-around', paddingTop: 8, paddingLeft: 2, paddingRight: 2}}>
-              <SegmentedControlTab
-                values={['Ville', 'CodePostale']}
-                selectedIndex={this.state.selectedIndex}
-                tabsContainerStyle={{flex:1, borderColor: "#7E7E7E", marginLeft:2, marginRight:2}}
-                borderRadius={25}
-                tabStyle={{borderColor: "#AEAEAE",}}
-                activeTabStyle={{borderColor: "#7E7E7E", backgroundColor: "none",borderWidth:2}}
-                activeTabTextStyle={{color: "#7E7E7E",fontWeight: 'bold',}}
-                tabTextStyle={{color: "#AEAEAE"}}
-                onTabPress={this._handleIndexChange}
               />
             </View>
             <View style={{flex: 2, justifyContent: 'center'}}>

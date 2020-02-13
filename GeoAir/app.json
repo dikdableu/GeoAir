@@ -33,7 +33,7 @@
       "package": "com.bastienchoisy.geoair",
       "versionCode": 4,
       "permissions": [
-        "LOCATION",
+        "LOCATION"
       ]
     }
   }
