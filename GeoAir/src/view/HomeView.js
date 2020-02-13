@@ -4,9 +4,9 @@ import { AppRegistry,
   Image,
   View,
   ScrollView,
-  SafeAreaView,
   TouchableOpacity,
   Platform,
+  StatusBar,
   RefreshControl,
   Dimensions,
   FlatList,
@@ -23,7 +23,9 @@ import PTRView from 'react-native-pull-to-refresh';
 import { material, iOSUIKit } from 'react-native-typography';
 import CardMeteo from "./CardMeteo.js"
 import CardAir from "./CardAir.js"
-
+import CardAccueil from "./CardAccueil.js"
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import SafeAreaView from 'react-native-safe-area-view';
 
 
 const conditionWeather = [
@@ -377,14 +379,19 @@ class HomeView extends React.Component {
     condition: null,
   };
 
-   
+  
   componentWillMount() {
-    if (Platform.OS === 'android' && !Constants.isDevice) {
-      this.setState({
-        errorMessage: 'Oops, this will not work on Sketch in an Android emulator. Try it on your device!',
-      });
-    } else {
-      this._getLocationAsync();
+    if(typeof this.props.navigation.state.params == "undefined"){
+      if (Platform.OS === 'android' && !Constants.isDevice) {
+        this.setState({
+          errorMessage: 'Oops, this will not work on Sketch in an Android emulator. Try it on your device!',
+        });
+      } else {
+        this._getLocationAsync();
+      }
+    }else{
+      this.setState({responseApiMeteo: this.props.navigation.state.params.api})
+      this._apiAir(this.props.navigation.state.params.api.coord.lat,this.props.navigation.state.params.api.coord.lon)
     }
   }
 
@@ -413,15 +420,20 @@ class HomeView extends React.Component {
     .then((responseJsonWaqi) => {
       this.setState({responseApiAir: responseJsonWaqi});
       this._colorIndex();
-      fetch('https://api.openweathermap.org/data/2.5/weather?lat='+lat+'&lon='+long+'4&APPID=505c84426a182da1a7178151dccdb616', {
-      method: 'GET'})
-      .then((responseWeather) => responseWeather.json())
-      .then((responseJsonWeather) => {
-        this.setState({responseApiMeteo: responseJsonWeather})
+      if(typeof this.props.navigation.state.params == "undefined"){
+        fetch('https://api.openweathermap.org/data/2.5/weather?lat='+lat+'&lon='+long+'4&APPID=505c84426a182da1a7178151dccdb616', {
+        method: 'GET'})
+        .then((responseWeather) => responseWeather.json())
+        .then((responseJsonWeather) => {
+          this.setState({responseApiMeteo: responseJsonWeather})
+          this._iconMeteo()
+          this.setState({loading: false, refreshing: false})
+          return responseJsonWeather
+        })
+      }else{
         this._iconMeteo()
         this.setState({loading: false, refreshing: false})
-        return responseJsonWeather
-      })
+      }
       return responseJsonWaqi;
     })
     .catch( error => {
@@ -444,81 +456,14 @@ class HomeView extends React.Component {
   }
   
   _colorIndex = () => {
-    
     if (this.state.responseApiAir.data.aqi >= 0 && this.state.responseApiAir.data.aqi <= 50){
-      this.setState({color: "#3DB82C"})
+      this.setState({color: "#28D3B0"})
     }
-    if (this.state.responseApiAir.data.aqi >= 51 && this.state.responseApiAir.data.aqi <= 100){
-      this.setState({color: "#E3D71B"})
+    if (this.state.responseApiAir.data.aqi >= 51 && this.state.responseApiAir.data.aqi <= 150){
+      this.setState({color: "#FFBB00"})
     }
-    if (this.state.responseApiAir.data.aqi >= 101 && this.state.responseApiAir.data.aqi <= 150){
-      this.setState({color: "#ECA100"})
-    }
-    if (this.state.responseApiAir.data.aqi >= 151 && this.state.responseApiAir.data.aqi <= 200){
-      this.setState({color: "#F94B1C"})
-    }
-    if (this.state.responseApiAir.data.aqi >= 201 && this.state.responseApiAir.data.aqi <= 299){
-      this.setState({color: "#8900E8"})
-    }
-    if (this.state.responseApiAir.data.aqi >= 300){
-      this.setState({color: "#7A0000"})
-    }
-    
-    if (this.state.responseApiAir.data.iaqi.pm10.v >= 0 && this.state.responseApiAir.data.iaqi.pm10.v <= 50){
-      this.setState({colorPm10: "#3DB82C"})
-    }
-    if (this.state.responseApiAir.data.iaqi.pm10.v >= 51 && this.state.responseApiAir.data.iaqi.pm10.v <= 100){
-      this.setState({colorPm10: "#E3D71B"})
-    }
-    if (this.state.responseApiAir.data.iaqi.pm10.v >= 101 && this.state.responseApiAir.data.iaqi.pm10.v <= 150){
-      this.setState({colorPm10: "#ECA100"})
-    }
-    if (this.state.responseApiAir.data.iaqi.pm10.v >= 151 && this.state.responseApiAir.data.iaqi.pm10.v <= 200){
-      this.setState({colorPm10: "#F94B1C"})
-    }
-    if (this.state.responseApiAir.data.iaqi.pm10.v >= 201 && this.state.responseApiAir.data.iaqi.pm10.v <= 299){
-      this.setState({colorPm10: "#8900E8"})
-    }
-    if (this.state.responseApiAir.data.iaqi.pm10.v >= 300){
-      this.setState({colorPm10: "#7A0000"})
-    }
-    
-    if (this.state.responseApiAir.data.iaqi.o3.v >= 0 && this.state.responseApiAir.data.iaqi.o3.v <= 50){
-      this.setState({colorO3: "#3DB82C"})
-    }
-    if (this.state.responseApiAir.data.iaqi.o3.v >= 51 && this.state.responseApiAir.data.iaqi.o3.v <= 100){
-      this.setState({colorO3: "#E3D71B"})
-    }
-    if (this.state.responseApiAir.data.iaqi.o3.v >= 101 && this.state.responseApiAir.data.iaqi.o3.v <= 150){
-      this.setState({colorO3: "#ECA100"})
-    }
-    if (this.state.responseApiAir.data.iaqi.o3.v >= 151 && this.state.responseApiAir.data.iaqi.o3.v <= 200){
-      this.setState({colorO3: "#F94B1C"})
-    }
-    if (this.state.responseApiAir.data.iaqi.o3.v >= 201 && this.state.responseApiAir.data.iaqi.o3.v <= 299){
-      this.setState({colorO3: "#8900E8"})
-    }
-    if (this.state.responseApiAir.data.iaqi.o3.v >= 300){
-      this.setState({colorO3: "#7A0000"})
-    }
-    
-    if (this.state.responseApiAir.data.iaqi.no2.v >= 0 && this.state.responseApiAir.data.iaqi.no2.v <= 50){
-      this.setState({colorNo2: "#3DB82C"})
-    }
-    if (this.state.responseApiAir.data.iaqi.no2.v >= 51 && this.state.responseApiAir.data.iaqi.no2.v <= 100){
-      this.setState({colorNo2: "#E3D71B"})
-    }
-    if (this.state.responseApiAir.data.iaqi.no2.v >= 101 && this.state.responseApiAir.data.iaqi.no2.v <= 150){
-      this.setState({colorNo2: "#ECA100"})
-    }
-    if (this.state.responseApiAir.data.iaqi.no2.v >= 151 && this.state.responseApiAir.data.iaqi.no2.v <= 200){
-      this.setState({colorNo2: "#F94B1C"})
-    }
-    if (this.state.responseApiAir.data.iaqi.no2.v >= 201 && this.state.responseApiAir.data.iaqi.no2.v <= 299){
-      this.setState({colorNo2: "#8900E8"})
-    }
-    if (this.state.responseApiAir.data.iaqi.no2.v >= 300){
-      this.setState({colorNo2: "#7A0000"})
+    if (this.state.responseApiAir.data.aqi >= 151){
+      this.setState({color: "#FF5656"})
     }
   }
   
@@ -526,25 +471,37 @@ class HomeView extends React.Component {
     if(this.state.loading){
       return (
       <View style={styles.container}>
-        <ActivityIndicator style={{flex:1, alignItems: "center", justifyContent: "center"}} size="large" color="#0000ff" />
+        <ActivityIndicator style={{flex:1, alignItems: "center", justifyContent: "center", backgroundColor: "white" }} size="large" color="#0000ff" />
       </View>
     );
     }else{
-      return (
-        <ScrollView style={{flex: 1}}
-        refreshControl={
-          <RefreshControl
-            refreshing={this.state.refreshing}
-            onRefresh={() => {this._getLocationAsync()}}
-          />
-         }
-        >
-        <CardMeteo ville={this.state.responseApiMeteo.name + " , " + this.state.responseApiMeteo.sys.country} color={this.state.color} temperature={(this.state.responseApiMeteo.main.temp - 273.15).toFixed(1) + "°C"} p={this.state.responseApiMeteo.main.pressure + " hPa"} tr={(this.state.responseApiMeteo.main.feels_like - 273.15).toFixed(1) + "°C"} tmin={(this.state.responseApiMeteo.main.temp_min - 273.15).toFixed(1) + "°C"} tmax={(this.state.responseApiMeteo.main.temp_max - 273.15).toFixed(1) + "°C"} h={this.state.responseApiMeteo.main.humidity} wind={this.state.responseApiMeteo.wind.speed + "  m/s"} visibility={this.state.responseApiMeteo.visibility + " m"} sun={this.state.responseApiMeteo.sys.sunrise} moon={this.state.responseApiMeteo.sys.sunset} condition={this.state.condition}
-        />
-        <CardAir aqi={this.state.responseApiAir.data.aqi} color={this.state.color} value={this.state.responseApiAir.data.aqi} ville={this.state.responseApiAir.data.city.name} dom={this.state.responseApiAir.data.dominentpol} pm10={this.state.responseApiAir.data.iaqi.pm10.v} o3={this.state.responseApiAir.data.iaqi.o3.v} no2={this.state.responseApiAir.data.iaqi.no2.v} colorPm10={this.state.colorPm10} colorO3={this.state.colorO3} colorNo2={this.state.colorNo2}
-        />
-      </ScrollView>
-    );
+      if(typeof this.props.navigation.state.params == "undefined"){
+        return (
+          <SafeAreaView style={{flex: 1}}>
+            <StatusBar barStyle={'dark-content'}/>
+              <ScrollView style={{flex: 1}}
+              refreshControl={
+                <RefreshControl
+                  refreshing={this.state.refreshing}
+                  onRefresh={() => {this._getLocationAsync()}}
+                />
+               }
+              >
+              <CardAccueil ville={this.state.responseApiMeteo.name} pays={this.state.responseApiMeteo.sys.country} color={this.state.color} temp={(this.state.responseApiMeteo.main.temp - 273.15).toFixed(1) + "°C"} tr={(this.state.responseApiMeteo.main.feels_like - 273.15).toFixed(1) + "°C"}  aqi={this.state.responseApiAir.data.aqi}/>
+              
+            </ScrollView>
+          </SafeAreaView>
+        );
+      }else{
+        return (
+          <SafeAreaView style={{flex: 1}}>
+            <StatusBar barStyle={'dark-content'}/>
+              <ScrollView style={{flex: 1}}>
+                <CardAccueil ville={this.state.responseApiMeteo.name} pays={this.state.responseApiMeteo.sys.country} color={this.state.color} temp={(this.state.responseApiMeteo.main.temp - 273.15).toFixed(1) + "°C"} tr={(this.state.responseApiMeteo.main.feels_like - 273.15).toFixed(1) + "°C"}  aqi={this.state.responseApiAir.data.aqi}/>
+            </ScrollView>
+          </SafeAreaView>
+        );
+      }
     }
   };
 }
