@@ -5,7 +5,8 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "eject": "expo eject"
+    "eject": "expo eject",
+    "generate": "expo build:ios && expo build:android"
   },
   "dependencies": {
     "@aws-amplify/api": "^2.1.2",
@@ -15,6 +16,7 @@
     "aws-amplify-react": "^3.1.2",
     "aws-amplify-react-native": "^2.2.3",
     "expo": "^36.0.0",
+    "expo-font": "~8.0.0",
     "expo-location": "~8.0.0",
     "expokit": "^36.0.0",
     "galio-framework": "^0.6.3",
@@ -30,10 +32,13 @@
     "react-native-ionicons": "^4.6.3",
     "react-native-pull-to-refresh": "^2.1.3",
     "react-native-reanimated": "^1.5.0",
+    "react-native-safe-area-context": "^0.6.4",
+    "react-native-safe-area-view": "^1.0.0",
     "react-native-segmented-control-tab": "^3.4.1",
     "react-native-shadow": "^1.2.2",
     "react-native-simple-gauge": "^0.2.2",
-    "react-native-svg": "9.13.3",
+    "react-native-svg": "^11.0.1",
+    "react-native-svg-uri": "^1.2.3",
     "react-native-typography": "^1.4.1",
     "react-native-unimodules": "^0.7.0",
     "react-native-vector-icons": "^6.6.0",
