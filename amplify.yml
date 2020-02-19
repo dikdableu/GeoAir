@@ -1,0 +1,19 @@
+version: 0.1
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - cd GeoAir
+        - npm install
+        - yarn add expo-cli
+    build:
+      commands: 
+        - expo build:ios
+        - expo build:android
+  artifacts:
+    baseDirectory: /
+    files:
+      - '**/*'
+  cache:
+    paths: 
+      - node_modules/**/*

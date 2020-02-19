@@ -1,0 +1,22 @@
+{
+    "prod": {
+        "awscloudformation": {
+            "AuthRoleName": "amplify-geoair-prod-234158-authRole",
+            "UnauthRoleArn": "arn:aws:iam::835680116565:role/amplify-geoair-prod-234158-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::835680116565:role/amplify-geoair-prod-234158-authRole",
+            "Region": "eu-central-1",
+            "DeploymentBucketName": "amplify-geoair-prod-234158-deployment",
+            "UnauthRoleName": "amplify-geoair-prod-234158-unauthRole",
+            "StackName": "amplify-geoair-prod-234158",
+            "StackId": "arn:aws:cloudformation:eu-central-1:835680116565:stack/amplify-geoair-prod-234158/f8de1bc0-2b5d-11ea-88e7-02946ff1a870",
+            "AmplifyAppId": "d1dqenac00qmt2"
+        },
+        "categories": {
+            "auth": {
+                "geoair86b25bc9": {
+                    "hostedUIProviderCreds": "[]"
+                }
+            }
+        }
+    }
+}
