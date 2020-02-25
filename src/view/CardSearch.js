@@ -46,7 +46,7 @@ class CardSearch extends React.Component {
 
 
 const styles = StyleSheet.create({
-  
+
 });
 
 export default CardSearch;
