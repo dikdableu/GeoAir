@@ -15,8 +15,6 @@ export default function FavoriteView(props) {
 
   const [dataLoaded, setDataLoaded] = useState(false)
   const [listSearch, setListSearch] = useState([])
-  const [loading, setLoading] = useState(false)
-  const [charged, setCharged] = useState(false)
   const [responseApiAir, setResponseApiAir] = useState({})
   const [responseApiMeteo, setResponseApiMeteo] = useState({})
   const [color, setColor] = useState(null)
@@ -26,7 +24,7 @@ export default function FavoriteView(props) {
     'roboto-bold': require('../../assets/Roboto-Bold.ttf'),
     'roboto-italic': require('../../assets/Roboto-Italic.ttf'),
     'roboto-regular': require('../../assets/Roboto-Regular.ttf')
-  })}}, [])
+  })}})
 
   useEffect(() => {
     var list = []
@@ -35,10 +33,7 @@ export default function FavoriteView(props) {
       ville: item.ville
     }))
     setListSearch(list)
-  }, [])
-
-
-
+  })
 
   function colorIndex(responseApiAir){
     if (responseApiAir.data.aqi >= 0 && responseApiAir.data.aqi <= 50){
@@ -53,12 +48,6 @@ export default function FavoriteView(props) {
   }
 
   function searchByCity(city){
-    console.log(city)
-    setLoading(true)
-    setCharged(false)
-    setVide(false)
-    setListSearch({})
-
     fetch('https://api.openweathermap.org/data/2.5/weather?q='+city+'&APPID=505c84426a182da1a7178151dccdb616', {
       method: 'GET'})
     .then((response) => response.json())
@@ -81,9 +70,6 @@ export default function FavoriteView(props) {
           ville: resultat.name
         })
         colorIndex(responseJsonWaqi);
-        setLoading(false)
-        setCharged(true)
-        setListSearch(data)
         return (<City aqi={responseJsonWaqi.data.aqi} color={color} temp={(resultat.main.temp - 273.15).toFixed(1) + "°C"} tr={(resultat.main.feels_like - 273.15).toFixed(1) + "°C"} ville={resultat.name} pays={resultat.sys.country}/>)
         })
       }else {
@@ -96,42 +82,27 @@ export default function FavoriteView(props) {
     });
   }
 
-
-  if(dataLoaded){
-    return(
-      <AppLoading
-        startAsync={this.fetchFonts}
-        onFinish={() => setDataLoaded(true)}
-      />
-    )
-  }
-  if(listSearch && listSearch.length > 0){
+  if(listSearch.length > 0){
     console.log(listSearch)
-  return (
-      <SafeAreaView style={styles.favoris}>
-        <FlatList
-          bounces={false}
-          data={listSearch}
-          keyExtractor={(item) => item.id.toString()}
-          renderItem={({item}) => searchByCity(item.ville)}
-          initialNumToRender={10}
-        />
-      </SafeAreaView>
-    )}else if (charged) {
-      <SafeAreaView style={styles.favoris}>
-        <FlatList
-          bounces={false}
-          data={listSearch}
-          keyExtractor={(item) => item.id.toString()}
-          renderItem={({item}) => searchByCity(item.ville)}
-          initialNumToRender={10}
-        />
-      </SafeAreaView>
-    }else {
-      return (
-          <SafeAreaView style={styles.favoris}>
-          </SafeAreaView>
-    )}
+    return (
+        <SafeAreaView style={styles.favoris}>
+          <FlatList
+            bounces={false}
+            data={listSearch}
+            keyExtractor={(item) => item.id.toString()}
+            renderItem={({item}) => searchByCity(item.ville)}
+            initialNumToRender={10}
+          />
+        </SafeAreaView>
+    )
+  } else {
+    return (
+        <SafeAreaView style={styles.favoris}>
+
+        </SafeAreaView>
+      )
+  }
+
 
 }
 
