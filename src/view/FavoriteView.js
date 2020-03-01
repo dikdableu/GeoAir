@@ -10,6 +10,7 @@ import City from "./city.js"
 import * as Font from 'expo-font';
 import { AppLoading} from 'expo';
 import * as data from '../../db/favorite.json';
+import Toast from 'react-native-root-toast';
 
 export default function FavoriteView(props) {
 
@@ -21,29 +22,30 @@ export default function FavoriteView(props) {
   const [errorFetch, setErrorFetch] = useState(null)
 
   useEffect(() => {
-    return Font.loadAsync({
-    'roboto-bold': require('../../assets/Roboto-Bold.ttf'),
-    'roboto-italic': require('../../assets/Roboto-Italic.ttf'),
-    'roboto-regular': require('../../assets/Roboto-Regular.ttf')
-  })}, [])
-
-  useEffect(() => {
+    async() => {return Font.loadAsync({
+      'roboto-bold': require('../../assets/Roboto-Bold.ttf'),
+      'roboto-italic': require('../../assets/Roboto-Italic.ttf'),
+      'roboto-regular': require('../../assets/Roboto-Regular.ttf')
+      })
+    }
     var list = []
     data.favorite.map((item) => list.push({
       id: item.id,
       ville: item.ville
     }))
-    setListSearch(list)
-  })
+    list.map((item) => {
+      setTimeout(function () {
+        searchByCity(item.ville)
+      }, 1000);
+    })
+  }, [])
 
   function colorIndex(responseApiAir){
     if (responseApiAir.data.aqi >= 0 && responseApiAir.data.aqi <= 50){
       setColor("#28D3B0")
-    }
-    if (responseApiAir.data.aqi >= 51 && responseApiAir.data.aqi <= 150){
+    }else if (responseApiAir.data.aqi >= 51 && responseApiAir.data.aqi <= 150){
       setColor("#FFBB00")
-    }
-    if (responseApiAir.data.aqi >= 151){
+    }else if (responseApiAir.data.aqi >= 151){
       setColor("#FF5656")
     }
   }
@@ -61,6 +63,7 @@ export default function FavoriteView(props) {
         .then((responseJsonWaqi) => {
         setResponseApiAir(responseJsonWaqi);
         setResponseApiMeteo(resultat)
+        colorIndex(responseJsonWaqi);
         data.push({
           id: id++,
           country: resultat.sys.country,
@@ -68,16 +71,26 @@ export default function FavoriteView(props) {
           temperature: (resultat.main.temp - 273.15).toFixed(1) + "°C",
           temperatureFeel: (resultat.main.feels_like - 273.15).toFixed(1) + "°C",
           idMeteo: 200,
-          ville: resultat.name
+          ville: resultat.name,
+          color: color
         })
-        colorIndex(responseJsonWaqi);
-        return (<City aqi={responseJsonWaqi.data.aqi} color={color} temp={(resultat.main.temp - 273.15).toFixed(1) + "°C"} tr={(resultat.main.feels_like - 273.15).toFixed(1) + "°C"} ville={resultat.name} pays={resultat.sys.country}/>)
+        setListSearch(data)
+        return responseJsonWaqi
       }).catch (error => {
         setErrorFetch(error)
         console.error(error);
         })
+      }else {
+        Toast.show('Problème de connexion au serveur, veuillez ressayer dans quelques instants', {
+          duration: Toast.durations.LONG,
+          position: Toast.positions.CENTER,
+          shadow: true,
+          animation: true,
+          hideOnPress: true,
+          delay: 0,
+        });
       }
-        return false
+        return resultat
     })
     .catch( error => {
       setErrorFetch(error)
@@ -85,16 +98,21 @@ export default function FavoriteView(props) {
     });
   }
 
+  function callApi(ville){
+    console.log('ici')
+    setTimeout(() => {
+      searchByCity(ville)
+    }, 1000)
+  }
+
   if(listSearch.length > 0){
-    console.log(listSearch)
     return (
         <SafeAreaView style={styles.favoris}>
           <FlatList
             bounces={false}
             data={listSearch}
-            keyExtractor={(item) => item.id.toString()}
-            renderItem={({item}) => searchByCity(item.ville)}
-            initialNumToRender={10}
+            keyExtractor={item => item.id.toString()}
+            renderItem={({item}) =>  <City icon={item.idMeteo} aqi={item.aqi} color={item.color} temp={item.temperature} tr={item.temperatureFeel} ville={item.ville} pays={item.country} />}
           />
         </SafeAreaView>
     )
