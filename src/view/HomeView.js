@@ -26,6 +26,8 @@ import {Image as SvgImage} from 'react-native-svg';
 import * as Font from 'expo-font';
 import { AppLoading} from 'expo';
 
+import * as data from '../../db/favorite.json';
+
 
 const conditionWeather = [
      {
@@ -378,24 +380,11 @@ class HomeView extends React.Component {
         colorO3: null,
         aqi: null,
         condition: null,
-        dataLoaded: false
+        dataLoaded: false,
+        textInside: '',
       };
       this.fetchFonts()
   }
-
-  static navigationOptions = ({ navigation, screenProps }) => ({
-      headerTitle: (
-        <Text style={{fontFamily: "roboto-bold",fontSize: 20, color: "black"}}>GeoAir</Text>
-      ),
-      headerRight: (
-        <TouchableOpacity onPress={() => alert('Vous avez cliqué sur le menu')} style={{marginRight: 15}}>
-          <Svg data-layer="ff60b171-b3c7-492d-a6b3-34630845296c" style={styles.ajouterUnLieux_iconsetting} preserveAspectRatio="none" viewBox="-7879 -1844.000732421875 12.0009765625 16.9993896484375" fill="rgba(42, 44, 53, 1)"><SvgPath d="M -7877.4990234375 -1827.001342773438 C -7878.32958984375 -1827.001342773438 -7879 -1827.671630859375 -7879 -1828.500122070312 C -7879 -1829.32861328125 -7878.32958984375 -1830.0009765625 -7877.4990234375 -1830.0009765625 L -7868.5 -1830.0009765625 C -7867.67138671875 -1830.0009765625 -7866.9990234375 -1829.32861328125 -7866.9990234375 -1828.500122070312 C -7866.9990234375 -1827.671630859375 -7867.67138671875 -1827.001342773438 -7868.5 -1827.001342773438 L -7877.4990234375 -1827.001342773438 Z M -7877.4990234375 -1834.001220703125 C -7878.32958984375 -1834.001220703125 -7879 -1834.671508789062 -7879 -1835.5 C -7879 -1836.328491210938 -7878.32958984375 -1837.000854492188 -7877.4990234375 -1837.000854492188 L -7868.5 -1837.000854492188 C -7867.67138671875 -1837.000854492188 -7866.9990234375 -1836.328491210938 -7866.9990234375 -1835.5 C -7866.9990234375 -1834.671508789062 -7867.67138671875 -1834.001220703125 -7868.5 -1834.001220703125 L -7877.4990234375 -1834.001220703125 Z M -7877.4990234375 -1841.001098632812 C -7878.32958984375 -1841.001098632812 -7879 -1841.67138671875 -7879 -1842.499877929688 C -7879 -1843.328369140625 -7878.32958984375 -1844.000732421875 -7877.4990234375 -1844.000732421875 L -7868.5 -1844.000732421875 C -7867.67138671875 -1844.000732421875 -7866.9990234375 -1843.328369140625 -7866.9990234375 -1842.499877929688 C -7866.9990234375 -1841.67138671875 -7867.67138671875 -1841.001098632812 -7868.5 -1841.001098632812 L -7877.4990234375 -1841.001098632812 Z"  /></Svg>
-        </TouchableOpacity>
-      ),
-      headerStyle: {
-        borderBottomWidth: 0,
-      },
-    })
 
   componentWillMount() {
     if(typeof this.props.navigation.state.params == "undefined"){
@@ -475,12 +464,44 @@ class HomeView extends React.Component {
   _colorIndex = () => {
     if (this.state.responseApiAir.data.aqi >= 0 && this.state.responseApiAir.data.aqi <= 50){
       this.setState({color: "#28D3B0"})
+      this.setState({textInside: "La qualité de l'air est jugée satisfaisante, et la pollution de l'air pose peu ou pas de risque."})
+
     }
     if (this.state.responseApiAir.data.aqi >= 51 && this.state.responseApiAir.data.aqi <= 150){
       this.setState({color: "#FFBB00"})
+      this.setState({textInside: "La qualité de l'ai est acceptable; Cependant, pour certains polluants, il peut y avoir un problème de santé modérée pour un très petit nombre de personnes qui sont particulièrement sensibles à la pollution de l'air."})
     }
     if (this.state.responseApiAir.data.aqi >= 151){
       this.setState({color: "#FF5656"})
+      this.setState({textInside: "Avertissements de santé de conditions d'urgence. Toutes la population est plus susceptible d'être affecté."})
+    }
+  }
+
+  _addFavorite = () => {
+    var id = 0
+
+    if (this.state.responseApiMeteo.name.length == 0){
+      id = 0
+    }else{
+      for (i = 0; i < this.state.responseApiMeteo.name.length; i++) {
+          var char = this.state.responseApiMeteo.name.charCodeAt(i);
+          id = ((id << 5) - id) + char;
+          id = id & id;
+      }
+    }
+
+    var i = 0
+
+    data.favorite.map((item) => {
+      if(!typeof 'undefined' || !item.ville || item.id == id){
+        i++
+      }
+    })
+    if(i == 0){
+      data.favorite.push({
+        "id": id,
+        "ville": this.state.responseApiMeteo.name
+      })
     }
   }
 
@@ -514,7 +535,10 @@ class HomeView extends React.Component {
             <View data-layer="e97e27e2-2ba3-4663-9cf1-b8e6a87404ea" style={styles.home_searchcity}>
                 <Text data-layer="0566535a-1279-4dc0-bf84-314d2bf4cbeb" style={styles.home_searchcity_versailles}>{this.state.responseApiMeteo.name}</Text>
                 <Text data-layer="ec71f28a-dd55-4cb6-a52d-b7c93ad5c018" style={styles.home_searchcity_yvelinesFrance}>{this.state.responseApiMeteo.sys.country}</Text>
-                <Svg data-layer="2aa5bee4-19b5-4040-a681-18ebd092a169" style={styles.home_searchcity_iconadd} preserveAspectRatio="none" viewBox="-5944.99951171875 -2494.0009765625 15 15" fill="rgba(42, 44, 53, 1)"><SvgPath d="M -5938.65380859375 -2480.15478515625 L -5938.65380859375 -2485.3466796875 L -5943.845703125 -2485.3466796875 C -5944.4833984375 -2485.3466796875 -5944.99951171875 -2485.86376953125 -5944.99951171875 -2486.500732421875 C -5944.99951171875 -2487.137939453125 -5944.4833984375 -2487.654541015625 -5943.845703125 -2487.654541015625 L -5938.65380859375 -2487.654541015625 L -5938.65380859375 -2492.846923828125 C -5938.65380859375 -2493.48388671875 -5938.13623046875 -2494.0009765625 -5937.49951171875 -2494.0009765625 C -5936.8623046875 -2494.0009765625 -5936.345703125 -2493.48388671875 -5936.345703125 -2492.846923828125 L -5936.345703125 -2487.654541015625 L -5931.15380859375 -2487.654541015625 C -5930.51611328125 -2487.654541015625 -5929.99951171875 -2487.137939453125 -5929.99951171875 -2486.500732421875 C -5929.99951171875 -2485.86376953125 -5930.51611328125 -2485.3466796875 -5931.15380859375 -2485.3466796875 L -5936.345703125 -2485.3466796875 L -5936.345703125 -2480.15478515625 C -5936.345703125 -2479.517333984375 -5936.8623046875 -2479.0009765625 -5937.49951171875 -2479.0009765625 C -5938.13623046875 -2479.0009765625 -5938.65380859375 -2479.517333984375 -5938.65380859375 -2480.15478515625 Z"  /></Svg>
+                <TouchableOpacity onPress={() => {this._addFavorite()}} style={{width:25, height: 25, left: 289, top:2}}>
+                  <Svg data-layer="2aa5bee4-19b5-4040-a681-18ebd092a169" style={styles.home_searchcity_iconadd} preserveAspectRatio="none" viewBox="-5944.99951171875 -2494.0009765625 15 15" fill="rgba(42, 44, 53, 1)"><SvgPath  d="M -5938.65380859375 -2480.15478515625 L -5938.65380859375 -2485.3466796875 L -5943.845703125 -2485.3466796875 C -5944.4833984375 -2485.3466796875 -5944.99951171875 -2485.86376953125 -5944.99951171875 -2486.500732421875 C -5944.99951171875 -2487.137939453125 -5944.4833984375 -2487.654541015625 -5943.845703125 -2487.654541015625 L -5938.65380859375 -2487.654541015625 L -5938.65380859375 -2492.846923828125 C -5938.65380859375 -2493.48388671875 -5938.13623046875 -2494.0009765625 -5937.49951171875 -2494.0009765625 C -5936.8623046875 -2494.0009765625 -5936.345703125 -2493.48388671875 -5936.345703125 -2492.846923828125 L -5936.345703125 -2487.654541015625 L -5931.15380859375 -2487.654541015625 C -5930.51611328125 -2487.654541015625 -5929.99951171875 -2487.137939453125 -5929.99951171875 -2486.500732421875 C -5929.99951171875 -2485.86376953125 -5930.51611328125 -2485.3466796875 -5931.15380859375 -2485.3466796875 L -5936.345703125 -2485.3466796875 L -5936.345703125 -2480.15478515625 C -5936.345703125 -2479.517333984375 -5936.8623046875 -2479.0009765625 -5937.49951171875 -2479.0009765625 C -5938.13623046875 -2479.0009765625 -5938.65380859375 -2479.517333984375 -5938.65380859375 -2480.15478515625 Z"  />
+                  </Svg>
+                </TouchableOpacity>
             </View>
             <Text data-layer="fcff8157-0898-4499-ba77-8c9c5c1399f4" style={styles.home_x10c}>{(this.state.responseApiMeteo.main.temp - 273.15).toFixed(1) + "°C"}</Text>
             <Text data-layer="e3a238f9-d269-489b-abdc-16c159f8bdfd" style={styles.home_min}>MIN</Text>
@@ -523,8 +547,8 @@ class HomeView extends React.Component {
             <Text data-layer="947b1b79-cf69-4852-adf7-d4ad1f9e5d19" style={styles.home_x13c}>{(this.state.responseApiMeteo.main.temp_max - 273.15).toFixed(1) + "°C"}</Text>
             <Text data-layer="eaa8bd00-b2cf-4b94-8626-b80c9dfd7fb4" style={styles.home_temp}>Temp.</Text>
             <View data-layer="01c94066-2b12-48e5-9d3a-9620b1a4214c" style={styles.home_airqualityindex}>
-                <View data-layer="e22a0d65-2293-4022-856e-4853fad7221f" style={styles.home_airqualityindex_rectangle190}></View>
-                <Text data-layer="65c2a307-84e5-488f-8d7f-4b6107009b76" style={styles.home_airqualityindex_x102}>{this.state.responseApiAir.data.aqi}</Text>
+                <View data-layer="e22a0d65-2293-4022-856e-4853fad7221f" style={[styles.home_airqualityindex_rectangle190, {borderColor: this.state.color}]}></View>
+                <Text data-layer="65c2a307-84e5-488f-8d7f-4b6107009b76" style={[styles.home_airqualityindex_x102, {color: this.state.color}]}>{this.state.responseApiAir.data.aqi}</Text>
             </View>
             <View data-layer="ba686c87-cb59-4c46-baed-6f1eec515b14" style={styles.home_lineacb95fde}></View>
             <View data-layer="f25280e4-4f48-4c2a-be2d-9ebe03c9ff61" style={styles.home_line}></View>
@@ -540,8 +564,8 @@ class HomeView extends React.Component {
               <Svg data-layer="3d35f051-b5bb-4ad4-889b-6a0b430a96b0" style={styles.home_iconmonstrRefresh2} preserveAspectRatio="none" viewBox="-4.76837158203125e-7 2 14 12.25" fill="rgba(42, 44, 53, 1)"><SvgPath d="M 7.874999523162842 2 C 4.591416358947754 2 1.917999744415283 4.587666511535645 1.764582753181458 7.833333492279053 L -4.76837158203125e-07 7.833333492279053 L 2.646582841873169 11.28491592407227 L 5.25 7.833333492279053 L 3.514583110809326 7.833333492279053 C 3.666249513626099 5.557166576385498 5.560916423797607 3.75 7.874999523162842 3.75 C 10.28766632080078 3.75 12.25 5.712333679199219 12.25 8.125 C 12.25 10.53766536712646 10.28766632080078 12.49999904632568 7.874999523162842 12.49999904632568 C 6.486083030700684 12.49999904632568 5.248833179473877 11.84724998474121 4.447333335876465 10.83516597747803 L 3.369916200637817 12.26374912261963 C 4.489333152770996 13.48174858093262 6.090583324432373 14.24999904632568 7.874999523162842 14.24999904632568 C 11.25716686248779 14.24999904632568 14 11.50716590881348 14 8.125 C 14 4.742833137512207 11.25716686248779 2 7.874999523162842 2 Z"  /></Svg>
             </TouchableOpacity>
             <Text data-layer="699344fd-f3c3-4637-91c6-9e22dabbc0b9" style={styles.home_lieuxAProximite}>Lieux à proximité</Text>
-            <View data-layer="09af10b5-c90e-41a5-8022-88aa02b5cd5e" style={styles.home_rectangle}></View>
-            <Text data-layer="7150d953-1902-4408-87cb-6ab655001bdc" style={styles.home_loremIpsumDolorSitAmetAdipiscingElitDonecVulputate}>Lorem ipsum dolor sit amet, adipiscing elit. Donec vulputate.</Text>
+            <View data-layer="09af10b5-c90e-41a5-8022-88aa02b5cd5e" style={[styles.home_rectangle, {borderWidth: 1 ,borderColor: this.state.color}]}></View>
+            <Text data-layer="7150d953-1902-4408-87cb-6ab655001bdc" style={[styles.home_loremIpsumDolorSitAmetAdipiscingElitDonecVulputate, {color: this.state.color}]}>{this.state.textInside}</Text>
             <View data-layer="edfed02e-1326-48d5-9935-25a9cb06b14c" style={styles.home_x09d}>
                 <Svg data-layer="e5d8674a-cb86-4b50-8c3a-1800bcde2d22" style={styles.home_x09d_trace110} preserveAspectRatio="none" viewBox="318.1409912109375 234.4969940185547 4.5 8.33599853515625" fill="rgba(31, 33, 40, 1)"><SvgPath d="M 320.3909912109375 242.0829925537109 C 319.56201171875 242.0829925537109 318.8909912109375 241.4109954833984 318.8909912109375 240.5829925537109 L 318.8909912109375 236.7469940185547 C 318.8909912109375 235.9190063476562 319.56201171875 235.2469940185547 320.3909912109375 235.2469940185547 C 321.218994140625 235.2469940185547 321.8909912109375 235.9190063476562 321.8909912109375 236.7469940185547 L 321.8909912109375 240.5829925537109 C 321.8909912109375 241.4109954833984 321.218994140625 242.0829925537109 320.3909912109375 242.0829925537109 Z"  /></Svg>
                 <Svg data-layer="db15a781-cd92-41b4-a212-5f106969ed7e" style={styles.home_x09d_trace111} preserveAspectRatio="none" viewBox="309.0409851074219 234.4969940185547 4.5 8.33599853515625" fill="rgba(31, 33, 40, 1)"><SvgPath d="M 311.2909851074219 242.0829925537109 C 310.4630126953125 242.0829925537109 309.7909851074219 241.4109954833984 309.7909851074219 240.5829925537109 L 309.7909851074219 236.7469940185547 C 309.7909851074219 235.9190063476562 310.4630126953125 235.2469940185547 311.2909851074219 235.2469940185547 C 312.1189880371094 235.2469940185547 312.7909851074219 235.9190063476562 312.7909851074219 236.7469940185547 L 312.7909851074219 240.5829925537109 C 312.7909851074219 241.4109954833984 312.1189880371094 242.0829925537109 311.2909851074219 242.0829925537109 Z"  /></Svg>
@@ -662,8 +686,8 @@ const styles = StyleSheet.create({
     "paddingLeft": 0,
     "width": 15,
     "height": 15,
-    "left": 291,
-    "top": 4
+    "left": 2,
+    "top": 2
   },
   "home_x10c": {
     "opacity": 1,
@@ -683,7 +707,7 @@ const styles = StyleSheet.create({
     "paddingRight": 0,
     "paddingBottom": 0,
     "paddingLeft": 0,
-    "width": 45,
+    "width": 51,
     "height": 23,
     "left": 89,
     "top": 300
@@ -833,13 +857,9 @@ const styles = StyleSheet.create({
     "paddingBottom": 0,
     "paddingLeft": 0,
     "borderTopWidth": 1.5,
-    "borderTopColor": "rgba(255, 187, 0, 1)",
     "borderRightWidth": 1.5,
-    "borderRightColor": "rgba(255, 187, 0, 1)",
     "borderBottomWidth": 1.5,
-    "borderBottomColor": "rgba(255, 187, 0, 1)",
     "borderLeftWidth": 1.5,
-    "borderLeftColor": "rgba(255, 187, 0, 1)",
     "borderTopLeftRadius": 3,
     "borderTopRightRadius": 3,
     "borderBottomLeftRadius": 3,
@@ -891,7 +911,7 @@ const styles = StyleSheet.create({
     "width": 375,
     "height": 2,
     "left": 0,
-    "top": 480
+    "top": 490
   },
   "home_line": {
     "opacity": 1,
@@ -912,7 +932,7 @@ const styles = StyleSheet.create({
     "width": 375,
     "height": 2,
     "left": 0,
-    "top": 540
+    "top": 550
   },
   "home_time": {
     "opacity": 1,
@@ -929,7 +949,7 @@ const styles = StyleSheet.create({
     "width": 397,
     "height": 20,
     "left": -10,
-    "top": 500
+    "top": 510
   },
   "home_time_x1200e2d3bdb2": {
     "opacity": 1,
@@ -1113,7 +1133,6 @@ const styles = StyleSheet.create({
   "home_rectangle": {
     "opacity": 1,
     "position": "absolute",
-    "backgroundColor": "rgba(255, 187, 0, 0.050980392156862744)",
     "marginTop": 0,
     "marginRight": 0,
     "marginBottom": 0,
@@ -1127,7 +1146,7 @@ const styles = StyleSheet.create({
     "borderBottomLeftRadius": 3,
     "borderBottomRightRadius": 3,
     "width": 306,
-    "height": 85,
+    "height": 100,
     "left": 34,
     "top": 370
   },
@@ -1151,7 +1170,7 @@ const styles = StyleSheet.create({
     "paddingBottom": 0,
     "paddingLeft": 0,
     "width": 250,
-    "height": 39,
+    "height": 60,
     "left": 63.5,
     "top": 390
   },

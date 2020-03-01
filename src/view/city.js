@@ -25,55 +25,7 @@ export default class City extends Component {
     });
   };
 
-  handlePress(target, owner) {
-    if (this.props.onPress) {
-        let name;
-        let id;
-        let index = -1;
-        if (target.search("::") > -1) {
-            const varCount = target.split("::").length;
-            if (varCount === 2) {
-                name = target.split("::")[0];
-                id = target.split("::")[1];
-            } else if (varCount === 3) {
-                name = target.split("::")[0];
-                index = parseInt(target.split("::")[1]);
-                id = target.split("::")[2];
-            }
-        } else {
-            name = target;
-        }
-        this.props.onPress({ type: 'button', name: name, index: index, id: id, owner: owner });
-    }
-  }
-
-  handleChangeTextinput(name, value) {
-      let id;
-      let index = -1;
-      if (name.search('::') > -1) {
-          const varCount = name.split("::").length;
-          if (varCount === 2) {
-              name = name.split("::")[0];
-              id = name.split("::")[1];
-          } else if (varCount === 3) {
-              name = name.split("::")[0];
-              index = name.split("::")[1];
-              id = name.split("::")[2];
-          }
-      } else {
-          name = name;
-      }
-      let state = this.state;
-      state[name.split('::').join('')] = value;
-      this.setState(state, () => {
-          if (this.props.onChange) {
-              this.props.onChange({ type: 'textinput', name: name, value: value, index: index, id: id });
-          }
-      });
-  }
-
   render() {
-    console.log(this.props)
   const color = this.props.color
   const propsState = this.props
   if(!this.state.dataLoaded){
@@ -84,9 +36,9 @@ export default class City extends Component {
       />
     )
   }
-    return (
-    <ScrollView data-layer="c5ca152e-c30f-4771-8df6-e408d0aa3faf" style={styles.city}>
-        <View data-layer="f2a47ae9-5fed-4240-9fd8-e104c8a17289" style={styles.city_city6cfae1a5}>
+  return (
+    <View data-layer="c5ca152e-c30f-4771-8df6-e408d0aa3faf" style={styles.city}>
+            <View data-layer="f2a47ae9-5fed-4240-9fd8-e104c8a17289" style={styles.city_city6cfae1a5}>
             <Text data-layer="34552563-2522-4d83-bd92-8d7a88c76a24" style={styles.city_city6cfae1a5_versailles}>{propsState.ville.length > 13 ? propsState.ville.slice(0,13) + '...' : propsState.ville}</Text>
             <Text data-layer="8886f830-eb72-4710-b7d4-ae68e93d3189" style={styles.city_city6cfae1a5_yvelinesFrance}>{propsState.pays}</Text>
             <Text data-layer="4762e86f-f9e5-48f7-9758-dff99395e172" style={styles.city_city6cfae1a5_x10c}>{propsState.temp}</Text>
@@ -97,7 +49,7 @@ export default class City extends Component {
             </View>
             <ReactImage data-layer="9e69dbce-f97b-4370-b4d6-70f5f93b8469" source={require('../../assets/x01d.png')} style={styles.city_city6cfae1a5_x01d} />
         </View>
-    </ScrollView>
+    </View>
     );
   }
 }
@@ -125,9 +77,9 @@ const styles = StyleSheet.create({
     "paddingBottom": 0,
     "paddingLeft": 0,
     "width": 375,
-    "height": 131,
+    "height": 100,
     "left": 0,
-    "top": 120
+    "top": 50,
   },
   "city_city6cfae1a5": {
     "opacity": 1,

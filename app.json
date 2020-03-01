@@ -25,7 +25,7 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true,
+      "supportsTablet": false,
       "bundleIdentifier": "com.bastienchoisy.geoair",
       "buildNumber": "1.0.10"
     },
