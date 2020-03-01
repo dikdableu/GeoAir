@@ -18,13 +18,14 @@ export default function FavoriteView(props) {
   const [responseApiAir, setResponseApiAir] = useState({})
   const [responseApiMeteo, setResponseApiMeteo] = useState({})
   const [color, setColor] = useState(null)
+  const [errorFetch, setErrorFetch] = useState(null)
 
   useEffect(() => {
-    async() => {return Font.loadAsync({
+    return Font.loadAsync({
     'roboto-bold': require('../../assets/Roboto-Bold.ttf'),
     'roboto-italic': require('../../assets/Roboto-Italic.ttf'),
     'roboto-regular': require('../../assets/Roboto-Regular.ttf')
-  })}})
+  })}, [])
 
   useEffect(() => {
     var list = []
@@ -71,13 +72,15 @@ export default function FavoriteView(props) {
         })
         colorIndex(responseJsonWaqi);
         return (<City aqi={responseJsonWaqi.data.aqi} color={color} temp={(resultat.main.temp - 273.15).toFixed(1) + "°C"} tr={(resultat.main.feels_like - 273.15).toFixed(1) + "°C"} ville={resultat.name} pays={resultat.sys.country}/>)
+      }).catch (error => {
+        setErrorFetch(error)
+        console.error(error);
         })
-      }else {
-        setCharged(true)
       }
-      return true
+        return false
     })
     .catch( error => {
+      setErrorFetch(error)
       console.error(error);
     });
   }
@@ -95,15 +98,13 @@ export default function FavoriteView(props) {
           />
         </SafeAreaView>
     )
-  } else {
+  }else {
     return (
         <SafeAreaView style={styles.favoris}>
 
         </SafeAreaView>
       )
   }
-
-
 }
 
 FavoriteView.propTypes = {
