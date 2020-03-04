@@ -14,7 +14,7 @@ import * as Permissions from 'expo-permissions';
 import Value from './indexValue/Value'
 import SafeAreaView from 'react-native-safe-area-view';
 
-import React, {Component} from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from "prop-types";
 import {StyleSheet, Text, View, TextInput, FlatList, Picker, ScrollView, TouchableHighlight} from 'react-native';
 import {Image as ReactImage} from 'react-native';
@@ -29,433 +29,422 @@ import { AppLoading} from 'expo';
 import * as data from '../../db/favorite.json';
 
 import Toast from 'react-native-root-toast';
+import { useDispatch, useSelector } from 'react-redux'
 
 
 
-class HomeView extends React.Component {
+const HomeView = () => {
 
-  constructor(props) {
-      super(props);
-      this.state = {
-        location: null,
-        loading: true,
-        refreshing: true,
-        responseApiAir: {},
-        errorMessage: null,
-        dominant: '',
-        responseApiMeteo: {},
-        color: null,
-        colorPm10: null,
-        colorNo2: null,
-        colorO3: null,
-        aqi: null,
-        condition: null,
-        dataLoaded: false,
-        textInside: '',
-        conditionWeather: [
-             {
-               id: 200,
-               weather: "Orage",
-               description: "orage avec pluie légère",
-               icon: "11d"
-             },
-             {
-               id: 201,
-               weather: "Orage",
-               description: "orage avec pluie ",
-               icon: "11d"
-             },
-             {
-               id: 202,
-               weather: "Orage",
-               description: "orage avec forte pluie",
-               icon: "11d"
-             },
-             {
-               id: 210,
-               weather: "Orage",
-               description: "orage léger",
-               icon: "11d"
-             },
-             {
-               id: 211,
-               weather: "Orage",
-               description: "orage",
-               icon: "11d"
-             },
-             {
-               id: 212,
-               weather: "Orage",
-               description: "fort orage",
-               icon: "11d"
-             },
-             {
-               id: 221,
-               weather: "Orage",
-               description: "orage",
-               icon: "11d"
-             },
-             {
-               id: 230,
-               weather: "Orage",
-               description: "orage avec bruine légère",
-               icon: "11d"
-             },
-             {
-               id: 231,
-               weather: "Orage",
-               description: "orage avec bruine ",
-               icon: "11d"
-             },
-             {
-               id: 232,
-               weather: "Orage",
-               description: "orage avec forte bruine",
-               icon: "11d"
-             },
-             {
-               id: 300,
-               weather: "Drizzle",
-               description: "bruine d'intensité légère",
-               icon: "09d"
-             },
-             {
-               id: 301,
-               weather: "Drizzle",
-               description: "bruine",
-               icon: "09d"
-             },
-             {
-               id: 302,
-               weather: "Drizzle",
-               description: "bruine de forte intensité",
-               icon: "09d"
-             },
-             {
-               id: 310,
-               weather: "Drizzle",
-               description: "bruine d'intensité légère et pluie",
-               icon: "09d"
-             },
-             {
-               id: 311,
-               weather: "Drizzle",
-               description: "bruine et pluie",
-               icon: "09d"
-             },
-             {
-               id: 312,
-               weather: "Drizzle",
-               description: "forte bruine pluie forte",
-               icon: "09d"
-             },
-             {
-               id: 313,
-               weather: "Drizzle",
-               description: "brèves averses et bruine",
-               icon: "09d"
-             },
-             {
-               id: 314,
-               weather: "Drizzle",
-               description: "fortes averses pluie forte",
-               icon: "09d"
-             },
-             {
-               id: 321,
-               weather: "Drizzle",
-               description: "brèves bruine",
-               icon: "09d"
-             },
-             {
-               id: 500,
-               weather: "Rain",
-               description: "légère pluie",
-               icon: "10d"
-             },
-             {
-               id: 501,
-               weather: "Rain",
-               description: "pluie modéré",
-               icon: "10d"
-             },
-             {
-               id: 502,
-               weather: "Rain",
-               description: "pluie de forte intensité",
-               icon: "10d"
-             },
-             {
-               id: 503,
-               weather: "Rain",
-               description: "très forte pluie",
-               icon: "10d"
-             },
-             {
-               id: 504,
-               weather: "Rain",
-               description: "pluie extrème",
-               icon: "10d"
-             },
-             {
-               id: 511,
-               weather: "Rain",
-               description: "pluie verglaçante",
-               icon: "10d"
-             },
-             {
-               id: 520,
-               weather: "520",
-               description: "pluie légère par intermitence",
-               icon: "10d"
-             },
-             {
-               id: 521,
-               weather: "Rain",
-               description: "pluie par intermitence",
-               icon: "10d"
-             },
-             {
-               id: 522,
-               weather: "Rain",
-               description: "forte pluie par intermitence",
-               icon: "10d"
-             },
-             {
-               id: 531,
-               weather: "Rain",
-               description: "forte pluie par intermitence",
-               icon: "10d"
-             },
-             {
-               id: 600,
-               weather: "Snow",
-               description: "faible chute de neige",
-               icon: "13d"
-             },
-             {
-               id: 601,
-               weather: "Snow",
-               description: "neige",
-               icon: "13d"
-             },
-             {
-               id: 602,
-               weather: "Snow",
-               description: "forte chute de neige",
-               icon: "13d"
-             },
-             {
-               id: 611,
-               weather: "Snow",
-               description: "neige fondue",
-               icon: "13d"
-             },
-             {
-               id: 612,
-               weather: "Snow",
-               description: "faible chute de neige fondu",
-               icon: "13d"
-             },
-             {
-               id: 613,
-               weather: "Snow",
-               description: "brève chute de neige fondu",
-               icon: "13d"
-             },
-             {
-               id: 615,
-               weather: "Snow",
-               description: "légère plui et chute de neige",
-               icon: "13d"
-             },
-             {
-               id: 616,
-               weather: "Snow",
-               description: "neige et pluie",
-               icon: "13d"
-             },
-             {
-               id: 620,
-               weather: "Snow",
-               description: "brève chute de neige de faible intensité",
-               icon: "13d"
-             },
-             {
-               id: 621,
-               weather: "Snow",
-               description: "brève chute de neige",
-               icon: "13d"
-             },
-             {
-               id: 622,
-               weather: "Snow",
-               description: "forte chute de neige par intermitence",
-               icon: "13d"
-             },
-             {
-               id: 701,
-               weather: "Mist",
-               description: "brouillard",
-               icon: "50d"
-             },
-             {
-               id: 711,
-               weather: "Smoke",
-               description: "fumée",
-               icon: "50d"
-             },
-             {
-               id: 721,
-               weather: "Haze",
-               description: "brume",
-               icon: "50d"
-             },
-             {
-               id: 731,
-               weather: "Dust",
-               description: "Sable/poussière",
-               icon: "50d"
-             },
-             {
-               id: 741,
-               weather: "Fog",
-               description: "brouillard",
-               icon: "50d"
-             },
-             {
-               id: 751,
-               weather: "Sand",
-               description: "sable",
-               icon: "50d"
-             },
-             {
-               id: 761,
-               weather: "Dust",
-               description: "poussière",
-               icon: "50d"
-             },
-             {
-               id: 701,
-               weather: "Ash",
-               description: "cendre volcanic/cendre",
-               icon: "50d"
-             },
-             {
-               id: 771,
-               weather: "Squall",
-               description: "bourrasque",
-               icon: "50d"
-             },
-             {
-               id: 781,
-               weather: "Tornado",
-               description: "tornade",
-               icon: "50d"
-             },
-             {
-               id: 800,
-               weather: "Clear",
-               description: "ciel dégagé",
-               icon: "01d"
-             },
-             {
-               id: 801,
-               weather: "Clouds",
-               description: "entre 11-25% de nuage",
-               icon: "02d"
-             },
-             {
-               id: 802,
-               weather: "Clouds",
-               description: "entre 25-50% de nuage",
-               icon: "03d"
-             },
-             {
-               id: 803,
-               weather: "Clouds",
-               description: "entre 50-84% de nuage",
-               icon: "04d"
-             },
-             {
-               id: 804,
-               weather: "Clouds",
-               description: "entre 85-100% de nuage",
-               icon: "04d"
-             },
-            ]
-      };
-      this.fetchFonts()
-  }
+  const listFavorite = useSelector(state => state.listFavorite)
 
-  componentWillMount() {
-    if(typeof this.props.navigation.state.params == "undefined"){
-      if (Platform.OS === 'android' && !Constants.isDevice) {
-        this.setState({
-          errorMessage: 'Oops, this will not work on Sketch in an Android emulator. Try it on your device!',
-        });
-      } else {
-        this._getLocationAsync();
-      }
-    }else{
-      this.setState({responseApiMeteo: this.props.navigation.state.params.api})
-      setTimeout(function () {
-        this._apiAir(this.props.navigation.state.params.api.coord.lat,this.props.navigation.state.params.api.coord.lon)
-      }, 1000);
+  const dispatch = useDispatch()
+
+  const [location, setLocation] = useState(null)
+  const [loading, setLoading] = useState(true)
+  const [responseApiAir, setResponseApiAir] = useState({})
+  const [errorMessage, setErrorMessage] = useState(null)
+  const [dominant, setDominant] = useState('')
+  const [responseApiMeteo, setResponseApiMeteo] = useState({})
+  const [color, setColor] = useState(null)
+  const [colorPm10, setColorPm10] = useState(null)
+  const [colorNo2, setColorNo2] = useState(null)
+  const [colorO3, setColorO3] = useState(null)
+  const [aqi, setAqi] = useState(null)
+  const [condition, setCondition] = useState(null)
+  const [textInside, setTextInside] = useState('')
+  const [conditionWeather, setConditionWeather] = useState(
+    [
+         {
+           id: 200,
+           weather: "Orage",
+           description: "orage avec pluie légère",
+           icon: "11d"
+         },
+         {
+           id: 201,
+           weather: "Orage",
+           description: "orage avec pluie ",
+           icon: "11d"
+         },
+         {
+           id: 202,
+           weather: "Orage",
+           description: "orage avec forte pluie",
+           icon: "11d"
+         },
+         {
+           id: 210,
+           weather: "Orage",
+           description: "orage léger",
+           icon: "11d"
+         },
+         {
+           id: 211,
+           weather: "Orage",
+           description: "orage",
+           icon: "11d"
+         },
+         {
+           id: 212,
+           weather: "Orage",
+           description: "fort orage",
+           icon: "11d"
+         },
+         {
+           id: 221,
+           weather: "Orage",
+           description: "orage",
+           icon: "11d"
+         },
+         {
+           id: 230,
+           weather: "Orage",
+           description: "orage avec bruine légère",
+           icon: "11d"
+         },
+         {
+           id: 231,
+           weather: "Orage",
+           description: "orage avec bruine ",
+           icon: "11d"
+         },
+         {
+           id: 232,
+           weather: "Orage",
+           description: "orage avec forte bruine",
+           icon: "11d"
+         },
+         {
+           id: 300,
+           weather: "Drizzle",
+           description: "bruine d'intensité légère",
+           icon: "09d"
+         },
+         {
+           id: 301,
+           weather: "Drizzle",
+           description: "bruine",
+           icon: "09d"
+         },
+         {
+           id: 302,
+           weather: "Drizzle",
+           description: "bruine de forte intensité",
+           icon: "09d"
+         },
+         {
+           id: 310,
+           weather: "Drizzle",
+           description: "bruine d'intensité légère et pluie",
+           icon: "09d"
+         },
+         {
+           id: 311,
+           weather: "Drizzle",
+           description: "bruine et pluie",
+           icon: "09d"
+         },
+         {
+           id: 312,
+           weather: "Drizzle",
+           description: "forte bruine pluie forte",
+           icon: "09d"
+         },
+         {
+           id: 313,
+           weather: "Drizzle",
+           description: "brèves averses et bruine",
+           icon: "09d"
+         },
+         {
+           id: 314,
+           weather: "Drizzle",
+           description: "fortes averses pluie forte",
+           icon: "09d"
+         },
+         {
+           id: 321,
+           weather: "Drizzle",
+           description: "brèves bruine",
+           icon: "09d"
+         },
+         {
+           id: 500,
+           weather: "Rain",
+           description: "légère pluie",
+           icon: "10d"
+         },
+         {
+           id: 501,
+           weather: "Rain",
+           description: "pluie modéré",
+           icon: "10d"
+         },
+         {
+           id: 502,
+           weather: "Rain",
+           description: "pluie de forte intensité",
+           icon: "10d"
+         },
+         {
+           id: 503,
+           weather: "Rain",
+           description: "très forte pluie",
+           icon: "10d"
+         },
+         {
+           id: 504,
+           weather: "Rain",
+           description: "pluie extrème",
+           icon: "10d"
+         },
+         {
+           id: 511,
+           weather: "Rain",
+           description: "pluie verglaçante",
+           icon: "10d"
+         },
+         {
+           id: 520,
+           weather: "520",
+           description: "pluie légère par intermitence",
+           icon: "10d"
+         },
+         {
+           id: 521,
+           weather: "Rain",
+           description: "pluie par intermitence",
+           icon: "10d"
+         },
+         {
+           id: 522,
+           weather: "Rain",
+           description: "forte pluie par intermitence",
+           icon: "10d"
+         },
+         {
+           id: 531,
+           weather: "Rain",
+           description: "forte pluie par intermitence",
+           icon: "10d"
+         },
+         {
+           id: 600,
+           weather: "Snow",
+           description: "faible chute de neige",
+           icon: "13d"
+         },
+         {
+           id: 601,
+           weather: "Snow",
+           description: "neige",
+           icon: "13d"
+         },
+         {
+           id: 602,
+           weather: "Snow",
+           description: "forte chute de neige",
+           icon: "13d"
+         },
+         {
+           id: 611,
+           weather: "Snow",
+           description: "neige fondue",
+           icon: "13d"
+         },
+         {
+           id: 612,
+           weather: "Snow",
+           description: "faible chute de neige fondu",
+           icon: "13d"
+         },
+         {
+           id: 613,
+           weather: "Snow",
+           description: "brève chute de neige fondu",
+           icon: "13d"
+         },
+         {
+           id: 615,
+           weather: "Snow",
+           description: "légère plui et chute de neige",
+           icon: "13d"
+         },
+         {
+           id: 616,
+           weather: "Snow",
+           description: "neige et pluie",
+           icon: "13d"
+         },
+         {
+           id: 620,
+           weather: "Snow",
+           description: "brève chute de neige de faible intensité",
+           icon: "13d"
+         },
+         {
+           id: 621,
+           weather: "Snow",
+           description: "brève chute de neige",
+           icon: "13d"
+         },
+         {
+           id: 622,
+           weather: "Snow",
+           description: "forte chute de neige par intermitence",
+           icon: "13d"
+         },
+         {
+           id: 701,
+           weather: "Mist",
+           description: "brouillard",
+           icon: "50d"
+         },
+         {
+           id: 711,
+           weather: "Smoke",
+           description: "fumée",
+           icon: "50d"
+         },
+         {
+           id: 721,
+           weather: "Haze",
+           description: "brume",
+           icon: "50d"
+         },
+         {
+           id: 731,
+           weather: "Dust",
+           description: "Sable/poussière",
+           icon: "50d"
+         },
+         {
+           id: 741,
+           weather: "Fog",
+           description: "brouillard",
+           icon: "50d"
+         },
+         {
+           id: 751,
+           weather: "Sand",
+           description: "sable",
+           icon: "50d"
+         },
+         {
+           id: 761,
+           weather: "Dust",
+           description: "poussière",
+           icon: "50d"
+         },
+         {
+           id: 701,
+           weather: "Ash",
+           description: "cendre volcanic/cendre",
+           icon: "50d"
+         },
+         {
+           id: 771,
+           weather: "Squall",
+           description: "bourrasque",
+           icon: "50d"
+         },
+         {
+           id: 781,
+           weather: "Tornado",
+           description: "tornade",
+           icon: "50d"
+         },
+         {
+           id: 800,
+           weather: "Clear",
+           description: "ciel dégagé",
+           icon: "01d"
+         },
+         {
+           id: 801,
+           weather: "Clouds",
+           description: "entre 11-25% de nuage",
+           icon: "02d"
+         },
+         {
+           id: 802,
+           weather: "Clouds",
+           description: "entre 25-50% de nuage",
+           icon: "03d"
+         },
+         {
+           id: 803,
+           weather: "Clouds",
+           description: "entre 50-84% de nuage",
+           icon: "04d"
+         },
+         {
+           id: 804,
+           weather: "Clouds",
+           description: "entre 85-100% de nuage",
+           icon: "04d"
+         },
+        ]
+  )
+
+  useEffect(() => {
+    console.log('useEffect 1')
+    if (Platform.OS === 'android' && !Constants.isDevice) {
+      setErrorMessage('Oops, this will not work on Sketch in an Android emulator. Try it on your device!')
+    } else {
+      console.log('appel de get Location')
+      _getLocationAsync()
     }
-  }
+  }, [])
+
+
+
+  useEffect(() => {
+    console.log('useEffect 3')
+    if(location || location != null){
+      console.log('la location est là')
+      _apiAir(location.coords.latitude,location.coords.longitude)
+    }
+  }, [location])
+
 
   _getLocationAsync = async () => {
-    this.setState({refreshing: true});
     let { status } = await Permissions.askAsync(Permissions.LOCATION);
     if (status !== 'granted') {
-      this.setState({
-        errorMessage: 'Permission to access location was denied',
-      });
+      setErrorMessage('Permission to access location was denied')
     }
-
-
-
-    var location = await Location.getCurrentPositionAsync({});
-    this.setState({ location: location });
-    console.log(location)
-    this._apiAir(this.state.location.coords.latitude,this.state.location.coords.longitude)
-
+    setLocation(await Location.getCurrentPositionAsync({}))
   };
 
   _apiAir = (lat, long) => {
+    console.log('lancement api')
     fetch('https://api.waqi.info/feed/geo:'+lat+';'+long+'/?token=85ab63dee549b4825ea4e18973ba6076cbaf3dd4', {
       method: 'GET'})
     .then((responsewaqi) => responsewaqi.json())
     .then((responseJsonWaqi) => {
-      this.setState({responseApiAir: responseJsonWaqi});
-      this._colorIndex();
-      if(typeof this.props.navigation.state.params == "undefined"){
-        fetch('https://api.openweathermap.org/data/2.5/weather?lat='+lat+'&lon='+long+'4&APPID=505c84426a182da1a7178151dccdb616', {
-        method: 'GET'})
-        .then((responseWeather) => responseWeather.json())
-        .then((responseJsonWeather) => {
-          if(responseJsonWeather.cod == 200) {
-          this.setState({responseApiMeteo: responseJsonWeather})
-          this._iconMeteo()
-          this.setState({loading: false, refreshing: false})
-          return responseJsonWeather
+      setResponseApiAir(responseJsonWaqi)
+      _colorIndex();
+      fetch('https://api.openweathermap.org/data/2.5/weather?lat='+lat+'&lon='+long+'4&APPID=505c84426a182da1a7178151dccdb616', {
+      method: 'GET'})
+      .then((responseWeather) => responseWeather.json())
+      .then((responseJsonWeather) => {
+        if(responseJsonWeather.cod == 200) {
+        setResponseApiMeteo(responseJsonWeather)
+        _iconMeteo()
+        setLoading(false)
+        return responseJsonWeather
 
-          }else{
-            Toast.show('Problème de connexion au serveur, veuillez ressayer dans quelques instants', {
-              duration: Toast.durations.LONG,
-              position: Toast.positions.CENTER,
-              shadow: true,
-              animation: true,
-              hideOnPress: true,
-              delay: 0,
-            });
-          }
-        })
-      }else{
-        this._iconMeteo()
-        this.setState({loading: false, refreshing: false})
-      }
+        }else{
+          Toast.show('Problème de connexion au serveur, veuillez ressayer dans quelques instants', {
+            duration: Toast.durations.LONG,
+            position: Toast.positions.CENTER,
+            shadow: true,
+            animation: true,
+            hideOnPress: true,
+            delay: 0,
+          });
+        }
+      })
       return responseJsonWaqi;
     })
     .catch( error => {
@@ -464,60 +453,62 @@ class HomeView extends React.Component {
   }
 
   _iconMeteo = () => {
-    this.state.conditionWeather.forEach( value => {
-        if(this.state.responseApiMeteo.weather[0].id == value.id){
+    conditionWeather.forEach( value => {
+        if(responseApiMeteo.weather[0].id == value.id){
             var cond = {
                 description: value.description,
                 icon: "http://openweathermap.org/img/wn/"+ value.icon +"@2x.png",
                 id: value.id,
                 main: value.main
             }
-        this.setState({condition: cond})
+        setCondition(cond)
         }
     })
   }
 
   _colorIndex = () => {
-    if (this.state.responseApiAir.data.aqi >= 0 && this.state.responseApiAir.data.aqi <= 50){
-      this.setState({color: "#28D3B0"})
-      this.setState({textInside: "La qualité de l'air est jugée satisfaisante, et la pollution de l'air pose peu ou pas de risque."})
+    if (responseApiAir.data.aqi >= 0 && responseApiAir.data.aqi <= 50){
+      setColor("#28D3B0")
+      setTextInside("La qualité de l'air est jugée satisfaisante, et la pollution de l'air pose peu ou pas de risque.")
 
-    }
-    if (this.state.responseApiAir.data.aqi >= 51 && this.state.responseApiAir.data.aqi <= 150){
-      this.setState({color: "#FFBB00"})
-      this.setState({textInside: "La qualité de l'ai est acceptable; Cependant, pour certains polluants, il peut y avoir un problème de santé modérée pour un très petit nombre de personnes qui sont particulièrement sensibles à la pollution de l'air."})
-    }
-    if (this.state.responseApiAir.data.aqi >= 151){
-      this.setState({color: "#FF5656"})
-      this.setState({textInside: "Avertissements de santé de conditions d'urgence. Toutes la population est plus susceptible d'être affecté."})
+    }else if (responseApiAir.data.aqi >= 51 && responseApiAir.data.aqi <= 150){
+      setColor("#FFBB00")
+      setTextInside("La qualité de l'ai est acceptable; Cependant, pour certains polluants, il peut y avoir un problème de santé modérée pour un très petit nombre de personnes qui sont particulièrement sensibles à la pollution de l'air.")
+    }else if (responseApiAir.data.aqi >= 151){
+      setColor("#FF5656")
+      setTextInside("Avertissements de santé de conditions d'urgence. Toutes la population est plus susceptible d'être affecté.")
     }
   }
 
   _addFavorite = () => {
     var id = 0
 
-    if (this.state.responseApiMeteo.name.length == 0){
+    if (responseApiMeteo.name.length == 0){
       id = 0
     }else{
-      for (i = 0; i < this.state.responseApiMeteo.name.length; i++) {
-          var char = this.state.responseApiMeteo.name.charCodeAt(i);
+      for (i = 0; i < responseApiMeteo.name.length; i++) {
+          var char = responseApiMeteo.name.charCodeAt(i);
           id = ((id << 5) - id) + char;
           id = id & id;
       }
     }
 
     var i = 0
-
-    data.favorite.map((item) => {
-      if(!typeof 'undefined' || !item.ville || item.id == id){
-        i++
-      }
-    })
-    if(i == 0){
-      data.favorite.push({
-        "id": id,
-        "ville": this.state.responseApiMeteo.name
+    if(listFavorite.length > 0){
+      listFavorite.map((item) => {
+        if(!typeof 'undefined' || !item.ville || item.id == id){
+          i++
+        }
       })
+    }
+    if(i == 0){
+
+      console.log('je suis fav');
+      dispatch({type: "ADD_FAVORITE", listFavorite: {
+        "id": id,
+        "ville": responseApiMeteo.name
+      }})
+
       Toast.show('Ajouté aux favoris', {
         duration: Toast.durations.SHORT,
         position: Toast.positions.CENTER,
@@ -537,25 +528,8 @@ class HomeView extends React.Component {
       });
     }
   }
-
-  fetchFonts() {
-    return Font.loadAsync({
-    'roboto-bold': require('../../assets/Roboto-Bold.ttf'),
-    'roboto-italic': require('../../assets/Roboto-Italic.ttf'),
-    'roboto-regular': require('../../assets/Roboto-Regular.ttf')
-    });
-  };
-
-  render() {
-    if(!this.state.dataLoaded){
-      return(
-        <AppLoading
-          startAsync={this.fetchFonts}
-          onFinish={() => this.setState({dataLoaded: true})}
-        />
-      )
-    }
-    if(this.state.loading){
+    console.log('loading: ' + loading)
+    if(loading){
       return (
       <View style={{flex: 1}}>
         <ActivityIndicator style={{flex:1, alignItems: "center", justifyContent: "center", backgroundColor: "white" }} size="large" color="#0000ff" />
@@ -566,22 +540,22 @@ class HomeView extends React.Component {
       <SafeAreaView style={styles.safe}>
         <ScrollView data-layer="13614dff-3bb8-47ff-9a88-81264c364874" bounces={false} style={styles.home}>
             <View data-layer="e97e27e2-2ba3-4663-9cf1-b8e6a87404ea" style={styles.home_searchcity}>
-                <Text data-layer="0566535a-1279-4dc0-bf84-314d2bf4cbeb" style={styles.home_searchcity_versailles}>{this.state.responseApiMeteo.name}</Text>
-                <Text data-layer="ec71f28a-dd55-4cb6-a52d-b7c93ad5c018" style={styles.home_searchcity_yvelinesFrance}>{this.state.responseApiMeteo.sys.country}</Text>
-                <TouchableOpacity onPress={() => {this._addFavorite()}} style={{width:25, height: 25, left: 289, top:2}}>
+                <Text data-layer="0566535a-1279-4dc0-bf84-314d2bf4cbeb" style={styles.home_searchcity_versailles}>{responseApiMeteo.name}</Text>
+                <Text data-layer="ec71f28a-dd55-4cb6-a52d-b7c93ad5c018" style={styles.home_searchcity_yvelinesFrance}>{responseApiMeteo.sys.country}</Text>
+                <TouchableOpacity onPress={() => {_addFavorite()}} style={{width:25, height: 25, left: 289, top:2}}>
                   <Svg data-layer="2aa5bee4-19b5-4040-a681-18ebd092a169" style={styles.home_searchcity_iconadd} preserveAspectRatio="none" viewBox="-5944.99951171875 -2494.0009765625 15 15" fill="rgba(42, 44, 53, 1)"><SvgPath  d="M -5938.65380859375 -2480.15478515625 L -5938.65380859375 -2485.3466796875 L -5943.845703125 -2485.3466796875 C -5944.4833984375 -2485.3466796875 -5944.99951171875 -2485.86376953125 -5944.99951171875 -2486.500732421875 C -5944.99951171875 -2487.137939453125 -5944.4833984375 -2487.654541015625 -5943.845703125 -2487.654541015625 L -5938.65380859375 -2487.654541015625 L -5938.65380859375 -2492.846923828125 C -5938.65380859375 -2493.48388671875 -5938.13623046875 -2494.0009765625 -5937.49951171875 -2494.0009765625 C -5936.8623046875 -2494.0009765625 -5936.345703125 -2493.48388671875 -5936.345703125 -2492.846923828125 L -5936.345703125 -2487.654541015625 L -5931.15380859375 -2487.654541015625 C -5930.51611328125 -2487.654541015625 -5929.99951171875 -2487.137939453125 -5929.99951171875 -2486.500732421875 C -5929.99951171875 -2485.86376953125 -5930.51611328125 -2485.3466796875 -5931.15380859375 -2485.3466796875 L -5936.345703125 -2485.3466796875 L -5936.345703125 -2480.15478515625 C -5936.345703125 -2479.517333984375 -5936.8623046875 -2479.0009765625 -5937.49951171875 -2479.0009765625 C -5938.13623046875 -2479.0009765625 -5938.65380859375 -2479.517333984375 -5938.65380859375 -2480.15478515625 Z"  />
                   </Svg>
                 </TouchableOpacity>
             </View>
-            <Text data-layer="fcff8157-0898-4499-ba77-8c9c5c1399f4" style={styles.home_x10c}>{(this.state.responseApiMeteo.main.temp - 273.15).toFixed(1) + "°C"}</Text>
+            <Text data-layer="fcff8157-0898-4499-ba77-8c9c5c1399f4" style={styles.home_x10c}>{(responseApiMeteo.main.temp - 273.15).toFixed(1) + "°C"}</Text>
             <Text data-layer="e3a238f9-d269-489b-abdc-16c159f8bdfd" style={styles.home_min}>MIN</Text>
             <Text data-layer="aa2caedb-af91-4980-91db-1dea85c1ac6b" style={styles.home_max}>MAX</Text>
-            <Text data-layer="1aff345a-b725-49c3-9873-1a98823d7b24" style={styles.home_x8c}>{(this.state.responseApiMeteo.main.temp_min - 273.15).toFixed(1) + "°C"}</Text>
-            <Text data-layer="947b1b79-cf69-4852-adf7-d4ad1f9e5d19" style={styles.home_x13c}>{(this.state.responseApiMeteo.main.temp_max - 273.15).toFixed(1) + "°C"}</Text>
+            <Text data-layer="1aff345a-b725-49c3-9873-1a98823d7b24" style={styles.home_x8c}>{(responseApiMeteo.main.temp_min - 273.15).toFixed(1) + "°C"}</Text>
+            <Text data-layer="947b1b79-cf69-4852-adf7-d4ad1f9e5d19" style={styles.home_x13c}>{(responseApiMeteo.main.temp_max - 273.15).toFixed(1) + "°C"}</Text>
             <Text data-layer="eaa8bd00-b2cf-4b94-8626-b80c9dfd7fb4" style={styles.home_temp}>Temp.</Text>
             <View data-layer="01c94066-2b12-48e5-9d3a-9620b1a4214c" style={styles.home_airqualityindex}>
-                <View data-layer="e22a0d65-2293-4022-856e-4853fad7221f" style={[styles.home_airqualityindex_rectangle190, {borderColor: this.state.color}]}></View>
-                <Text data-layer="65c2a307-84e5-488f-8d7f-4b6107009b76" style={[styles.home_airqualityindex_x102, {color: this.state.color}]}>{this.state.responseApiAir.data.aqi}</Text>
+                <View data-layer="e22a0d65-2293-4022-856e-4853fad7221f" style={[styles.home_airqualityindex_rectangle190, {borderColor: color}]}></View>
+                <Text data-layer="65c2a307-84e5-488f-8d7f-4b6107009b76" style={[styles.home_airqualityindex_x102, {color: color}]}>{responseApiAir.data.aqi}</Text>
             </View>
             <View data-layer="ba686c87-cb59-4c46-baed-6f1eec515b14" style={styles.home_lineacb95fde}></View>
             <View data-layer="f25280e4-4f48-4c2a-be2d-9ebe03c9ff61" style={styles.home_line}></View>
@@ -592,13 +566,13 @@ class HomeView extends React.Component {
                 <Text data-layer="608d07ce-0678-4ee1-8ae8-313ef306ab00" style={styles.home_time_x120061c83be0}>12 : 00</Text>
                 <Text data-layer="1cdb565a-e3c7-46a1-913c-6772032fc806" style={styles.home_time_x1200}>12 : 00</Text>
             </View>
-            <TouchableOpacity onPress={() => {this._getLocationAsync()}}>
+            <TouchableOpacity style={{height: 40, width: 110, left: 236, top: 95}} onPress={() => {_getLocationAsync()}}>
               <Text data-layer="8f879b30-4046-4eb3-b96e-277a55d04826" style={styles.home_actualiser}>Actualiser</Text>
               <Svg data-layer="3d35f051-b5bb-4ad4-889b-6a0b430a96b0" style={styles.home_iconmonstrRefresh2} preserveAspectRatio="none" viewBox="-4.76837158203125e-7 2 14 12.25" fill="rgba(42, 44, 53, 1)"><SvgPath d="M 7.874999523162842 2 C 4.591416358947754 2 1.917999744415283 4.587666511535645 1.764582753181458 7.833333492279053 L -4.76837158203125e-07 7.833333492279053 L 2.646582841873169 11.28491592407227 L 5.25 7.833333492279053 L 3.514583110809326 7.833333492279053 C 3.666249513626099 5.557166576385498 5.560916423797607 3.75 7.874999523162842 3.75 C 10.28766632080078 3.75 12.25 5.712333679199219 12.25 8.125 C 12.25 10.53766536712646 10.28766632080078 12.49999904632568 7.874999523162842 12.49999904632568 C 6.486083030700684 12.49999904632568 5.248833179473877 11.84724998474121 4.447333335876465 10.83516597747803 L 3.369916200637817 12.26374912261963 C 4.489333152770996 13.48174858093262 6.090583324432373 14.24999904632568 7.874999523162842 14.24999904632568 C 11.25716686248779 14.24999904632568 14 11.50716590881348 14 8.125 C 14 4.742833137512207 11.25716686248779 2 7.874999523162842 2 Z"  /></Svg>
             </TouchableOpacity>
             <Text data-layer="699344fd-f3c3-4637-91c6-9e22dabbc0b9" style={styles.home_lieuxAProximite}>Lieux à proximité</Text>
-            <View data-layer="09af10b5-c90e-41a5-8022-88aa02b5cd5e" style={[styles.home_rectangle, {borderWidth: 1 ,borderColor: this.state.color}]}></View>
-            <Text data-layer="7150d953-1902-4408-87cb-6ab655001bdc" style={[styles.home_loremIpsumDolorSitAmetAdipiscingElitDonecVulputate, {color: this.state.color}]}>{this.state.textInside}</Text>
+            <View data-layer="09af10b5-c90e-41a5-8022-88aa02b5cd5e" style={[styles.home_rectangle, {borderWidth: 1 ,borderColor: color}]}></View>
+            <Text data-layer="7150d953-1902-4408-87cb-6ab655001bdc" style={[styles.home_loremIpsumDolorSitAmetAdipiscingElitDonecVulputate, {color: color}]}>{textInside}</Text>
             <View data-layer="edfed02e-1326-48d5-9935-25a9cb06b14c" style={styles.home_x09d}>
                 <Svg data-layer="e5d8674a-cb86-4b50-8c3a-1800bcde2d22" style={styles.home_x09d_trace110} preserveAspectRatio="none" viewBox="318.1409912109375 234.4969940185547 4.5 8.33599853515625" fill="rgba(31, 33, 40, 1)"><SvgPath d="M 320.3909912109375 242.0829925537109 C 319.56201171875 242.0829925537109 318.8909912109375 241.4109954833984 318.8909912109375 240.5829925537109 L 318.8909912109375 236.7469940185547 C 318.8909912109375 235.9190063476562 319.56201171875 235.2469940185547 320.3909912109375 235.2469940185547 C 321.218994140625 235.2469940185547 321.8909912109375 235.9190063476562 321.8909912109375 236.7469940185547 L 321.8909912109375 240.5829925537109 C 321.8909912109375 241.4109954833984 321.218994140625 242.0829925537109 320.3909912109375 242.0829925537109 Z"  /></Svg>
                 <Svg data-layer="db15a781-cd92-41b4-a212-5f106969ed7e" style={styles.home_x09d_trace111} preserveAspectRatio="none" viewBox="309.0409851074219 234.4969940185547 4.5 8.33599853515625" fill="rgba(31, 33, 40, 1)"><SvgPath d="M 311.2909851074219 242.0829925537109 C 310.4630126953125 242.0829925537109 309.7909851074219 241.4109954833984 309.7909851074219 240.5829925537109 L 309.7909851074219 236.7469940185547 C 309.7909851074219 235.9190063476562 310.4630126953125 235.2469940185547 311.2909851074219 235.2469940185547 C 312.1189880371094 235.2469940185547 312.7909851074219 235.9190063476562 312.7909851074219 236.7469940185547 L 312.7909851074219 240.5829925537109 C 312.7909851074219 241.4109954833984 312.1189880371094 242.0829925537109 311.2909851074219 242.0829925537109 Z"  /></Svg>
@@ -612,7 +586,7 @@ class HomeView extends React.Component {
     </SafeAreaView>
       )
     }
-  };
+
 }
 
 HomeView.propTypes = {
@@ -1120,8 +1094,8 @@ const styles = StyleSheet.create({
     "paddingLeft": 0,
     "width": 63,
     "height": 41,
-    "left": 253,
-    "top": 95
+    "left": 10,
+    "top": 0
   },
   "home_lieuxAProximite": {
     "opacity": 1,
@@ -1160,8 +1134,8 @@ const styles = StyleSheet.create({
     "paddingLeft": 0,
     "width": 14,
     "height": 12.25,
-    "left": 326,
-    "top": 108
+    "left": 80,
+    "top": 14
   },
   "home_rectangle": {
     "opacity": 1,
@@ -1338,5 +1312,7 @@ const styles = StyleSheet.create({
     "top": -1
   }
 });
+
+
 
 export default HomeView;

@@ -44,7 +44,9 @@
     "react-navigation": "^4.0.10",
     "react-navigation-stack": "^1.10.3",
     "react-navigation-tabs": "^2.7.0",
+    "react-redux": "^7.2.0",
     "react-timestamp": "^5.1.0",
+    "redux": "^4.0.5",
     "yarn": "^1.19.1"
   },
   "devDependencies": {

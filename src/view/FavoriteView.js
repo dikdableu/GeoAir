@@ -11,10 +11,20 @@ import * as Font from 'expo-font';
 import { AppLoading} from 'expo';
 import * as data from '../../db/favorite.json';
 import Toast from 'react-native-root-toast';
+import { useDispatch, useSelector } from 'react-redux'
 
-export default function FavoriteView(props) {
+export const FavoriteView = () => {
 
-  const [dataLoaded, setDataLoaded] = useState(false)
+  const dispatch = useDispatch()
+
+  // useEffect(() => {
+  //   console.log(data.listFavorite)
+  //   dispatch({type: "INIT_FAVORITE", listFavorite: data.favorite})
+  // }, [])
+
+  const listFavorite = useSelector(state => state.listFavorite)
+
+
   const [listSearch, setListSearch] = useState([])
   const [responseApiAir, setResponseApiAir] = useState({})
   const [responseApiMeteo, setResponseApiMeteo] = useState({})
@@ -22,23 +32,15 @@ export default function FavoriteView(props) {
   const [errorFetch, setErrorFetch] = useState(null)
 
   useEffect(() => {
-    async() => {return Font.loadAsync({
-      'roboto-bold': require('../../assets/Roboto-Bold.ttf'),
-      'roboto-italic': require('../../assets/Roboto-Italic.ttf'),
-      'roboto-regular': require('../../assets/Roboto-Regular.ttf')
-      })
+
+    if(typeof listFavorite != "undefined"){
+      listFavorite.map((item) => setTimeout(() => {
+        searchByCity(item)
+      }, 1000))
     }
-    var list = []
-    data.favorite.map((item) => list.push({
-      id: item.id,
-      ville: item.ville
-    }))
-    list.map((item) => {
-      setTimeout(function () {
-        searchByCity(item.ville)
-      }, 1000);
-    })
-  }, [])
+  }, [listFavorite])
+
+
 
   function colorIndex(responseApiAir){
     if (responseApiAir.data.aqi >= 0 && responseApiAir.data.aqi <= 50){
@@ -50,13 +52,12 @@ export default function FavoriteView(props) {
     }
   }
 
-  function searchByCity(city){
-    fetch('https://api.openweathermap.org/data/2.5/weather?q='+city+'&APPID=505c84426a182da1a7178151dccdb616', {
+  function searchByCity(all){
+    fetch('https://api.openweathermap.org/data/2.5/weather?q='+all.ville+'&APPID=505c84426a182da1a7178151dccdb616', {
       method: 'GET'})
     .then((response) => response.json())
     .then((resultat) => {
-      var id = 0
-      var data = []
+      var id = all.id
       if(resultat.cod == 200) {
         fetch('https://api.waqi.info/feed/geo:'+resultat.coord.lat+';'+resultat.coord.lon+'/?token=85ab63dee549b4825ea4e18973ba6076cbaf3dd4', { method: 'GET'})
         .then((responsewaqi) => responsewaqi.json())
@@ -64,8 +65,9 @@ export default function FavoriteView(props) {
         setResponseApiAir(responseJsonWaqi);
         setResponseApiMeteo(resultat)
         colorIndex(responseJsonWaqi);
-        data.push({
-          id: id++,
+
+        var line = {
+          id: id,
           country: resultat.sys.country,
           aqi: responseJsonWaqi.data.aqi,
           temperature: (resultat.main.temp - 273.15).toFixed(1) + "°C",
@@ -73,8 +75,9 @@ export default function FavoriteView(props) {
           idMeteo: 200,
           ville: resultat.name,
           color: color
-        })
-        setListSearch(data)
+        }
+
+        setListSearch(listSearch => listSearch.concat(line))
         return responseJsonWaqi
       }).catch (error => {
         setErrorFetch(error)
@@ -99,13 +102,12 @@ export default function FavoriteView(props) {
   }
 
   function callApi(ville){
-    console.log('ici')
     setTimeout(() => {
       searchByCity(ville)
     }, 1000)
   }
 
-  if(listSearch.length > 0){
+  if(listSearch && listSearch.length > 0){
     return (
         <SafeAreaView style={styles.favoris}>
           <FlatList
@@ -170,3 +172,6 @@ const styles = StyleSheet.create({
     "top": 199
   },
 });
+
+
+export default FavoriteView;

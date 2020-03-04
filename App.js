@@ -26,6 +26,9 @@ import {Path as SvgPath} from 'react-native-svg';
 import {Text as SvgText} from 'react-native-svg';
 import {Image as SvgImage} from 'react-native-svg';
 
+import { Provider } from 'react-redux'
+import Store from './store/configureStore'
+
 Amplify.configure(config.cognito);
 
 const screenWidth = Math.round(Dimensions.get('window').width);
@@ -166,8 +169,10 @@ render(){
       );
     }
   return (
-        <SafeAreaProvider><AppContainer /></SafeAreaProvider>
-      )
+    <Provider store={Store}>
+      <SafeAreaProvider><AppContainer /></SafeAreaProvider>
+    </Provider>
+    )
   }
 }
 
