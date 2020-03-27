@@ -31,6 +31,7 @@ import Store from './store/configureStore'
 
 Amplify.configure(config.cognito);
 
+
 const screenWidth = Math.round(Dimensions.get('window').width);
 
 const Home = createStackNavigator(
@@ -102,34 +103,33 @@ const fetchFonts = () => {
 const TabNavigator = createBottomTabNavigator({
   Home: {screen: Home,
     navigationOptions: {
-      tabBarIcon: ({focused}) => { // On définit le rendu de nos icônes par les images récemment ajoutés au projet
-        return(focused ? (<IconTab active={true} text={"Accueil"}/>) : (<IconTab text={"Accueil"}/>))
-       }
+      tabBarLabel: 'Accueil',
      }
   },
   Favoris: {screen: Favoris,
     navigationOptions: {
-      tabBarIcon: ({focused}) => { // On définit le rendu de nos icônes par les images récemment ajoutés au projet
-        return(focused ? (<IconTab active={true} text={"Favoris"}/>) : (<IconTab text={"Favoris"}/>))
-      }
+      tabBarLabel: 'Favoris',
     }
   },
   Search: {screen: Search,
     navigationOptions: {
-      tabBarIcon: ({focused}) => { // On définit le rendu de nos icônes par les images récemment ajoutés au projet
-        return(focused ? (<IconTab flex={4} active={true} text={"+ Ajouter une ville"}/>) : (<IconTab flex={4} text={"+ Ajouter une ville"}/>))
-      }
+      tabBarLabel: '+ Ajouter une ville',
     }
   }
 },
 {
   tabBarOptions: {
-    showLabel: false, // On masque les titres
-    showIcon: true, // On informe le TabNavigator qu'on souhaite afficher les icônes définis
+    showLabel: true, // On masque les titres
+    showIcon: false, // On informe le TabNavigator qu'on souhaite afficher les icônes définis
     style:{
       borderTopWidth: 0,
-      left: "-4.8%"
     },
+    labelStyle: {
+      fontFamily: "roboto-bold",
+      fontSize: 15,
+    },
+    activeTintColor: '#2A2C35',
+    inactiveTintColor: '#9FA0A4',
   }
 })
 
@@ -157,6 +157,7 @@ class App extends React.Component {
     this.state = {
       dataLoaded: false
     }
+
   }
 
 render(){

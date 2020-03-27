@@ -28,56 +28,28 @@ const IconTab = props => {
     )
   }
   if(propsState.active){
-    if(propsState.flex){
-      return(
-        <View style={{flex: flex, borderWidth: 0}}>
-            <View style={{flex: 2}}>
-                <Text style={{fontFamily: "roboto-bold", fontSize: 15, color: "#2A2C35"}}>{propsState.text}</Text>
-            </View>
-            <View style={{flex:1, alignItems: 'center'}}>
-                <View style={{ width: 20,height: 5, backgroundColor: '#2A2C35', borderRadius: 50}}>
-                </View>
-            </View>
-        </View>
-      )
-    }
-    else{
-      return(
-        <View style={{flex: 1, borderWidth: 0}}>
-            <View style={{flex: 2}}>
-                <Text style={{fontFamily: "roboto-bold", fontSize: 15, color: "#2A2C35"}}>{propsState.text}</Text>
-            </View>
-            <View style={{flex:1, alignItems: 'center'}}>
-                <View style={{ width: 20,height: 5, backgroundColor: '#2A2C35', borderRadius: 50}}>
-                </View>
-            </View>
-        </View>
-      )
-    }
+    return(
+      <View style={{flex: 1, borderWidth: 0}}>
+          <View style={{flex: 2, alignItems: 'center'}}>
+              <Text style={{fontFamily: "roboto-bold", fontSize: 15, color: "#2A2C35"}}>{propsState.text}</Text>
+          </View>
+          <View style={{flex:1, alignItems: 'center'}}>
+              <View style={{ width: 20,height: 5, backgroundColor: '#2A2C35', borderRadius: 50}}>
+              </View>
+          </View>
+      </View>
+    )
   }
   else{
-    if(propsState.flex){
-      return(
-          <View style={{flex: flex, borderWidth: 0}}>
-              <View style={{flex: 1}}>
-                  <Text style={{fontFamily: "roboto-bold", fontSize: 15, opacity: 0.25, color: "#2A2C35"}}>{propsState.text}</Text>
-              </View>
-              <View style={{flex: 1}}>
-              </View>
+    return(
+      <View style={{flex: 1, borderWidth: 0}}>
+          <View style={{flex: 1, alignItems: 'center'}}>
+              <Text style={{fontFamily: "roboto-bold", fontSize: 15, opacity: 0.25, color: "#2A2C35"}}>{propsState.text}</Text>
           </View>
-      )
-    }
-    else {
-      return(
-          <View style={{flex: 1, borderWidth: 0}}>
-              <View style={{flex: 1}}>
-                  <Text style={{fontFamily: "roboto-bold", fontSize: 15, opacity: 0.25, color: "#2A2C35"}}>{propsState.text}</Text>
-              </View>
-              <View style={{flex: 1}}>
-              </View>
+          <View style={{flex: 1}}>
           </View>
-      )
-    }
+      </View>
+    )
   }
 }
 

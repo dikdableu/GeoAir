@@ -13,6 +13,9 @@ import * as data from '../../db/favorite.json';
 import Toast from 'react-native-root-toast';
 import { useDispatch, useSelector } from 'react-redux'
 
+import Amplify from 'aws-amplify';
+import { Auth } from 'aws-amplify';
+
 export const FavoriteView = () => {
 
   const dispatch = useDispatch()
@@ -23,6 +26,7 @@ export const FavoriteView = () => {
   // }, [])
 
   const listFavorite = useSelector(state => state.listFavorite)
+  const user = useSelector(state => state.user)
 
 
   const [listSearch, setListSearch] = useState([])
@@ -39,7 +43,6 @@ export const FavoriteView = () => {
       }, 1000))
     }
   }, [listFavorite])
-
 
 
   function colorIndex(responseApiAir){
@@ -149,10 +152,11 @@ const styles = StyleSheet.create({
     "paddingRight": 0,
     "paddingBottom": 0,
     "paddingLeft": 0,
-    "width": 375,
+    "width": "auto",
     "height": 812,
     "left": 0,
-    "top": 0
+    "top": 0,
+    "right": 0
   },
   "favoris_city215502f3": {
     "opacity": 1,

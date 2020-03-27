@@ -22,27 +22,14 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Timestamp from 'react-timestamp';
 import * as Font from 'expo-font';
 import { AppLoading, Svg } from 'expo';
-
-const fetchFonts = () => {
-  return Font.loadAsync({
-  'roboto-bold': require('../../assets/Roboto-Bold.ttf'),
-  'roboto-italic': require('../../assets/Roboto-Italic.ttf'),
-  'roboto-regular': require('../../assets/Roboto-Regular.ttf')
-  });
-};
+import { Auth } from 'aws-amplify';
 
 const CardAccueil = props => {
-   const [dataLoaded, setDataLoaded] = useState(false)
+
    const [propsState, setPropsState] = useState(props)
    const color = propsState.color
-  if(!dataLoaded){
-    return(
-      <AppLoading
-        startAsync={fetchFonts}
-        onFinish={() => setDataLoaded(true)}
-      />
-    )
-  }
+
+
 
   return (
     <View style={styles.city}>
