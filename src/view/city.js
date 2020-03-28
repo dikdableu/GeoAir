@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
     "paddingRight": 0,
     "paddingBottom": 0,
     "paddingLeft": 0,
-    "width": 33,
+    "width": 'auto',
     "height": 23,
     "left": 201,
     "top": 0
@@ -168,7 +168,7 @@ const styles = StyleSheet.create({
     "paddingRight": 0,
     "paddingBottom": 0,
     "paddingLeft": 0,
-    "width": 21,
+    "width": 'auto',
     "height": 21,
     "left": 201,
     "bottom": 1

@@ -11,7 +11,6 @@ import { AppRegistry,
 import Constants from 'expo-constants';
 import * as Location from 'expo-location';
 import * as Permissions from 'expo-permissions';
-import Value from './indexValue/Value'
 import SafeAreaView from 'react-native-safe-area-view';
 
 import React, { useState, useEffect } from 'react';
@@ -393,25 +392,31 @@ const HomeView = () => {
   )
 
   useEffect(() => {
-    console.log('useEffect 1')
+
     if (Platform.OS === 'android' && !Constants.isDevice) {
       setErrorMessage('Oops, this will not work on Sketch in an Android emulator. Try it on your device!')
     } else {
-      console.log('appel de get Location')
       _getLocationAsync()
     }
 
-    dispatch({type: "ADD_USER", user: {
-      "username": Auth.user.username,
-    }})
+    fetch('http://18.194.240.99:3000/addUser?username='+ Auth.user.username, {
+      method: 'get'
+    })
+    .then((response) => response.json())
+    .then((resultat) => {
+      dispatch({type: "ADD_USER", user: resultat[0]})
+    })
+    .catch( error => {
+      setErrorFetch(error)
+      console.error(error);
+    });
+
   }, [])
 
 
 
   useEffect(() => {
-    console.log('useEffect 3')
     if(location || location != null){
-      console.log('la location est là')
       _apiAir(location.coords.latitude,location.coords.longitude)
     }
   }, [location])
@@ -426,7 +431,6 @@ const HomeView = () => {
   };
 
   _apiAir = (lat, long) => {
-    console.log('lancement api')
     fetch('https://api.waqi.info/feed/geo:'+lat+';'+long+'/?token=85ab63dee549b4825ea4e18973ba6076cbaf3dd4', {
       method: 'GET'})
     .then((responsewaqi) => responsewaqi.json())
@@ -511,10 +515,10 @@ const HomeView = () => {
       })
     }
     if(i == 0){
+      var userInfos = user.shift().idUsers
 
-      console.log(responseApiMeteo);
       dispatch({type: "ADD_FAVORITE", listFavorite: {
-        "id": user.idUsers,
+        "id": userInfos,
         "ville": responseApiMeteo.name,
         "lat": responseApiMeteo.coord.lat,
         "long": responseApiMeteo.coord.lon
@@ -539,7 +543,6 @@ const HomeView = () => {
       });
     }
   }
-    console.log('loading: ' + loading)
     if(loading){
       return (
       <View style={{flex: 1}}>
@@ -1295,7 +1298,7 @@ const styles = StyleSheet.create({
     "paddingRight": 0,
     "paddingBottom": 0,
     "paddingLeft": 0,
-    "width": 33,
+    "width": 'auto',
     "height": 23,
     "left": 56,
     "top": 6
@@ -1364,9 +1367,9 @@ const styles = StyleSheet.create({
     "paddingRight": 0,
     "paddingBottom": 0,
     "paddingLeft": 0,
-    "width": 19,
+    "width": 'auto',
     "height": 19,
-    "left": 173,
+    "left": 165,
     "top": 27
   },
   "home_groupe212_groupe211_x13c": {
@@ -1387,7 +1390,7 @@ const styles = StyleSheet.create({
     "paddingRight": 0,
     "paddingBottom": 0,
     "paddingLeft": 0,
-    "width": 27,
+    "width": 'auto',
     "height": 19,
     "left": 165,
     "top": 10

@@ -19,12 +19,6 @@ import { Auth } from 'aws-amplify';
 export const FavoriteView = () => {
 
   const dispatch = useDispatch()
-
-  // useEffect(() => {
-  //   console.log(data.listFavorite)
-  //   dispatch({type: "INIT_FAVORITE", listFavorite: data.favorite})
-  // }, [])
-
   const listFavorite = useSelector(state => state.listFavorite)
   const user = useSelector(state => state.user)
 
@@ -36,13 +30,17 @@ export const FavoriteView = () => {
   const [errorFetch, setErrorFetch] = useState(null)
 
   useEffect(() => {
-
-    if(typeof listFavorite != "undefined"){
-      listFavorite.map((item) => setTimeout(() => {
-        searchByCity(item)
-      }, 1000))
+    if(user.length > 0){
+      console.log(user)
+      var userInfos = user.shift().idUsers
+      dispatch({type: "INIT_FAVORITE", data: userInfos })
+      if(typeof listFavorite != "undefined"){
+        listFavorite.map((item) => setTimeout(() => {
+          searchByCity(item)
+        }, 1000))
+      }
     }
-  }, [listFavorite])
+  }, [listFavorite, user])
 
 
   function colorIndex(responseApiAir){
@@ -111,6 +109,7 @@ export const FavoriteView = () => {
   }
 
   if(listSearch && listSearch.length > 0){
+    console.log(user)
     return (
         <SafeAreaView style={styles.favoris}>
           <FlatList
@@ -122,6 +121,7 @@ export const FavoriteView = () => {
         </SafeAreaView>
     )
   }else {
+    console.log(user)
     return (
         <SafeAreaView style={styles.favoris}>
 

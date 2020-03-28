@@ -1,7 +1,8 @@
 function toggleFavorite(state = [], action) {
   switch (action.type) {
     case 'ADD_FAVORITE':
-      fetch('http://18.194.240.99:3000/addFavorite?username='+ action.listFavorite.username+'&villes='+action.listFavorite.ville+'&latitude='+action.listFavorite.lat+'&longitude='+action.listFavorite.longitude, {
+      console.log(action)
+      fetch('http://18.194.240.99:3000/addFavorite?username='+ action.listFavorite.id+'&villes='+action.listFavorite.ville+'&latitude='+action.listFavorite.lat+'&longitude='+action.listFavorite.long, {
         method: 'get'
       })
       .then((response) => response.json())
@@ -17,12 +18,14 @@ function toggleFavorite(state = [], action) {
       ]
       break;
     case 'INIT_FAVORITE':
-      fetch('http://18.194.240.99:3000/listFavoris?idFkUsers='+ action.data, {
+      return fetch('http://18.194.240.99:3000/listFavoris?idFkUsers='+ action.data, {
         method: 'get'
       })
       .then((response) => response.json())
       .then((resultat) => {
-        return resultat
+        return [
+          ...state, resultat
+        ]
       })
       .catch( error => {
         setErrorFetch(error)
