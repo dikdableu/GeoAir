@@ -122,15 +122,15 @@ export default class DetailView extends Component {
     const responseApiAir = this.props.navigation.state.params.responseApiAir
     const responseApiMeteo = this.props.navigation.state.params.responseApiMeteo
 
-    var dateSunRise = new Date(responseApiMeteo.sys.sunrise * 1000)
-    var dateSunSet = new Date(responseApiMeteo.sys.sunset * 1000)
+    var dateSunSet = new Date(responseApiMeteo.sys.sunrise * 1000)
+    var dateSunRise = new Date(responseApiMeteo.sys.sunset * 1000)
     const minuteSunRise = "0" + dateSunRise.getMinutes()
     const minuteSunSet = "0" + dateSunSet.getMinutes()
 
     console.log(responseApiAir)
 
-    const sunrise = dateSunRise.getHours() + 'h' + minuteSunRise.substr(-2)
     const sunset = dateSunSet.getHours() + 'h' + minuteSunSet.substr(-2)
+    const sunrise = dateSunRise.getHours() + 'h' + minuteSunRise.substr(-2)
 
     return (
     <ScrollView data-layer="4f1b034a-7282-4eb8-9a4f-fe1e74b0e35b" style={styles.ville}>
