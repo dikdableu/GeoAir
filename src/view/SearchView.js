@@ -16,6 +16,7 @@ import * as data from '../../db/favorite.json';
 import { connect } from 'react-redux'
 import Autocomplete from 'react-native-autocomplete-input'
 
+
 class SearchView extends React.Component {
   constructor(props) {
       super(props);
@@ -232,11 +233,11 @@ class SearchView extends React.Component {
                 </View>
                 {console.log(this.props)}
                 <FlatList
-                  bounces={false}
+
                   style={styles.ajouterUnLieux_rectangle283}
                   data={this.state.listSearch}
                   keyExtractor={(item) => item.id.toString()}
-                  renderItem={({item}) => <TouchableOpacity onPress={() => this.props.navigation.navigate('Detail', {responseApiAir: this.state.responseApiAir, responseApiMeteo: this.state.responseApiMeteo, color: this.state.color})} onLongPress={() => this._addFavorite()}><City aqi={item.aqi} color={this.state.color} temp={item.temperature} tr={item.temperatureFeel} ville={item.ville} pays={item.country}/></TouchableOpacity>}
+                  renderItem={({item}) => <TouchableOpacity onPress={() => this.props.navigation.navigate('Detail', {responseApiAir: this.state.responseApiAir, responseApiMeteo: this.state.responseApiMeteo, color: this.state.color})} onLongPress={() => this._addFavorite()}><City aqi={item.aqi} color={this.state.color} responseApiMeteo={this.state.responseApiMeteo} temp={item.temperature} tr={item.temperatureFeel} ville={item.ville} pays={item.country}/></TouchableOpacity>}
                   initialNumToRender={10}
                 />
               </SafeAreaView>
@@ -363,7 +364,7 @@ const styles = StyleSheet.create({
     "width": "auto",
     "height": 58,
     "left": 34,
-    "top": 189,
+    "top": 80,
     "right": 35
   },
   "ajouterUnLieux_groupe215_versa": {
@@ -384,7 +385,7 @@ const styles = StyleSheet.create({
     "paddingRight": 0,
     "paddingBottom": 0,
     "paddingLeft": 0,
-    "width": "auto",
+    "width": "60%",
     "height": 33,
     "left": 0,
     "top": 9,
@@ -462,7 +463,7 @@ const styles = StyleSheet.create({
     "width": "auto",
     "height": 454,
     "left": 0,
-    "top": 299,
+    "top": 160,
     "right": 0
   }
 });

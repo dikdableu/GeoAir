@@ -17,7 +17,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from "prop-types";
 import {StyleSheet, Text, View, TextInput, FlatList, Picker, ScrollView, TouchableHighlight} from 'react-native';
 import {Image as ReactImage} from 'react-native';
-import Svg, {Defs, Pattern} from 'react-native-svg';
+import Svg, { Defs, ClipPath, Path, G } from "react-native-svg"
 import {Path as SvgPath} from 'react-native-svg';
 import {Text as SvgText} from 'react-native-svg';
 import {Image as SvgImage} from 'react-native-svg';
@@ -33,6 +33,11 @@ import { config } from '../../config/config.js';
 
 import Toast from 'react-native-root-toast';
 import { useDispatch, useSelector } from 'react-redux'
+
+import SoleilComponent from './Icones/01d.js'
+import CouldsComponent from './Icones/02d.js'
+import RainComponent from './Icones/09d.js'
+import SnowComponent from './Icones/13d.js'
 
 
 
@@ -122,181 +127,211 @@ const HomeView = () => {
            id: 300,
            weather: "Drizzle",
            description: "bruine d'intensité légère",
-           icon: "09d"
+           icon: "09d",
+           path: (<RainComponent/>)
          },
          {
            id: 301,
            weather: "Drizzle",
            description: "bruine",
-           icon: "09d"
+           icon: "09d",
+           path: (<RainComponent/>)
          },
          {
            id: 302,
            weather: "Drizzle",
            description: "bruine de forte intensité",
-           icon: "09d"
+           icon: "09d",
+           path: (<RainComponent/>)
          },
          {
            id: 310,
            weather: "Drizzle",
            description: "bruine d'intensité légère et pluie",
-           icon: "09d"
+           icon: "09d",
+           path: (<RainComponent/>)
          },
          {
            id: 311,
            weather: "Drizzle",
            description: "bruine et pluie",
-           icon: "09d"
+           icon: "09d",
+           path: (<RainComponent/>)
          },
          {
            id: 312,
            weather: "Drizzle",
            description: "forte bruine pluie forte",
-           icon: "09d"
+           icon: "09d",
+           path: (<RainComponent/>)
          },
          {
            id: 313,
            weather: "Drizzle",
            description: "brèves averses et bruine",
-           icon: "09d"
+           icon: "09d",
+           path: (<RainComponent/>)
          },
          {
            id: 314,
            weather: "Drizzle",
            description: "fortes averses pluie forte",
-           icon: "09d"
+           icon: "09d",
+           path: (<RainComponent/>)
          },
          {
            id: 321,
            weather: "Drizzle",
            description: "brèves bruine",
-           icon: "09d"
+           icon: "09d",
+           path: (<RainComponent/>)
          },
          {
            id: 500,
            weather: "Rain",
            description: "légère pluie",
-           icon: "10d"
+           icon: "10d",
+           path: (<RainComponent/>)
          },
          {
            id: 501,
            weather: "Rain",
            description: "pluie modéré",
-           icon: "10d"
+           icon: "10d",
+           path: (<RainComponent/>)
          },
          {
            id: 502,
            weather: "Rain",
            description: "pluie de forte intensité",
-           icon: "10d"
+           icon: "10d",
+           path: (<RainComponent/>)
          },
          {
            id: 503,
            weather: "Rain",
            description: "très forte pluie",
-           icon: "10d"
+           icon: "10d",
+           path: (<RainComponent/>)
          },
          {
            id: 504,
            weather: "Rain",
            description: "pluie extrème",
-           icon: "10d"
+           icon: "10d",
+           path: (<RainComponent/>)
          },
          {
            id: 511,
            weather: "Rain",
            description: "pluie verglaçante",
-           icon: "10d"
+           icon: "10d",
+           path: (<RainComponent/>)
          },
          {
            id: 520,
            weather: "520",
            description: "pluie légère par intermitence",
-           icon: "10d"
+           icon: "10d",
+           path: (<RainComponent/>)
          },
          {
            id: 521,
            weather: "Rain",
            description: "pluie par intermitence",
-           icon: "10d"
+           icon: "10d",
+           path: (<RainComponent/>)
          },
          {
            id: 522,
            weather: "Rain",
            description: "forte pluie par intermitence",
-           icon: "10d"
+           icon: "10d",
+           path: (<RainComponent/>)
          },
          {
            id: 531,
            weather: "Rain",
            description: "forte pluie par intermitence",
-           icon: "10d"
+           icon: "10d",
+           path: (<RainComponent/>)
          },
          {
            id: 600,
            weather: "Snow",
            description: "faible chute de neige",
-           icon: "13d"
+           icon: "13d",
+           path: (<SnowComponent/>)
          },
          {
            id: 601,
            weather: "Snow",
            description: "neige",
-           icon: "13d"
+           icon: "13d",
+           path: (<SnowComponent/>)
          },
          {
            id: 602,
            weather: "Snow",
            description: "forte chute de neige",
-           icon: "13d"
+           icon: "13d",
+           path: (<SnowComponent/>)
          },
          {
            id: 611,
            weather: "Snow",
            description: "neige fondue",
-           icon: "13d"
+           icon: "13d",
+           path: (<SnowComponent/>)
          },
          {
            id: 612,
            weather: "Snow",
            description: "faible chute de neige fondu",
-           icon: "13d"
+           icon: "13d",
+           path: (<SnowComponent/>)
          },
          {
            id: 613,
            weather: "Snow",
            description: "brève chute de neige fondu",
-           icon: "13d"
+           icon: "13d",
+           path: (<SnowComponent/>)
          },
          {
            id: 615,
            weather: "Snow",
            description: "légère plui et chute de neige",
-           icon: "13d"
+           icon: "13d",
+           path: (<SnowComponent/>)
          },
          {
            id: 616,
            weather: "Snow",
            description: "neige et pluie",
-           icon: "13d"
+           icon: "13d",
+           path: (<SnowComponent/>)
          },
          {
            id: 620,
            weather: "Snow",
            description: "brève chute de neige de faible intensité",
-           icon: "13d"
+           icon: "13d",
+           path: (<SnowComponent/>)
          },
          {
            id: 621,
            weather: "Snow",
            description: "brève chute de neige",
-           icon: "13d"
+           icon: "13d",
+           path: (<SnowComponent/>)
          },
          {
            id: 622,
            weather: "Snow",
            description: "forte chute de neige par intermitence",
-           icon: "13d"
+           icon: "13d",
+           path: (<SnowComponent/>)
          },
          {
            id: 701,
@@ -362,31 +397,36 @@ const HomeView = () => {
            id: 800,
            weather: "Clear",
            description: "ciel dégagé",
-           icon: "01d"
+           icon: "01d",
+           path:(<SoleilComponent/>)
          },
          {
            id: 801,
            weather: "Clouds",
            description: "entre 11-25% de nuage",
-           icon: "02d"
+           icon: "02d",
+           path: (<CouldsComponent/>)
          },
          {
            id: 802,
            weather: "Clouds",
            description: "entre 25-50% de nuage",
-           icon: "03d"
+           icon: "03d",
+           path: (<CouldsComponent/>)
          },
          {
            id: 803,
            weather: "Clouds",
            description: "entre 50-84% de nuage",
-           icon: "04d"
+           icon: "04d",
+           path: (<CouldsComponent/>)
          },
          {
            id: 804,
            weather: "Clouds",
            description: "entre 85-100% de nuage",
-           icon: "04d"
+           icon: "04d",
+           path: (<CouldsComponent/>)
          },
         ]
   )
@@ -472,7 +512,8 @@ const HomeView = () => {
                 description: value.description,
                 icon: "http://openweathermap.org/img/wn/"+ value.icon +"@2x.png",
                 id: value.id,
-                main: value.main
+                main: value.main,
+                path: value.path
             }
         setCondition(cond)
         }
@@ -509,7 +550,7 @@ const HomeView = () => {
     var i = 0
     if(listFavorite.length > 0){
       listFavorite.map((item) => {
-        if(!typeof 'undefined' || !item.ville || item.id == id){
+        if(typeof item != 'undefined' || !item.ville || item.id == id){
           i++
         }
       })
@@ -552,7 +593,6 @@ const HomeView = () => {
     }else{
       return(
       <SafeAreaView style={{display: 'flex', flex:1}}>
-
       <ScrollView data-layer="13614dff-3bb8-47ff-9a88-81264c364874" style={styles.home}>
           <View data-layer="ba686c87-cb59-4c46-baed-6f1eec515b14" style={styles.home_line8cf6fdea}></View>
           <View data-layer="f25280e4-4f48-4c2a-be2d-9ebe03c9ff61" style={styles.home_line}></View>
@@ -564,8 +604,9 @@ const HomeView = () => {
               <Text data-layer="1cdb565a-e3c7-46a1-913c-6772032fc806" style={styles.home_time_x1200}>12 : 00</Text>
           </View>
           <View data-layer="f24bcd06-3188-4e29-b0b8-1617ca1a5c65" style={styles.home_groupe205}>
-              <View data-layer="09af10b5-c90e-41a5-8022-88aa02b5cd5e" style={[styles.home_groupe205_rectangle, {borderWidth: 1 ,borderColor: color}]}></View>
-              <Text data-layer="7150d953-1902-4408-87cb-6ab655001bdc" style={[styles.home_groupe205_loremIpsumDolorSitAmetAdipiscingElitDonecVulputate, {color: color}]}>{textInside}</Text>
+              <View data-layer="09af10b5-c90e-41a5-8022-88aa02b5cd5e" style={[styles.home_groupe205_rectangle, {borderWidth: 1 ,borderColor: color}]}>
+                <Text data-layer="7150d953-1902-4408-87cb-6ab655001bdc" style={[styles.home_groupe205_loremIpsumDolorSitAmetAdipiscingElitDonecVulputate, {color: color}]}>{textInside}</Text>
+              </View>
           </View>
           <View data-layer="17b224e8-ca18-4bb8-beeb-ef167bacb82d" style={styles.home_groupe209}>
               <View data-layer="e97e27e2-2ba3-4663-9cf1-b8e6a87404ea" style={styles.home_groupe209_searchcity}>
@@ -606,13 +647,7 @@ const HomeView = () => {
                       </View>
                   </View>
                   <View data-layer="edfed02e-1326-48d5-9935-25a9cb06b14c" style={styles.home_groupe212_groupe211_x09d}>
-                      <Svg data-layer="e5d8674a-cb86-4b50-8c3a-1800bcde2d22" style={styles.home_groupe212_groupe211_x09d_trace110} preserveAspectRatio="none" viewBox="318.1409912109375 234.4969940185547 4.5 8.33599853515625" fill="rgba(31, 33, 40, 1)"><SvgPath d="M 320.3909912109375 242.0829925537109 C 319.56201171875 242.0829925537109 318.8909912109375 241.4109954833984 318.8909912109375 240.5829925537109 L 318.8909912109375 236.7469940185547 C 318.8909912109375 235.9190063476562 319.56201171875 235.2469940185547 320.3909912109375 235.2469940185547 C 321.218994140625 235.2469940185547 321.8909912109375 235.9190063476562 321.8909912109375 236.7469940185547 L 321.8909912109375 240.5829925537109 C 321.8909912109375 241.4109954833984 321.218994140625 242.0829925537109 320.3909912109375 242.0829925537109 Z"  /></Svg>
-                      <Svg data-layer="db15a781-cd92-41b4-a212-5f106969ed7e" style={styles.home_groupe212_groupe211_x09d_trace111} preserveAspectRatio="none" viewBox="309.0409851074219 234.4969940185547 4.5 8.33599853515625" fill="rgba(31, 33, 40, 1)"><SvgPath d="M 311.2909851074219 242.0829925537109 C 310.4630126953125 242.0829925537109 309.7909851074219 241.4109954833984 309.7909851074219 240.5829925537109 L 309.7909851074219 236.7469940185547 C 309.7909851074219 235.9190063476562 310.4630126953125 235.2469940185547 311.2909851074219 235.2469940185547 C 312.1189880371094 235.2469940185547 312.7909851074219 235.9190063476562 312.7909851074219 236.7469940185547 L 312.7909851074219 240.5829925537109 C 312.7909851074219 241.4109954833984 312.1189880371094 242.0829925537109 311.2909851074219 242.0829925537109 Z"  /></Svg>
-                      <Svg data-layer="62a14ac2-6fef-4683-8047-fa74272c0bb9" style={styles.home_groupe212_groupe211_x09d_trace112} preserveAspectRatio="none" viewBox="327.5769958496094 234.4969940185547 4.5 8.33599853515625" fill="rgba(31, 33, 40, 1)"><SvgPath d="M 329.8269958496094 242.0829925537109 C 328.9989929199219 242.0829925537109 328.3269958496094 241.4109954833984 328.3269958496094 240.5829925537109 L 328.3269958496094 236.7469940185547 C 328.3269958496094 235.9190063476562 328.9989929199219 235.2469940185547 329.8269958496094 235.2469940185547 C 330.6549987792969 235.2469940185547 331.3269958496094 235.9190063476562 331.3269958496094 236.7469940185547 L 331.3269958496094 240.5829925537109 C 331.3269958496094 241.4109954833984 330.6549987792969 242.0829925537109 329.8269958496094 242.0829925537109 Z"  /></Svg>
-                      <View data-layer="52f75473-749f-4ab7-a906-376742013ddb" style={styles.home_groupe212_groupe211_x09d_groupe153}>
-                          <Svg data-layer="70448e54-618d-4821-909d-3730b9ac9077" style={styles.home_groupe212_groupe211_x09d_groupe153_trace113} preserveAspectRatio="none" viewBox="315.0220031738281 230.52999877929688 1.54296875 1.5030059814453125" fill="transparent"><SvgPath d="M 315.7720031738281 231.2799987792969 C 315.7860107421875 231.281005859375 315.7999877929688 231.2830047607422 315.8150024414062 231.2830047607422 L 315.8150024414062 231.2830047607422 L 315.8150024414062 231.2830047607422 C 315.8009948730469 231.2830047607422 315.7869873046875 231.2799987792969 315.7720031738281 231.2799987792969 Z"  /></Svg>
-                          <Svg data-layer="cf251e54-cbd3-46b2-a091-6e4bb54a7796" style={styles.home_groupe212_groupe211_x09d_groupe153_trace114} preserveAspectRatio="none" viewBox="302.1735534667969 206.79098510742188 33.85693359375 24.658004760742188" fill="rgba(31, 33, 40, 1)"><SvgPath d="M 335.2793884277344 222.3498840332031 C 335.3513488769531 217.6692962646484 331.6438293457031 213.8171081542969 326.9970092773438 213.7385559082031 L 326.9878845214844 213.7385559082031 C 326.5704040527344 213.7385559082031 326.1610717773438 213.7691650390625 325.7608337402344 213.8293609619141 C 325.4598999023438 213.8752593994141 325.1650390625 213.9528045654297 324.8701782226562 214.0313568115234 C 324.77392578125 214.0568542480469 324.672607421875 214.0680694580078 324.578369140625 214.0976715087891 L 324.5773620605469 214.0966339111328 L 324.5773620605469 214.0966339111328 C 324.5570678710938 214.0527648925781 324.53173828125 214.0109405517578 324.5104675292969 213.9670715332031 C 323.7181091308594 212.35009765625 322.5670471191406 210.9483795166016 321.16064453125 209.8710632324219 C 321.1353149414062 209.8527221679688 321.1119995117188 209.8312835693359 321.0876770019531 209.8129272460938 C 320.9569702148438 209.7149810791016 320.8211975097656 209.6241760253906 320.6874389648438 209.5323638916016 C 320.5952453613281 209.4691162109375 320.5050354003906 209.4028015136719 320.4108276367188 209.3415985107422 C 320.3399047851562 209.2967071533203 320.2659301757812 209.2559051513672 320.1950073242188 209.2120361328125 C 320.0318908691406 209.112060546875 319.8697509765625 209.0120849609375 319.7025451660156 208.9212799072266 L 319.6832885742188 208.9110870361328 C 318.0610961914062 208.0316925048828 316.2209777832031 207.5450592041016 314.3059387207031 207.5409851074219 L 314.3038940429688 207.5420227050781 C 308.1088256835938 207.6083068847656 303.0790100097656 212.6031036376953 302.9270324707031 218.8394470214844 C 302.7730102539062 225.2186126708984 307.7724609375 230.5163726806641 314.1022644042969 230.6959381103516 C 314.1174621582031 230.6959381103516 314.1316528320312 230.6989898681641 314.1468505859375 230.6989898681641 L 314.1468505859375 230.6989898681641 L 326.9868774414062 230.6989898681641 C 331.5374145507812 230.6286010742188 335.20947265625 226.9314880371094 335.2793884277344 222.3498840332031 Z M 314.1883850097656 227.6384582519531 C 311.9866027832031 227.6078643798828 309.9195251464844 226.7121429443359 308.3682250976562 225.1155700683594 C 306.808837890625 223.5098114013672 305.9495849609375 221.3806915283203 305.9495849609375 219.1210021972656 C 305.9495849609375 214.423095703125 309.6986389160156 210.6015167236328 314.3059387207031 210.6015167236328 C 315.9058532714844 210.6015167236328 317.4581909179688 211.0626373291016 318.7976989746094 211.9348907470703 C 320.10888671875 212.7887725830078 321.1596069335938 213.9925842285156 321.8354797363281 215.416748046875 L 322.9612121582031 217.7906951904297 L 325.4619140625 217.0255737304688 C 325.953369140625 216.8745880126953 326.4670715332031 216.7990875244141 326.9878845214844 216.7990875244141 C 329.9141845703125 216.7990875244141 332.2943420410156 219.2301635742188 332.2943420410156 222.2203063964844 C 332.2943420410156 225.2084045410156 329.9141845703125 227.6394958496094 326.9878845214844 227.6394958496094 L 314.2451171875 227.6394958496094 L 314.1883850097656 227.6384582519531 Z"  /></Svg>
-                      </View>
+                      {condition.path}
                   </View>
               </View>
           </View>
@@ -632,6 +667,10 @@ HomeView.defaultProps = {
 }
 
 var {height, width} = Dimensions.get('window');
+var indiceHeight = width < height ? 812/height : 375/height
+var indiceWidth = width < height ? 375/width : 812/width
+var indiceScreen = indiceWidth+indiceHeight >= 2 ? 1 : (indiceWidth + indiceHeight) - 0.2
+
 
 const styles = StyleSheet.create({
   "home": {
@@ -672,7 +711,7 @@ const styles = StyleSheet.create({
     "width": "auto",
     "height": 2,
     "left": 0,
-    "top": 622,
+    "top": 450,
     "right": 0
   },
   "home_line": {
@@ -694,7 +733,7 @@ const styles = StyleSheet.create({
     "width": "auto",
     "height": 2,
     "left": 0,
-    "top": 691,
+    "top": 510,
     "right": 0
   },
   "home_time": {
@@ -712,14 +751,14 @@ const styles = StyleSheet.create({
     "width": 397,
     "height": 20,
     "left": "50%",
-    "top": 646
+    "top": 472
   },
   "home_time_x1200303d8887": {
     "opacity": 1,
     "position": "absolute",
     "backgroundColor": "rgba(255, 255, 255, 0)",
     "color": "rgba(42, 44, 53, 0.25098039215686274)",
-    "fontSize": 15,
+    "fontSize": 15* indiceScreen,
     "fontWeight": "700",
     "fontStyle": "normal",
     "fontFamily": "roboto-bold",
@@ -732,7 +771,7 @@ const styles = StyleSheet.create({
     "paddingRight": 0,
     "paddingBottom": 0,
     "paddingLeft": 0,
-    "width": 46,
+    "width": 'auto',
     "height": 20,
     "left": 88,
     "top": 0
@@ -742,7 +781,7 @@ const styles = StyleSheet.create({
     "position": "absolute",
     "backgroundColor": "rgba(255, 255, 255, 0)",
     "color": "rgba(42, 44, 53, 0.25098039215686274)",
-    "fontSize": 15,
+    "fontSize": 15* indiceScreen,
     "fontWeight": "700",
     "fontStyle": "normal",
     "fontFamily": "roboto-bold",
@@ -755,7 +794,7 @@ const styles = StyleSheet.create({
     "paddingRight": 0,
     "paddingBottom": 0,
     "paddingLeft": 0,
-    "width": 47,
+    "width": 'auto',
     "height": 20,
     "left": 174,
     "top": 0
@@ -786,7 +825,7 @@ const styles = StyleSheet.create({
     "position": "absolute",
     "backgroundColor": "rgba(255, 255, 255, 0)",
     "color": "rgba(42, 44, 53, 0.25098039215686274)",
-    "fontSize": 15,
+    "fontSize": 15* indiceScreen,
     "fontWeight": "700",
     "fontStyle": "normal",
     "fontFamily": "roboto-bold",
@@ -799,7 +838,7 @@ const styles = StyleSheet.create({
     "paddingRight": 0,
     "paddingBottom": 0,
     "paddingLeft": 0,
-    "width": 46,
+    "width": 'auto',
     "height": 20,
     "left": 263,
     "top": 0
@@ -809,7 +848,7 @@ const styles = StyleSheet.create({
     "position": "absolute",
     "backgroundColor": "rgba(255, 255, 255, 0)",
     "color": "rgba(42, 44, 53, 0.25098039215686274)",
-    "fontSize": 15,
+    "fontSize": 15* indiceScreen,
     "fontWeight": "700",
     "fontStyle": "normal",
     "fontFamily": "roboto-bold",
@@ -822,7 +861,7 @@ const styles = StyleSheet.create({
     "paddingRight": 0,
     "paddingBottom": 0,
     "paddingLeft": 0,
-    "width": 46,
+    "width": 'auto',
     "height": 20,
     "left": 351,
     "top": 0
@@ -832,7 +871,7 @@ const styles = StyleSheet.create({
     "position": "absolute",
     "backgroundColor": "rgba(255, 255, 255, 0)",
     "color": "rgba(42, 44, 53, 0.25098039215686274)",
-    "fontSize": 15,
+    "fontSize": 15* indiceScreen,
     "fontWeight": "700",
     "fontStyle": "normal",
     "fontFamily": "roboto-bold",
@@ -845,7 +884,7 @@ const styles = StyleSheet.create({
     "paddingRight": 0,
     "paddingBottom": 0,
     "paddingLeft": 0,
-    "width": 46,
+    "width": 'auto',
     "height": 20,
     "left": 0,
     "top": 0
@@ -863,9 +902,9 @@ const styles = StyleSheet.create({
     "paddingBottom": 0,
     "paddingLeft": 0,
     "width": "auto",
-    "height": 85,
+    "height": 130,
     "left": 34,
-    "top": 505,
+    "top": 280,
     "right": 35
   },
   "home_groupe205_rectangle": {
@@ -884,35 +923,33 @@ const styles = StyleSheet.create({
     "borderBottomLeftRadius": 3,
     "borderBottomRightRadius": 3,
     "width": "auto",
-    "height": 85,
+    "height": 'auto',
     "left": 0,
     "top": 0,
     "right": 0
   },
   "home_groupe205_loremIpsumDolorSitAmetAdipiscingElitDonecVulputate": {
     "opacity": 1,
-    "position": "absolute",
-    "backgroundColor": "rgba(255, 255, 255, 0)",
+    "position": "relative",
+    "backgroundColor": "transparent",
     "color": "rgba(255, 187, 0, 1)",
-    "fontSize": 14,
+    "fontSize": 12.4* indiceScreen,
     "fontWeight": "500",
     "fontStyle": "normal",
     "fontFamily": "roboto-bold",
-    "textAlign": "left",
+    "textAlign": "center",
     "lineHeight": 18,
     "marginTop": 0,
-    "marginRight": 0,
-    "marginBottom": 0,
-    "marginLeft": 0,
-    "paddingTop": 0,
+    "marginRight": 10,
+    "marginBottom": 20,
+    "marginLeft": 10,
+    "paddingTop": 20,
     "paddingRight": 0,
     "paddingBottom": 0,
     "paddingLeft": 0,
     "width": "auto",
-    "height": 39,
-    "left": 29.5,
-    "top": 25.5,
-    "right": 26.5
+    "height": "auto",
+    "top": 0
   },
   "home_groupe209": {
     "opacity": 1,
@@ -929,7 +966,7 @@ const styles = StyleSheet.create({
     "width": "auto",
     "height": "auto",
     "left": 31,
-    "top": 362,
+    "top": 120,
     "right": 34,
     "bottom": 395
   },
@@ -956,7 +993,7 @@ const styles = StyleSheet.create({
     "position": "absolute",
     "backgroundColor": "rgba(255, 255, 255, 0)",
     "color": "rgba(42, 44, 53, 1)",
-    "fontSize": 20,
+    "fontSize": 20* indiceScreen,
     "fontWeight": "700",
     "fontStyle": "normal",
     "fontFamily": "roboto-bold",
@@ -979,7 +1016,7 @@ const styles = StyleSheet.create({
     "position": "absolute",
     "backgroundColor": "rgba(255, 255, 255, 0)",
     "color": "rgba(42, 44, 53, 1)",
-    "fontSize": 14,
+    "fontSize": 14* indiceScreen,
     "fontWeight": "500",
     "fontStyle": "normal",
     "fontFamily": "roboto-bold",
@@ -1070,7 +1107,7 @@ const styles = StyleSheet.create({
     "width": "auto",
     "height": 87,
     "left": 34,
-    "top": 198,
+    "top": 20,
     "right": 34
   },
   "home_groupe207_actualiser": {
@@ -1078,7 +1115,7 @@ const styles = StyleSheet.create({
     "position": "absolute",
     "backgroundColor": "rgba(255, 255, 255, 0)",
     "color": "rgba(42, 44, 53, 1)",
-    "fontSize": 14,
+    "fontSize": 14* indiceScreen,
     "fontWeight": "500",
     "fontStyle": "normal",
     "fontFamily": "roboto-bold",
@@ -1092,7 +1129,7 @@ const styles = StyleSheet.create({
     "paddingRight": 0,
     "paddingBottom": 0,
     "paddingLeft": 0,
-    "width": 63,
+    "width": 'auto',
     "height": 41,
     "top": -8.5,
     "right": 25
@@ -1102,7 +1139,7 @@ const styles = StyleSheet.create({
     "position": "absolute",
     "backgroundColor": "rgba(255, 255, 255, 0)",
     "color": "rgba(42, 44, 53, 1)",
-    "fontSize": 30,
+    "fontSize": 30* indiceScreen,
     "fontWeight": "700",
     "fontStyle": "normal",
     "fontFamily": "roboto-bold",
@@ -1192,7 +1229,7 @@ const styles = StyleSheet.create({
     "width": "auto",
     "height": 55,
     "left": 33,
-    "top": 432,
+    "top": 200,
     "right": 32
   },
   "home_groupe212_airqualityindex": {
@@ -1242,7 +1279,7 @@ const styles = StyleSheet.create({
     "position": "absolute",
     "backgroundColor": "rgba(255, 255, 255, 0)",
     "color": "rgba(255, 187, 0, 1)",
-    "fontSize": 16,
+    "fontSize": 16* indiceScreen,
     "fontWeight": "700",
     "fontStyle": "normal",
     "fontFamily": "roboto-bold",
@@ -1285,7 +1322,7 @@ const styles = StyleSheet.create({
     "position": "absolute",
     "backgroundColor": "rgba(255, 255, 255, 0)",
     "color": "rgba(42, 44, 53, 1)",
-    "fontSize": 17,
+    "fontSize": 17* indiceScreen,
     "fontWeight": "700",
     "fontStyle": "normal",
     "fontFamily": "roboto-bold",
@@ -1308,7 +1345,7 @@ const styles = StyleSheet.create({
     "position": "absolute",
     "backgroundColor": "rgba(255, 255, 255, 0)",
     "color": "rgba(42, 44, 53, 1)",
-    "fontSize": 14,
+    "fontSize": 14* indiceScreen,
     "fontWeight": "700",
     "fontStyle": "normal",
     "fontFamily": "roboto-bold",
@@ -1321,7 +1358,7 @@ const styles = StyleSheet.create({
     "paddingRight": 0,
     "paddingBottom": 0,
     "paddingLeft": 0,
-    "width": 26,
+    "width": 'auto',
     "height": 19,
     "left": 120,
     "top": 27
@@ -1331,7 +1368,7 @@ const styles = StyleSheet.create({
     "position": "absolute",
     "backgroundColor": "rgba(255, 255, 255, 0)",
     "color": "rgba(42, 44, 53, 1)",
-    "fontSize": 14,
+    "fontSize": 14* indiceScreen,
     "fontWeight": "700",
     "fontStyle": "normal",
     "fontFamily": "roboto-bold",
@@ -1344,7 +1381,7 @@ const styles = StyleSheet.create({
     "paddingRight": 0,
     "paddingBottom": 0,
     "paddingLeft": 0,
-    "width": 31,
+    "width": 'auto',
     "height": 19,
     "left": 120,
     "top": 10
@@ -1354,7 +1391,7 @@ const styles = StyleSheet.create({
     "position": "absolute",
     "backgroundColor": "rgba(255, 255, 255, 0)",
     "color": "rgba(42, 44, 53, 1)",
-    "fontSize": 14,
+    "fontSize": 14* indiceScreen,
     "fontWeight": "700",
     "fontStyle": "normal",
     "fontFamily": "roboto-bold",
@@ -1377,7 +1414,7 @@ const styles = StyleSheet.create({
     "position": "absolute",
     "backgroundColor": "rgba(255, 255, 255, 0)",
     "color": "rgba(42, 44, 53, 1)",
-    "fontSize": 14,
+    "fontSize": 14* indiceScreen,
     "fontWeight": "700",
     "fontStyle": "normal",
     "fontFamily": "roboto-bold",
@@ -1400,7 +1437,7 @@ const styles = StyleSheet.create({
     "position": "absolute",
     "backgroundColor": "rgba(255, 255, 255, 0)",
     "color": "rgba(42, 44, 53, 1)",
-    "fontSize": 14,
+    "fontSize": 14* indiceScreen,
     "fontWeight": "700",
     "fontStyle": "normal",
     "fontFamily": "roboto-bold",
@@ -1413,7 +1450,7 @@ const styles = StyleSheet.create({
     "paddingRight": 0,
     "paddingBottom": 0,
     "paddingLeft": 0,
-    "width": 40,
+    "width": 'auto',
     "height": 19,
     "left": 56,
     "top": 27
