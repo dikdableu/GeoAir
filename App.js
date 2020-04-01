@@ -46,7 +46,7 @@ const Home = createStackNavigator(
       screen:HomeView,
       navigationOptions:{
         headerTitle: (
-          <Text style={{fontFamily: "roboto-bold",fontSize: 20 * indiceScreen, color: "black"}}>GeoAir</Text>
+          <Text style={{fontFamily: "roboto-bold",fontSize: 20 * indiceScreen, color: "black", textAlign: 'center'}}>GeoAir</Text>
         ),
         headerRight: (
           <TouchableOpacity onPress={() => alert('test')} style={{width: 15, marginRight: 20}}>
@@ -58,7 +58,9 @@ const Home = createStackNavigator(
         },
       }
     },
-  })
+  },
+  {headerLayoutPreset: 'center'}
+)
 
 const Search = createStackNavigator({
   Search: {
@@ -99,7 +101,9 @@ const Search = createStackNavigator({
       },
     }
   },
-})
+},
+{headerLayoutPreset: 'center'}
+)
 
 const Favoris = createStackNavigator({
   Favorite: {
@@ -135,7 +139,9 @@ const Favoris = createStackNavigator({
       },
     }
   },
-})
+},
+{headerLayoutPreset: 'center'}
+)
 
 const fetchFonts = () => {
   return Font.loadAsync({

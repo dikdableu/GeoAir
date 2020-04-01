@@ -3,7 +3,7 @@ import Svg, { Defs, ClipPath, Path, G } from "react-native-svg"
 
 function SnowComponent(props) {
   return (
-    <Svg width={35} height={35} viewBox="0 0 35 35" {...props}>
+    <Svg width={35} height={35} {...props}>
       <Defs>
         <ClipPath id="prefix__a">
           <Path d="M0 0h35v35H0z" />

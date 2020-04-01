@@ -391,7 +391,6 @@ export default class City extends Component {
   _iconMeteo = () => {
     this.state.conditionWeather.forEach( value => {
         if(this.props.responseApiMeteo.weather[0].id == value.id){
-            console.log('test')
             var cond = {
                 path: value.path
             }
@@ -401,6 +400,7 @@ export default class City extends Component {
   }
 
   render() {
+
   const color = this.props.color
   const propsState = this.props
   return (
@@ -437,7 +437,7 @@ const styles = StyleSheet.create({
   "city": {
     "opacity": 1,
     "position": "relative",
-    "backgroundColor": "rgba(255, 255, 255, 1)",
+    "backgroundColor": "white",
     "marginTop": 0,
     "marginRight": 0,
     "marginBottom": 0,
@@ -451,7 +451,8 @@ const styles = StyleSheet.create({
     "left": 0,
     "top": 0,
     "right": 0,
-    "bottom": 0
+    "bottom": 0,
+    "zIndex": 99
   },
   "city_city46e4674a": {
     "opacity": 1,

@@ -7,6 +7,7 @@ import { AppRegistry,
   ActivityIndicator,
   TouchableOpacity,
   Button,
+  Alert
   } from 'react-native';
 import Constants from 'expo-constants';
 import * as Location from 'expo-location';
@@ -33,6 +34,9 @@ import { config } from '../../config/config.js';
 
 import Toast from 'react-native-root-toast';
 import { useDispatch, useSelector } from 'react-redux'
+
+import RefreshComponent from './Icones/Refresh.js'
+import AddComponent from './Icones/Add.js'
 
 import SoleilComponent from './Icones/01d.js'
 import CouldsComponent from './Icones/02d.js'
@@ -433,11 +437,7 @@ const HomeView = () => {
 
   useEffect(() => {
 
-    if (Platform.OS === 'android' && !Constants.isDevice) {
-      setErrorMessage('Oops, this will not work on Sketch in an Android emulator. Try it on your device!')
-    } else {
-      _getLocationAsync()
-    }
+    _getLocationAsync()
 
     fetch('http://18.194.240.99:3000/addUser?username='+ Auth.user.username, {
       method: 'get'
@@ -447,7 +447,7 @@ const HomeView = () => {
       dispatch({type: "ADD_USER", user: resultat[0]})
     })
     .catch( error => {
-      setErrorFetch(error)
+      alert(error)
       console.error(error);
     });
 
@@ -456,18 +456,39 @@ const HomeView = () => {
 
 
   useEffect(() => {
+    console.log(location)
     if(location || location != null){
       _apiAir(location.coords.latitude,location.coords.longitude)
     }
   }, [location])
 
+  useEffect(() => {
+    if(typeof responseApiMeteo != 'undefined' && Object.keys(responseApiMeteo).length !== 0 && responseApiMeteo && responseApiMeteo != null){
+      console.log('different')
+      console.log(responseApiMeteo.weather[0])
+      conditionWeather.forEach( value => {
+          if(responseApiMeteo.weather[0].id == value.id){
+              var cond = {
+                  description: value.description,
+                  icon: "http://openweathermap.org/img/wn/"+ value.icon +"@2x.png",
+                  id: value.id,
+                  main: value.main,
+                  path: value.path
+              }
+          setCondition(cond)
+          }
+      })
+    }
+  }, [responseApiMeteo])
+
 
   _getLocationAsync = async () => {
-    let { status } = await Permissions.askAsync(Permissions.LOCATION);
-    if (status !== 'granted') {
-      setErrorMessage('Permission to access location was denied')
-    }
-    setLocation(await Location.getCurrentPositionAsync({}))
+      let { status } = await Permissions.askAsync(Permissions.LOCATION);
+      if (status !== 'granted'){
+        console.log('Permission to access location was denied');
+      }
+
+      setLocation(await Location.getCurrentPositionAsync({}))
   };
 
   _apiAir = (lat, long) => {
@@ -483,10 +504,8 @@ const HomeView = () => {
       .then((responseJsonWeather) => {
         if(responseJsonWeather.cod == 200) {
         setResponseApiMeteo(responseJsonWeather)
-        _iconMeteo()
         setLoading(false)
         return responseJsonWeather
-
         }else{
           Toast.show('Problème de connexion au serveur, veuillez ressayer dans quelques instants', {
             duration: Toast.durations.LONG,
@@ -497,27 +516,14 @@ const HomeView = () => {
             delay: 0,
           });
         }
-      })
+      }).catch( error => {
+        console.error(error);
+      });
       return responseJsonWaqi;
     })
     .catch( error => {
       console.error(error);
     });
-  }
-
-  _iconMeteo = () => {
-    conditionWeather.forEach( value => {
-        if(responseApiMeteo.weather[0].id == value.id){
-            var cond = {
-                description: value.description,
-                icon: "http://openweathermap.org/img/wn/"+ value.icon +"@2x.png",
-                id: value.id,
-                main: value.main,
-                path: value.path
-            }
-        setCondition(cond)
-        }
-    })
   }
 
   _colorIndex = () => {
@@ -527,7 +533,7 @@ const HomeView = () => {
 
     }else if (responseApiAir.data.aqi >= 51 && responseApiAir.data.aqi <= 150){
       setColor("#FFBB00")
-      setTextInside("La qualité de l'ai est acceptable; Cependant, pour certains polluants, il peut y avoir un problème de santé modérée pour un très petit nombre de personnes qui sont particulièrement sensibles à la pollution de l'air.")
+      setTextInside("La qualité de l'air est acceptable; Cependant, pour certains polluants, il peut y avoir un problème de santé modérée pour un très petit nombre de personnes qui sont particulièrement sensibles à la pollution de l'air.")
     }else if (responseApiAir.data.aqi >= 151){
       setColor("#FF5656")
       setTextInside("Avertissements de santé de conditions d'urgence. Toutes la population est plus susceptible d'être affecté.")
@@ -592,67 +598,67 @@ const HomeView = () => {
     );
     }else{
       return(
-      <SafeAreaView style={{display: 'flex', flex:1}}>
-      <ScrollView data-layer="13614dff-3bb8-47ff-9a88-81264c364874" style={styles.home}>
-          <View data-layer="ba686c87-cb59-4c46-baed-6f1eec515b14" style={styles.home_line8cf6fdea}></View>
-          <View data-layer="f25280e4-4f48-4c2a-be2d-9ebe03c9ff61" style={styles.home_line}></View>
-          <View data-layer="a26dc001-9ab5-4ffd-9f28-9301663a0804" style={styles.home_time}>
-              <Text data-layer="9a56958e-2d40-49f2-a8bc-c54a080d1c88" style={styles.home_time_x1200303d8887}>12 : 00</Text>
-              <Text data-layer="43a27cd7-422c-4aef-bf60-5d05a84dbfd4" style={styles.home_time_x1200cc93c759}>12 : 00</Text>
-              <Text data-layer="951d2dc7-9ece-4caa-9e99-a9583fdf0134" style={styles.home_time_x12005e70baf0}>12 : 00</Text>
-              <Text data-layer="608d07ce-0678-4ee1-8ae8-313ef306ab00" style={styles.home_time_x1200f9879df1}>12 : 00</Text>
-              <Text data-layer="1cdb565a-e3c7-46a1-913c-6772032fc806" style={styles.home_time_x1200}>12 : 00</Text>
-          </View>
-          <View data-layer="f24bcd06-3188-4e29-b0b8-1617ca1a5c65" style={styles.home_groupe205}>
-              <View data-layer="09af10b5-c90e-41a5-8022-88aa02b5cd5e" style={[styles.home_groupe205_rectangle, {borderWidth: 1 ,borderColor: color}]}>
-                <Text data-layer="7150d953-1902-4408-87cb-6ab655001bdc" style={[styles.home_groupe205_loremIpsumDolorSitAmetAdipiscingElitDonecVulputate, {color: color}]}>{textInside}</Text>
-              </View>
-          </View>
-          <View data-layer="17b224e8-ca18-4bb8-beeb-ef167bacb82d" style={styles.home_groupe209}>
-              <View data-layer="e97e27e2-2ba3-4663-9cf1-b8e6a87404ea" style={styles.home_groupe209_searchcity}>
-                  <Text data-layer="0566535a-1279-4dc0-bf84-314d2bf4cbeb" style={styles.home_groupe209_searchcity_versailles}>{responseApiMeteo.name}</Text>
-                  <Text data-layer="ec71f28a-dd55-4cb6-a52d-b7c93ad5c018" style={styles.home_groupe209_searchcity_yvelinesFrance}>{responseApiMeteo.sys.country}</Text>
-                  <Svg data-layer="2aa5bee4-19b5-4040-a681-18ebd092a169" style={styles.home_groupe209_searchcity_iconadd} preserveAspectRatio="none" viewBox="-5944.99951171875 -2494.0009765625 15 15" fill="rgba(42, 44, 53, 1)"><SvgPath d="M -5938.65380859375 -2480.15478515625 L -5938.65380859375 -2485.3466796875 L -5943.845703125 -2485.3466796875 C -5944.4833984375 -2485.3466796875 -5944.99951171875 -2485.86376953125 -5944.99951171875 -2486.500732421875 C -5944.99951171875 -2487.137939453125 -5944.4833984375 -2487.654541015625 -5943.845703125 -2487.654541015625 L -5938.65380859375 -2487.654541015625 L -5938.65380859375 -2492.846923828125 C -5938.65380859375 -2493.48388671875 -5938.13623046875 -2494.0009765625 -5937.49951171875 -2494.0009765625 C -5936.8623046875 -2494.0009765625 -5936.345703125 -2493.48388671875 -5936.345703125 -2492.846923828125 L -5936.345703125 -2487.654541015625 L -5931.15380859375 -2487.654541015625 C -5930.51611328125 -2487.654541015625 -5929.99951171875 -2487.137939453125 -5929.99951171875 -2486.500732421875 C -5929.99951171875 -2485.86376953125 -5930.51611328125 -2485.3466796875 -5931.15380859375 -2485.3466796875 L -5936.345703125 -2485.3466796875 L -5936.345703125 -2480.15478515625 C -5936.345703125 -2479.517333984375 -5936.8623046875 -2479.0009765625 -5937.49951171875 -2479.0009765625 C -5938.13623046875 -2479.0009765625 -5938.65380859375 -2479.517333984375 -5938.65380859375 -2480.15478515625 Z"  /></Svg>
-              </View>
-              <TouchableOpacity onPress={() => {_addFavorite()}} >
-                <View data-layer="3568ea33-fc37-4f12-96a5-1681fd4178a9" style={styles.home_groupe213_groupe209_rectangle280}></View>
-              </TouchableOpacity>
-          </View>
-          <View data-layer="adc02b6d-f8e4-4014-b787-5bcc88729d4f" style={styles.home_groupe207}>
-              <Text data-layer="8f879b30-4046-4eb3-b96e-277a55d04826" style={styles.home_groupe207_actualiser}>Actualiser</Text>
-              <Text data-layer="699344fd-f3c3-4637-91c6-9e22dabbc0b9" style={styles.home_groupe207_lieuxAProximite}>Lieux à proximité</Text>
-              <Svg data-layer="3d35f051-b5bb-4ad4-889b-6a0b430a96b0" style={styles.home_groupe207_iconmonstrRefresh2} onPress={() => {_getLocationAsync()}} preserveAspectRatio="none" viewBox="-4.76837158203125e-7 2 14 12.25" fill="rgba(42, 44, 53, 1)"><SvgPath d="M 7.874999523162842 2 C 4.591416358947754 2 1.917999744415283 4.587666511535645 1.764582753181458 7.833333492279053 L -4.76837158203125e-07 7.833333492279053 L 2.646582841873169 11.28491592407227 L 5.25 7.833333492279053 L 3.514583110809326 7.833333492279053 C 3.666249513626099 5.557166576385498 5.560916423797607 3.75 7.874999523162842 3.75 C 10.28766632080078 3.75 12.25 5.712333679199219 12.25 8.125 C 12.25 10.53766536712646 10.28766632080078 12.49999904632568 7.874999523162842 12.49999904632568 C 6.486083030700684 12.49999904632568 5.248833179473877 11.84724998474121 4.447333335876465 10.83516597747803 L 3.369916200637817 12.26374912261963 C 4.489333152770996 13.48174858093262 6.090583324432373 14.24999904632568 7.874999523162842 14.24999904632568 C 11.25716686248779 14.24999904632568 14 11.50716590881348 14 8.125 C 14 4.742833137512207 11.25716686248779 2 7.874999523162842 2 Z"  /></Svg>
-              <View data-layer="32f32dff-d3fc-4a50-8c29-42aad3939253" style={styles.home_groupe207_groupe206}>
-                  <View data-layer="4dc4caac-6c61-4719-8b20-15042a4d6c8b" style={styles.home_groupe207_groupe206_rectanglea6da2d5c}></View>
-              </View>
-              <TouchableOpacity onPress={() => {_getLocationAsync()}} >
-                <View data-layer="b31d0d4d-c9e6-42b5-ae15-0f73e61b769c" style={styles.home_groupe214_groupe207_rectangle281}></View>
-              </TouchableOpacity>
-          </View>
-          <View data-layer="be86a2d7-3e32-4675-9c37-d5c8d629bdd9" style={styles.home_groupe212}>
-              <View data-layer="01c94066-2b12-48e5-9d3a-9620b1a4214c" style={styles.home_groupe212_airqualityindex}>
-                  <View data-layer="e22a0d65-2293-4022-856e-4853fad7221f" style={[styles.home_groupe212_airqualityindex_rectangle190, {borderColor: color}]}></View>
-                  <Text data-layer="65c2a307-84e5-488f-8d7f-4b6107009b76" style={[styles.home_groupe212_airqualityindex_x102, {color: color}]}>{responseApiAir.data.aqi}</Text>
-              </View>
-              <View data-layer="94a3af68-7070-4f53-849e-311c1edcc16f" style={styles.home_groupe212_groupe211}>
-                  <Text data-layer="fcff8157-0898-4499-ba77-8c9c5c1399f4" style={styles.home_groupe212_groupe211_x10c}>{(responseApiMeteo.main.temp - 273.15).toFixed(1) + "°C"}</Text>
-                  <Text data-layer="e3a238f9-d269-489b-abdc-16c159f8bdfd" style={styles.home_groupe212_groupe211_min}>MIN</Text>
-                  <Text data-layer="aa2caedb-af91-4980-91db-1dea85c1ac6b" style={styles.home_groupe212_groupe211_max}>MAX</Text>
-                  <Text data-layer="1aff345a-b725-49c3-9873-1a98823d7b24" style={styles.home_groupe212_groupe211_x8c}>{(responseApiMeteo.main.temp_min - 273.15).toFixed(1) + "°C"}</Text>
-                  <Text data-layer="947b1b79-cf69-4852-adf7-d4ad1f9e5d19" style={styles.home_groupe212_groupe211_x13c}>{(responseApiMeteo.main.temp_max - 273.15).toFixed(1) + "°C"}</Text>
-                  <Text data-layer="eaa8bd00-b2cf-4b94-8626-b80c9dfd7fb4" style={styles.home_groupe212_groupe211_temp}>Temp.</Text>
-                  <View data-layer="d6d2d453-b0f3-4806-ad24-4344c723948f" style={styles.home_groupe212_groupe211_groupe210}>
-                      <View data-layer="9d65069b-0dc9-420f-8ada-5928312e3310" style={styles.home_groupe212_groupe211_groupe210_groupe208325c65e5}>
-                          <View data-layer="3ea825a4-c7e1-46cb-b30a-e31db441ca50" style={styles.home_groupe212_groupe211_groupe210_groupe208325c65e5_rectanglec24f8a8d}></View>
-                      </View>
-                  </View>
-                  <View data-layer="edfed02e-1326-48d5-9935-25a9cb06b14c" style={styles.home_groupe212_groupe211_x09d}>
-                      {condition.path}
-                  </View>
-              </View>
-          </View>
-      </ScrollView>
-    </SafeAreaView>
+        <SafeAreaView style={{display: 'flex', flex: 1, position: 'relative'}}>
+            <ScrollView data-layer="13614dff-3bb8-47ff-9a88-81264c364874" style={styles.home}>
+                <View data-layer="ba686c87-cb59-4c46-baed-6f1eec515b14" style={styles.home_line8cf6fdea}></View>
+                <View data-layer="f25280e4-4f48-4c2a-be2d-9ebe03c9ff61" style={styles.home_line}></View>
+                <View data-layer="a26dc001-9ab5-4ffd-9f28-9301663a0804" style={styles.home_time}>
+                    <Text data-layer="9a56958e-2d40-49f2-a8bc-c54a080d1c88" style={styles.home_time_x1200303d8887}>12 : 00</Text>
+                    <Text data-layer="43a27cd7-422c-4aef-bf60-5d05a84dbfd4" style={styles.home_time_x1200cc93c759}>12 : 00</Text>
+                    <Text data-layer="951d2dc7-9ece-4caa-9e99-a9583fdf0134" style={styles.home_time_x12005e70baf0}>12 : 00</Text>
+                    <Text data-layer="608d07ce-0678-4ee1-8ae8-313ef306ab00" style={styles.home_time_x1200f9879df1}>12 : 00</Text>
+                    <Text data-layer="1cdb565a-e3c7-46a1-913c-6772032fc806" style={styles.home_time_x1200}>12 : 00</Text>
+                </View>
+                <View data-layer="f24bcd06-3188-4e29-b0b8-1617ca1a5c65" style={styles.home_groupe205}>
+                    <View data-layer="09af10b5-c90e-41a5-8022-88aa02b5cd5e" style={[styles.home_groupe205_rectangle, {borderWidth: 1 ,borderColor: color}]}>
+                      <Text data-layer="7150d953-1902-4408-87cb-6ab655001bdc" style={[styles.home_groupe205_loremIpsumDolorSitAmetAdipiscingElitDonecVulputate, {color: color}]}>{textInside}</Text>
+                    </View>
+                </View>
+                <View data-layer="17b224e8-ca18-4bb8-beeb-ef167bacb82d" style={styles.home_groupe209}>
+                    <View data-layer="e97e27e2-2ba3-4663-9cf1-b8e6a87404ea" style={styles.home_groupe209_searchcity}>
+                        <Text data-layer="0566535a-1279-4dc0-bf84-314d2bf4cbeb" style={styles.home_groupe209_searchcity_versailles}>{responseApiMeteo.name}</Text>
+                        <Text data-layer="ec71f28a-dd55-4cb6-a52d-b7c93ad5c018" style={styles.home_groupe209_searchcity_yvelinesFrance}>{responseApiMeteo.sys.country}</Text>
+                        <AddComponent style={styles.home_groupe213_groupe209_searchcity_iconadd}/>
+                    </View>
+                    <TouchableOpacity onPress={() => {_addFavorite()}} >
+                      <View data-layer="3568ea33-fc37-4f12-96a5-1681fd4178a9" style={styles.home_groupe213_groupe209_rectangle280}></View>
+                    </TouchableOpacity>
+                </View>
+                <View data-layer="adc02b6d-f8e4-4014-b787-5bcc88729d4f" style={styles.home_groupe207}>
+                    <Text data-layer="8f879b30-4046-4eb3-b96e-277a55d04826" style={styles.home_groupe207_actualiser}>Actualiser</Text>
+                    <Text data-layer="699344fd-f3c3-4637-91c6-9e22dabbc0b9" style={styles.home_groupe207_lieuxAProximite}>Lieux à proximité</Text>
+                    <RefreshComponent style={styles.home_groupe214_groupe207_iconmonstrRefresh2}/>
+                    <View data-layer="32f32dff-d3fc-4a50-8c29-42aad3939253" style={styles.home_groupe207_groupe206}>
+                        <View data-layer="4dc4caac-6c61-4719-8b20-15042a4d6c8b" style={styles.home_groupe207_groupe206_rectanglea6da2d5c}></View>
+                    </View>
+                    <TouchableOpacity onPress={() => {_getLocationAsync()}} >
+                      <View data-layer="b31d0d4d-c9e6-42b5-ae15-0f73e61b769c" style={styles.home_groupe214_groupe207_rectangle281}></View>
+                    </TouchableOpacity>
+                </View>
+                <View data-layer="be86a2d7-3e32-4675-9c37-d5c8d629bdd9" style={styles.home_groupe212}>
+                    <View data-layer="01c94066-2b12-48e5-9d3a-9620b1a4214c" style={styles.home_groupe212_airqualityindex}>
+                        <View data-layer="e22a0d65-2293-4022-856e-4853fad7221f" style={[styles.home_groupe212_airqualityindex_rectangle190, {borderColor: color}]}></View>
+                        <Text data-layer="65c2a307-84e5-488f-8d7f-4b6107009b76" style={[styles.home_groupe212_airqualityindex_x102, {color: color}]}>{responseApiAir.data.aqi}</Text>
+                    </View>
+                    <View data-layer="94a3af68-7070-4f53-849e-311c1edcc16f" style={styles.home_groupe212_groupe211}>
+                        <Text data-layer="fcff8157-0898-4499-ba77-8c9c5c1399f4" style={styles.home_groupe212_groupe211_x10c}>{(responseApiMeteo.main.temp - 273.15).toFixed(1) + "°C"}</Text>
+                        <Text data-layer="e3a238f9-d269-489b-abdc-16c159f8bdfd" style={styles.home_groupe212_groupe211_min}>MIN</Text>
+                        <Text data-layer="aa2caedb-af91-4980-91db-1dea85c1ac6b" style={styles.home_groupe212_groupe211_max}>MAX</Text>
+                        <Text data-layer="1aff345a-b725-49c3-9873-1a98823d7b24" style={styles.home_groupe212_groupe211_x8c}>{(responseApiMeteo.main.temp_min - 273.15).toFixed(1) + "°C"}</Text>
+                        <Text data-layer="947b1b79-cf69-4852-adf7-d4ad1f9e5d19" style={styles.home_groupe212_groupe211_x13c}>{(responseApiMeteo.main.temp_max - 273.15).toFixed(1) + "°C"}</Text>
+                        <Text data-layer="eaa8bd00-b2cf-4b94-8626-b80c9dfd7fb4" style={styles.home_groupe212_groupe211_temp}>Temp.</Text>
+                        <View data-layer="d6d2d453-b0f3-4806-ad24-4344c723948f" style={styles.home_groupe212_groupe211_groupe210}>
+                            <View data-layer="9d65069b-0dc9-420f-8ada-5928312e3310" style={styles.home_groupe212_groupe211_groupe210_groupe208325c65e5}>
+                                <View data-layer="3ea825a4-c7e1-46cb-b30a-e31db441ca50" style={styles.home_groupe212_groupe211_groupe210_groupe208325c65e5_rectanglec24f8a8d}></View>
+                            </View>
+                        </View>
+                        <View data-layer="edfed02e-1326-48d5-9935-25a9cb06b14c" style={styles.home_groupe212_groupe211_x09d}>
+                            {condition.path}
+                        </View>
+                    </View>
+                </View>
+            </ScrollView>
+      </SafeAreaView>
       )
     }
 
@@ -675,7 +681,7 @@ var indiceScreen = indiceWidth+indiceHeight >= 2 ? 1 : (indiceWidth + indiceHeig
 const styles = StyleSheet.create({
   "home": {
     "opacity": 1,
-    "position": "relative",
+    "position": "absolute",
     "backgroundColor": "rgba(255, 255, 255, 1)",
     "marginTop": 0,
     "marginRight": 0,
@@ -686,11 +692,11 @@ const styles = StyleSheet.create({
     "paddingBottom": 0,
     "paddingLeft": 0,
     "width": "auto",
-    "height": "auto",
+    "height": height,
     "left": 0,
     "top": 0,
     "right": 0,
-    "bottom": 0
+    "bottom": 0,
   },
   "home_line8cf6fdea": {
     "opacity": 1,
@@ -712,7 +718,7 @@ const styles = StyleSheet.create({
     "height": 2,
     "left": 0,
     "top": 450,
-    "right": 0
+    "right": 0,
   },
   "home_line": {
     "opacity": 1,
@@ -1650,7 +1656,40 @@ const styles = StyleSheet.create({
     "height": 23,
     "top": 0,
     "right": 0
-  }
+  },
+  "home_groupe213_groupe209_searchcity_iconadd": {
+    "opacity": 1,
+    "position": "absolute",
+    "marginTop": 0,
+    "marginRight": 0,
+    "marginBottom": 0,
+    "marginLeft": 0,
+    "paddingTop": 0,
+    "paddingRight": 0,
+    "paddingBottom": 0,
+    "paddingLeft": 0,
+    "width": 15,
+    "height": "auto",
+    "top": 4,
+    "right": 0,
+    "bottom": 24
+  },
+  "home_groupe214_groupe207_iconmonstrRefresh2": {
+    "opacity": 1,
+    "position": "absolute",
+    "marginTop": 0,
+    "marginRight": 0,
+    "marginBottom": 0,
+    "marginLeft": 0,
+    "paddingTop": 0,
+    "paddingRight": 0,
+    "paddingBottom": 0,
+    "paddingLeft": 0,
+    "width": 14,
+    "height": 12.25,
+    "top": 4.38,
+    "right": 3
+  },
 });
 
 

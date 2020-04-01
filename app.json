@@ -11,7 +11,7 @@
       "android",
       "web"
     ],
-    "version": "1.0.14",
+    "version": "1.0.18",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -28,13 +28,19 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.bastienchoisy.geoair",
-      "buildNumber": "1.0.14"
+      "buildNumber": "1.0.18"
     },
     "android": {
       "package": "com.bastienchoisy.geoair",
-      "versionCode": 7,
+      "versionCode": 11,
       "permissions": [
-        "LOCATION"
+        "ACCESS_COARSE_LOCATION",
+        "ACCESS_FINE_LOCATION",
+        "MANAGE_DOCUMENTS",
+        "READ_EXTERNAL_STORAGE",
+        "WAKE_LOCK",
+        "WRITE_EXTERNAL_STORAGE",
+        "com.android.launcher.permission.INSTALL_SHORTCUT"
       ]
     }
   }
