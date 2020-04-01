@@ -390,6 +390,9 @@ export default class City extends Component {
 
   _iconMeteo = () => {
     this.state.conditionWeather.forEach( value => {
+        if(value == null){
+          console.log('il y a un null ici')
+        }
         if(this.props.responseApiMeteo.weather[0].id == value.id){
             var cond = {
                 path: value.path
@@ -403,24 +406,45 @@ export default class City extends Component {
 
   const color = this.props.color
   const propsState = this.props
-  return (
-    <View data-layer="c5ca152e-c30f-4771-8df6-e408d0aa3faf" style={styles.city}>
-        <View data-layer="f2a47ae9-5fed-4240-9fd8-e104c8a17289" style={styles.city_city46e4674a}>
-            <Text data-layer="34552563-2522-4d83-bd92-8d7a88c76a24" style={styles.city_city46e4674a_versailles}>{propsState.ville.length > 13 ? propsState.ville.slice(0,13) + '...' : propsState.ville}</Text>
-            <Text data-layer="8886f830-eb72-4710-b7d4-ae68e93d3189" style={styles.city_city46e4674a_yvelinesFrance}>{propsState.pays}</Text>
-            <Text data-layer="4762e86f-f9e5-48f7-9758-dff99395e172" style={styles.city_city46e4674a_x10c}>{propsState.temp}</Text>
-            <Text data-layer="9479b0e7-648b-4243-b85f-91c4dd89bb12" style={styles.city_city46e4674a_x7c}>{propsState.tr}</Text>
-            <View data-layer="b6dacb07-c87a-4261-a560-bf40cc71202f" style={styles.city_city46e4674a_airqualityindex}>
-                <View data-layer="2efb1a80-24d0-441c-b59e-42c3d1d2c484" style={[styles.city_city46e4674a_airqualityindex_rectangle190, {borderColor: color}]}></View>
-                <Text data-layer="659bb7cc-acc6-44f0-a23e-a75516eaeb70" style={[styles.city_city46e4674a_airqualityindex_x12, {color: color}]}>{propsState.aqi}</Text>
-            </View>
-            <View data-layer="9e69dbce-f97b-4370-b4d6-70f5f93b8469" style={styles.city_city46e4674a_x01d}>
-              {this.state.condition == null ? this._iconMeteo() : null}
-              {this.state.condition == null ? null : this.state.condition.path}
-            </View>
-        </View>
-    </View>
-    );
+  console.log(this.props)
+  if(this.state.condition == null){
+    return (
+      <View data-layer="c5ca152e-c30f-4771-8df6-e408d0aa3faf" style={styles.city}>
+          <View data-layer="f2a47ae9-5fed-4240-9fd8-e104c8a17289" style={styles.city_city46e4674a}>
+              <Text data-layer="34552563-2522-4d83-bd92-8d7a88c76a24" style={styles.city_city46e4674a_versailles}>{propsState.ville.length > 13 ? propsState.ville.slice(0,13) + '...' : propsState.ville}</Text>
+              <Text data-layer="8886f830-eb72-4710-b7d4-ae68e93d3189" style={styles.city_city46e4674a_yvelinesFrance}>{propsState.pays}</Text>
+              <Text data-layer="4762e86f-f9e5-48f7-9758-dff99395e172" style={styles.city_city46e4674a_x10c}>{propsState.temp}</Text>
+              <Text data-layer="9479b0e7-648b-4243-b85f-91c4dd89bb12" style={styles.city_city46e4674a_x7c}>{propsState.tr}</Text>
+              <View data-layer="b6dacb07-c87a-4261-a560-bf40cc71202f" style={styles.city_city46e4674a_airqualityindex}>
+                  <View data-layer="2efb1a80-24d0-441c-b59e-42c3d1d2c484" style={[styles.city_city46e4674a_airqualityindex_rectangle190, {borderColor: color}]}></View>
+                  <Text data-layer="659bb7cc-acc6-44f0-a23e-a75516eaeb70" style={[styles.city_city46e4674a_airqualityindex_x12, {color: color}]}>{propsState.aqi}</Text>
+              </View>
+              <View data-layer="9e69dbce-f97b-4370-b4d6-70f5f93b8469" style={styles.city_city46e4674a_x01d}>
+                {this._iconMeteo()}
+              </View>
+          </View>
+      </View>
+      );
+  }else{
+    return (
+      <View data-layer="c5ca152e-c30f-4771-8df6-e408d0aa3faf" style={styles.city}>
+          <View data-layer="f2a47ae9-5fed-4240-9fd8-e104c8a17289" style={styles.city_city46e4674a}>
+              <Text data-layer="34552563-2522-4d83-bd92-8d7a88c76a24" style={styles.city_city46e4674a_versailles}>{propsState.ville.length > 13 ? propsState.ville.slice(0,13) + '...' : propsState.ville}</Text>
+              <Text data-layer="8886f830-eb72-4710-b7d4-ae68e93d3189" style={styles.city_city46e4674a_yvelinesFrance}>{propsState.pays}</Text>
+              <Text data-layer="4762e86f-f9e5-48f7-9758-dff99395e172" style={styles.city_city46e4674a_x10c}>{propsState.temp}</Text>
+              <Text data-layer="9479b0e7-648b-4243-b85f-91c4dd89bb12" style={styles.city_city46e4674a_x7c}>{propsState.tr}</Text>
+              <View data-layer="b6dacb07-c87a-4261-a560-bf40cc71202f" style={styles.city_city46e4674a_airqualityindex}>
+                  <View data-layer="2efb1a80-24d0-441c-b59e-42c3d1d2c484" style={[styles.city_city46e4674a_airqualityindex_rectangle190, {borderColor: color}]}></View>
+                  <Text data-layer="659bb7cc-acc6-44f0-a23e-a75516eaeb70" style={[styles.city_city46e4674a_airqualityindex_x12, {color: color}]}>{propsState.aqi}</Text>
+              </View>
+              <View data-layer="9e69dbce-f97b-4370-b4d6-70f5f93b8469" style={styles.city_city46e4674a_x01d}>
+                {this.state.condition.path}
+              </View>
+          </View>
+      </View>
+      );
+  }
+
   }
 }
 
@@ -447,7 +471,7 @@ const styles = StyleSheet.create({
     "paddingBottom": 0,
     "paddingLeft": 0,
     "width": "auto",
-    "height": "auto",
+    "height": 300,
     "left": 0,
     "top": 0,
     "right": 0,

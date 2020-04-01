@@ -6,6 +6,7 @@ import Svg, {Defs, Pattern} from 'react-native-svg';
 import {Path as SvgPath} from 'react-native-svg';
 import {Text as SvgText} from 'react-native-svg';
 import {Image as SvgImage} from 'react-native-svg';
+import AddComponent from './Icones/Add.js'
 import SoleilComponent from './Icones/01d.js'
 import CouldsComponent from './Icones/02d.js'
 import RainComponent from './Icones/09d.js'
@@ -470,11 +471,11 @@ export default class DetailView extends Component {
     const sunrise = dateSunRise.getHours() + 'h' + minuteSunRise.substr(-2)
 
     return (
-    <ScrollView data-layer="4f1b034a-7282-4eb8-9a4f-fe1e74b0e35b" style={styles.ville}>
+    <View data-layer="4f1b034a-7282-4eb8-9a4f-fe1e74b0e35b" style={styles.ville}>
         <View data-layer="3d1674d8-b866-413a-b6f1-d4d4843c5c0b" style={styles.ville_searchcity}>
             <Text data-layer="35e40b9c-0c10-4b39-9378-5716d6ae6453" style={styles.ville_searchcity_versailles}>{responseApiMeteo.name.length > 13 ? responseApiMeteo.name.slice(0,13) + '...' : responseApiMeteo.name}</Text>
             <Text data-layer="8a61130c-2565-4b9f-ba8c-cae5c64598dc" style={styles.ville_searchcity_yvelinesFrance}>{responseApiMeteo.sys.country}</Text>
-            <Svg data-layer="182b2df4-be2b-4861-90d8-5fc386c26c59" style={styles.ville_searchcity_iconadd} preserveAspectRatio="none" viewBox="-5944.99951171875 -2494.0009765625 15 15" fill="rgba(42, 44, 53, 1)"><SvgPath d="M -5938.65380859375 -2480.15478515625 L -5938.65380859375 -2485.3466796875 L -5943.845703125 -2485.3466796875 C -5944.4833984375 -2485.3466796875 -5944.99951171875 -2485.86376953125 -5944.99951171875 -2486.500732421875 C -5944.99951171875 -2487.137939453125 -5944.4833984375 -2487.654541015625 -5943.845703125 -2487.654541015625 L -5938.65380859375 -2487.654541015625 L -5938.65380859375 -2492.846923828125 C -5938.65380859375 -2493.48388671875 -5938.13623046875 -2494.0009765625 -5937.49951171875 -2494.0009765625 C -5936.8623046875 -2494.0009765625 -5936.345703125 -2493.48388671875 -5936.345703125 -2492.846923828125 L -5936.345703125 -2487.654541015625 L -5931.15380859375 -2487.654541015625 C -5930.51611328125 -2487.654541015625 -5929.99951171875 -2487.137939453125 -5929.99951171875 -2486.500732421875 C -5929.99951171875 -2485.86376953125 -5930.51611328125 -2485.3466796875 -5931.15380859375 -2485.3466796875 L -5936.345703125 -2485.3466796875 L -5936.345703125 -2480.15478515625 C -5936.345703125 -2479.517333984375 -5936.8623046875 -2479.0009765625 -5937.49951171875 -2479.0009765625 C -5938.13623046875 -2479.0009765625 -5938.65380859375 -2479.517333984375 -5938.65380859375 -2480.15478515625 Z"  /></Svg>
+            <AddComponent style={styles.ville_searchcity_iconadd}/>
             <View data-layer="f9ca6f36-e687-40d6-a4ff-81a741ff2ef3" style={styles.ville_searchcity_rectangle286}></View>
             <TouchableOpacity onPress={() => {this._addFavorite()}}>
               <View data-layer="6f42dd39-c16b-4316-9787-f322c9cb308f" style={styles.ville_searchcity_rectangle287}></View>
@@ -556,7 +557,7 @@ export default class DetailView extends Component {
             {this.state.condition == null ? null : this.state.condition.path}
             <View data-layer="8fbbd1ca-eba7-457d-a9dd-b0a0a1b079da" style={styles.ville_groupe219_rectangle288}></View>
         </View>
-    </ScrollView>
+    </View>
     );
   }
 }

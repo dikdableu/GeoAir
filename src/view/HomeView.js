@@ -439,7 +439,7 @@ const HomeView = () => {
 
     _getLocationAsync()
 
-    fetch('http://18.194.240.99:3000/addUser?username='+ Auth.user.username, {
+    fetch('http://3.126.246.233:3000/addUser?username='+ Auth.user.username, {
       method: 'get'
     })
     .then((response) => response.json())
@@ -599,7 +599,7 @@ const HomeView = () => {
     }else{
       return(
         <SafeAreaView style={{display: 'flex', flex: 1, position: 'relative'}}>
-            <ScrollView data-layer="13614dff-3bb8-47ff-9a88-81264c364874" style={styles.home}>
+            <View data-layer="13614dff-3bb8-47ff-9a88-81264c364874" style={styles.home}>
                 <View data-layer="ba686c87-cb59-4c46-baed-6f1eec515b14" style={styles.home_line8cf6fdea}></View>
                 <View data-layer="f25280e4-4f48-4c2a-be2d-9ebe03c9ff61" style={styles.home_line}></View>
                 <View data-layer="a26dc001-9ab5-4ffd-9f28-9301663a0804" style={styles.home_time}>
@@ -657,7 +657,7 @@ const HomeView = () => {
                         </View>
                     </View>
                 </View>
-            </ScrollView>
+            </View>
       </SafeAreaView>
       )
     }
@@ -1686,7 +1686,7 @@ const styles = StyleSheet.create({
     "paddingBottom": 0,
     "paddingLeft": 0,
     "width": 14,
-    "height": 12.25,
+    "height": 15,
     "top": 4.38,
     "right": 3
   },
