@@ -28,8 +28,7 @@ import { AppLoading} from 'expo';
 
 import * as data from '../../db/favorite.json';
 
-import Amplify from 'aws-amplify';
-import { Auth } from 'aws-amplify';
+import Amplify, { Auth } from 'aws-amplify';
 import { config } from '../../config/config.js';
 
 import Toast from 'react-native-root-toast';
@@ -39,9 +38,14 @@ import RefreshComponent from './Icones/Refresh.js'
 import AddComponent from './Icones/Add.js'
 
 import SoleilComponent from './Icones/01d.js'
-import CouldsComponent from './Icones/02d.js'
+import CouldsSunComponent from './Icones/02d.js'
+import CloudComponent from './Icones/03d.js'
+import CloudsComponent from './Icones/04d.js'
 import RainComponent from './Icones/09d.js'
+import LightRainComponent from './Icones/10d.js'
+import ThunderComponent from './Icones/11d.js'
 import SnowComponent from './Icones/13d.js'
+import FogComponent from './Icones/50d.js'
 
 
 
@@ -71,61 +75,71 @@ const HomeView = () => {
            id: 200,
            weather: "Orage",
            description: "orage avec pluie légère",
-           icon: "11d"
+           icon: "11d",
+           path: (<ThunderComponent/>)
          },
          {
            id: 201,
            weather: "Orage",
            description: "orage avec pluie ",
-           icon: "11d"
+           icon: "11d",
+           path: (<ThunderComponent/>)
          },
          {
            id: 202,
            weather: "Orage",
            description: "orage avec forte pluie",
-           icon: "11d"
+           icon: "11d",
+           path: (<ThunderComponent/>)
          },
          {
            id: 210,
            weather: "Orage",
            description: "orage léger",
-           icon: "11d"
+           icon: "11d",
+           path: (<ThunderComponent/>)
          },
          {
            id: 211,
            weather: "Orage",
            description: "orage",
-           icon: "11d"
+           icon: "11d",
+           path: (<ThunderComponent/>)
          },
          {
            id: 212,
            weather: "Orage",
            description: "fort orage",
-           icon: "11d"
+           icon: "11d",
+           path: (<ThunderComponent/>)
          },
          {
            id: 221,
            weather: "Orage",
            description: "orage",
-           icon: "11d"
+           icon: "11d",
+           path: (<ThunderComponent/>)
          },
          {
            id: 230,
            weather: "Orage",
            description: "orage avec bruine légère",
-           icon: "11d"
+           icon: "11d",
+           path: (<ThunderComponent/>)
          },
          {
            id: 231,
            weather: "Orage",
            description: "orage avec bruine ",
-           icon: "11d"
+           icon: "11d",
+           path: (<ThunderComponent/>)
          },
          {
            id: 232,
            weather: "Orage",
            description: "orage avec forte bruine",
-           icon: "11d"
+           icon: "11d",
+           path: (<ThunderComponent/>)
          },
          {
            id: 300,
@@ -195,70 +209,70 @@ const HomeView = () => {
            weather: "Rain",
            description: "légère pluie",
            icon: "10d",
-           path: (<RainComponent/>)
+           path: (<LightRainComponent/>)
          },
          {
            id: 501,
            weather: "Rain",
            description: "pluie modéré",
            icon: "10d",
-           path: (<RainComponent/>)
+           path: (<LightRainComponent/>)
          },
          {
            id: 502,
            weather: "Rain",
            description: "pluie de forte intensité",
            icon: "10d",
-           path: (<RainComponent/>)
+           path: (<LightRainComponent/>)
          },
          {
            id: 503,
            weather: "Rain",
            description: "très forte pluie",
            icon: "10d",
-           path: (<RainComponent/>)
+           path: (<LightRainComponent/>)
          },
          {
            id: 504,
            weather: "Rain",
            description: "pluie extrème",
            icon: "10d",
-           path: (<RainComponent/>)
+           path: (<LightRainComponent/>)
          },
          {
            id: 511,
            weather: "Rain",
            description: "pluie verglaçante",
            icon: "10d",
-           path: (<RainComponent/>)
+           path: (<LightRainComponent/>)
          },
          {
            id: 520,
            weather: "520",
            description: "pluie légère par intermitence",
            icon: "10d",
-           path: (<RainComponent/>)
+           path: (<LightRainComponent/>)
          },
          {
            id: 521,
            weather: "Rain",
            description: "pluie par intermitence",
            icon: "10d",
-           path: (<RainComponent/>)
+           path: (<LightRainComponent/>)
          },
          {
            id: 522,
            weather: "Rain",
            description: "forte pluie par intermitence",
            icon: "10d",
-           path: (<RainComponent/>)
+           path: (<LightRainComponent/>)
          },
          {
            id: 531,
            weather: "Rain",
            description: "forte pluie par intermitence",
            icon: "10d",
-           path: (<RainComponent/>)
+           path: (<LightRainComponent/>)
          },
          {
            id: 600,
@@ -341,61 +355,71 @@ const HomeView = () => {
            id: 701,
            weather: "Mist",
            description: "brouillard",
-           icon: "50d"
+           icon: "50d",
+           path: (<FogComponent/>)
          },
          {
            id: 711,
            weather: "Smoke",
            description: "fumée",
-           icon: "50d"
+           icon: "50d",
+           path: (<FogComponent/>)
          },
          {
            id: 721,
            weather: "Haze",
            description: "brume",
-           icon: "50d"
+           icon: "50d",
+           path: (<FogComponent/>)
          },
          {
            id: 731,
            weather: "Dust",
            description: "Sable/poussière",
-           icon: "50d"
+           icon: "50d",
+           path: (<FogComponent/>)
          },
          {
            id: 741,
            weather: "Fog",
            description: "brouillard",
-           icon: "50d"
+           icon: "50d",
+           path: (<FogComponent/>)
          },
          {
            id: 751,
            weather: "Sand",
            description: "sable",
-           icon: "50d"
+           icon: "50d",
+           path: (<FogComponent/>)
          },
          {
            id: 761,
            weather: "Dust",
            description: "poussière",
-           icon: "50d"
+           icon: "50d",
+           path: (<FogComponent/>)
          },
          {
            id: 701,
            weather: "Ash",
            description: "cendre volcanic/cendre",
-           icon: "50d"
+           icon: "50d",
+           path: (<FogComponent/>)
          },
          {
            id: 771,
            weather: "Squall",
            description: "bourrasque",
-           icon: "50d"
+           icon: "50d",
+           path: (<FogComponent/>)
          },
          {
            id: 781,
            weather: "Tornado",
            description: "tornade",
-           icon: "50d"
+           icon: "50d",
+           path: (<FogComponent/>)
          },
          {
            id: 800,
@@ -409,28 +433,28 @@ const HomeView = () => {
            weather: "Clouds",
            description: "entre 11-25% de nuage",
            icon: "02d",
-           path: (<CouldsComponent/>)
+           path: (<CouldsSunComponent/>)
          },
          {
            id: 802,
            weather: "Clouds",
            description: "entre 25-50% de nuage",
            icon: "03d",
-           path: (<CouldsComponent/>)
+           path: (<CloudComponent/>)
          },
          {
            id: 803,
            weather: "Clouds",
            description: "entre 50-84% de nuage",
            icon: "04d",
-           path: (<CouldsComponent/>)
+           path: (<CloudsComponent/>)
          },
          {
            id: 804,
            weather: "Clouds",
            description: "entre 85-100% de nuage",
            icon: "04d",
-           path: (<CouldsComponent/>)
+           path: (<CloudsComponent/>)
          },
         ]
   )
@@ -438,7 +462,6 @@ const HomeView = () => {
   useEffect(() => {
 
     _getLocationAsync()
-
     fetch('http://3.126.246.233:3000/addUser?username='+ Auth.user.username, {
       method: 'get'
     })
@@ -456,7 +479,6 @@ const HomeView = () => {
 
 
   useEffect(() => {
-    console.log(location)
     if(location || location != null){
       _apiAir(location.coords.latitude,location.coords.longitude)
     }
@@ -464,8 +486,6 @@ const HomeView = () => {
 
   useEffect(() => {
     if(typeof responseApiMeteo != 'undefined' && Object.keys(responseApiMeteo).length !== 0 && responseApiMeteo && responseApiMeteo != null){
-      console.log('different')
-      console.log(responseApiMeteo.weather[0])
       conditionWeather.forEach( value => {
           if(responseApiMeteo.weather[0].id == value.id){
               var cond = {
@@ -541,46 +561,23 @@ const HomeView = () => {
   }
 
   _addFavorite = () => {
-    var id = 0
+    if(user.length > 0){
+      var userInfos = user[0].username
 
-    if (responseApiMeteo.name.length == 0){
-      id = 0
-    }else{
-      for (i = 0; i < responseApiMeteo.name.length; i++) {
-          var char = responseApiMeteo.name.charCodeAt(i);
-          id = ((id << 5) - id) + char;
-          id = id & id;
-      }
-    }
-
-    var i = 0
-    if(listFavorite.length > 0){
-      listFavorite.map((item) => {
-        if(typeof item != 'undefined' || !item.ville || item.id == id){
-          i++
-        }
+      fetch('http:/3.126.246.233:3000/addFavorite?username='+ userInfos+'&villes='+responseApiMeteo.name+'&latitude='+responseApiMeteo.coord.lat+'&longitude='+responseApiMeteo.coord.lon+'&pays='+ responseApiMeteo.sys.country, {
+        method: 'get'
       })
-    }
-    if(i == 0){
-      var userInfos = user.shift().idUsers
-
-      dispatch({type: "ADD_FAVORITE", listFavorite: {
-        "id": userInfos,
-        "ville": responseApiMeteo.name,
-        "lat": responseApiMeteo.coord.lat,
-        "long": responseApiMeteo.coord.lon
-      }})
+      .then((response) => response.json())
+      .then((resultat) => {
+        dispatch({type: "ADD_FAVORITE", listFavorite: resultat})
+        return resultat
+      })
+      .catch( error => {
+        setErrorFetch(error)
+        console.error(error);
+      });
 
       Toast.show('Ajouté aux favoris', {
-        duration: Toast.durations.SHORT,
-        position: Toast.positions.CENTER,
-        shadow: true,
-        animation: true,
-        hideOnPress: true,
-        delay: 0,
-      });
-    }else{
-      Toast.show('Existe déjà dans vos favoris', {
         duration: Toast.durations.SHORT,
         position: Toast.positions.CENTER,
         shadow: true,

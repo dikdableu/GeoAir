@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux'
 import PropTypes from "prop-types";
 import {StyleSheet, Text, View, TextInput, FlatList, Picker, ScrollView, TouchableHighlight, Dimensions} from 'react-native';
 import {Image as ReactImage, TouchableOpacity, SafeAreaView} from 'react-native';
@@ -18,6 +19,10 @@ import Autocomplete from 'react-native-autocomplete-input'
 
 
 export default function SearchView({props, navigation}) {
+  const listFavorite = useSelector(state => state.listFavorite)
+  const user = useSelector(state => state.user)
+
+  const dispatch = useDispatch()
 
   const [listSearch, setListSearch] = useState([])
   const [search, setSearch] = useState('')
@@ -146,40 +151,23 @@ export default function SearchView({props, navigation}) {
     }
 
   _addFavorite = () => {
-    var id = 0
+    if(user.length > 0){
+      var userInfos = user[0].username
 
-    if (responseApiMeteo.name.length == 0){
-      id = 0
-    }else{
-      for (i = 0; i < responseApiMeteo.name.length; i++) {
-          var char = responseApiMeteo.name.charCodeAt(i);
-          id = ((id << 5) - id) + char;
-          id = id & id;
-      }
-    }
-
-    var i = 0
-
-    data.favorite.map((item) => {
-      if(!typeof 'undefined' || !item.ville || item.id == id){
-        i++
-      }
-    })
-    if(i == 0){
-      data.favorite.push({
-        "id": id,
-        "ville": responseApiMeteo.name
+      fetch('http:/3.126.246.233:3000/addFavorite?username='+ userInfos+'&villes='+responseApiMeteo.name+'&latitude='+responseApiMeteo.coord.lat+'&longitude='+responseApiMeteo.coord.lon+'&pays='+ responseApiMeteo.sys.country, {
+        method: 'get'
       })
-      Toast.show('Ajouté aux favoris', {
-        duration: Toast.durations.SHORT,
-        position: Toast.positions.CENTER,
-        shadow: true,
-        animation: true,
-        hideOnPress: true,
-        delay: 0,
+      .then((response) => response.json())
+      .then((resultat) => {
+        dispatch({type: "ADD_FAVORITE", listFavorite: resultat})
+        return resultat
+      })
+      .catch( error => {
+        setErrorFetch(error)
+        console.error(error);
       });
-    }else{
-      Toast.show('Existe déjà dans vos favoris', {
+
+      Toast.show('Ajouté aux favoris', {
         duration: Toast.durations.SHORT,
         position: Toast.positions.CENTER,
         shadow: true,
@@ -214,9 +202,6 @@ export default function SearchView({props, navigation}) {
     setVide(true)
     setSearch('')
   }
-  console.log(vide)
-  console.log(charged)
-  console.log(props)
   if(!vide && charged){
     if(error == false){
       return (
@@ -231,7 +216,7 @@ export default function SearchView({props, navigation}) {
             style={styles.ajouterUnLieux_rectangle283}
             data={listSearch}
             keyExtractor={(item) => item.id.toString()}
-            renderItem={({item}) => <TouchableOpacity onPress={() => navigation.navigate('Detail', {responseApiAir: responseApiAir, responseApiMeteo: responseApiMeteo, color: color})} onLongPress={() => _addFavorite()}><City aqi={item.aqi} color={color} responseApiMeteo={responseApiMeteo} temp={item.temperature} tr={item.temperatureFeel} ville={item.ville} pays={item.country}/></TouchableOpacity>}
+            renderItem={({item}) => <TouchableOpacity onPress={() => navigation.navigate('Detail', {responseApiAir: responseApiAir, responseApiMeteo: responseApiMeteo, color: color})} onLongPress={() => _addFavorite()}><City aqi={item.aqi} color={color} icon={responseApiMeteo.weather[0].id} temp={item.temperature} tr={item.temperatureFeel} ville={item.ville} pays={item.country}/></TouchableOpacity>}
             initialNumToRender={10}
           />
         </SafeAreaView>

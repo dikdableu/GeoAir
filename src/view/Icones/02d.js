@@ -1,7 +1,7 @@
 import * as React from "react"
 import Svg, { Defs, ClipPath, Path, G } from "react-native-svg"
 
-function CloudsComponent(props) {
+function CloudsSunComponent(props) {
   return (
     <Svg width={35} height={35} {...props}>
       <Defs>
@@ -24,4 +24,4 @@ function CloudsComponent(props) {
   )
 }
 
-export default CloudsComponent
+export default CloudsSunComponent

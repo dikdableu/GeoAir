@@ -7,9 +7,14 @@ import * as Font from 'expo-font';
 import { AppLoading} from 'expo';
 
 import SoleilComponent from './Icones/01d.js'
-import CouldsComponent from './Icones/02d.js'
+import CouldsSunComponent from './Icones/02d.js'
+import CloudComponent from './Icones/03d.js'
+import CloudsComponent from './Icones/04d.js'
 import RainComponent from './Icones/09d.js'
+import LightRainComponent from './Icones/10d.js'
+import ThunderComponent from './Icones/11d.js'
 import SnowComponent from './Icones/13d.js'
+import FogComponent from './Icones/50d.js'
 
 
 export default class City extends Component {
@@ -19,371 +24,391 @@ export default class City extends Component {
       this.state = {
         condition: null,
         conditionWeather: [
-             {
-               id: 200,
-               weather: "Orage",
-               description: "orage avec pluie légère",
-               icon: "11d"
-             },
-             {
-               id: 201,
-               weather: "Orage",
-               description: "orage avec pluie ",
-               icon: "11d"
-             },
-             {
-               id: 202,
-               weather: "Orage",
-               description: "orage avec forte pluie",
-               icon: "11d"
-             },
-             {
-               id: 210,
-               weather: "Orage",
-               description: "orage léger",
-               icon: "11d"
-             },
-             {
-               id: 211,
-               weather: "Orage",
-               description: "orage",
-               icon: "11d"
-             },
-             {
-               id: 212,
-               weather: "Orage",
-               description: "fort orage",
-               icon: "11d"
-             },
-             {
-               id: 221,
-               weather: "Orage",
-               description: "orage",
-               icon: "11d"
-             },
-             {
-               id: 230,
-               weather: "Orage",
-               description: "orage avec bruine légère",
-               icon: "11d"
-             },
-             {
-               id: 231,
-               weather: "Orage",
-               description: "orage avec bruine ",
-               icon: "11d"
-             },
-             {
-               id: 232,
-               weather: "Orage",
-               description: "orage avec forte bruine",
-               icon: "11d"
-             },
-             {
-               id: 300,
-               weather: "Drizzle",
-               description: "bruine d'intensité légère",
-               icon: "09d",
-               path: (<RainComponent/>)
-             },
-             {
-               id: 301,
-               weather: "Drizzle",
-               description: "bruine",
-               icon: "09d",
-               path: (<RainComponent/>)
-             },
-             {
-               id: 302,
-               weather: "Drizzle",
-               description: "bruine de forte intensité",
-               icon: "09d",
-               path: (<RainComponent/>)
-             },
-             {
-               id: 310,
-               weather: "Drizzle",
-               description: "bruine d'intensité légère et pluie",
-               icon: "09d",
-               path: (<RainComponent/>)
-             },
-             {
-               id: 311,
-               weather: "Drizzle",
-               description: "bruine et pluie",
-               icon: "09d",
-               path: (<RainComponent/>)
-             },
-             {
-               id: 312,
-               weather: "Drizzle",
-               description: "forte bruine pluie forte",
-               icon: "09d",
-               path: (<RainComponent/>)
-             },
-             {
-               id: 313,
-               weather: "Drizzle",
-               description: "brèves averses et bruine",
-               icon: "09d",
-               path: (<RainComponent/>)
-             },
-             {
-               id: 314,
-               weather: "Drizzle",
-               description: "fortes averses pluie forte",
-               icon: "09d",
-               path: (<RainComponent/>)
-             },
-             {
-               id: 321,
-               weather: "Drizzle",
-               description: "brèves bruine",
-               icon: "09d",
-               path: (<RainComponent/>)
-             },
-             {
-               id: 500,
-               weather: "Rain",
-               description: "légère pluie",
-               icon: "10d",
-               path: (<RainComponent/>)
-             },
-             {
-               id: 501,
-               weather: "Rain",
-               description: "pluie modéré",
-               icon: "10d",
-               path: (<RainComponent/>)
-             },
-             {
-               id: 502,
-               weather: "Rain",
-               description: "pluie de forte intensité",
-               icon: "10d",
-               path: (<RainComponent/>)
-             },
-             {
-               id: 503,
-               weather: "Rain",
-               description: "très forte pluie",
-               icon: "10d",
-               path: (<RainComponent/>)
-             },
-             {
-               id: 504,
-               weather: "Rain",
-               description: "pluie extrème",
-               icon: "10d",
-               path: (<RainComponent/>)
-             },
-             {
-               id: 511,
-               weather: "Rain",
-               description: "pluie verglaçante",
-               icon: "10d",
-               path: (<RainComponent/>)
-             },
-             {
-               id: 520,
-               weather: "520",
-               description: "pluie légère par intermitence",
-               icon: "10d",
-               path: (<RainComponent/>)
-             },
-             {
-               id: 521,
-               weather: "Rain",
-               description: "pluie par intermitence",
-               icon: "10d",
-               path: (<RainComponent/>)
-             },
-             {
-               id: 522,
-               weather: "Rain",
-               description: "forte pluie par intermitence",
-               icon: "10d",
-               path: (<RainComponent/>)
-             },
-             {
-               id: 531,
-               weather: "Rain",
-               description: "forte pluie par intermitence",
-               icon: "10d",
-               path: (<RainComponent/>)
-             },
-             {
-               id: 600,
-               weather: "Snow",
-               description: "faible chute de neige",
-               icon: "13d",
-               path: (<SnowComponent/>)
-             },
-             {
-               id: 601,
-               weather: "Snow",
-               description: "neige",
-               icon: "13d",
-               path: (<SnowComponent/>)
-             },
-             {
-               id: 602,
-               weather: "Snow",
-               description: "forte chute de neige",
-               icon: "13d",
-               path: (<SnowComponent/>)
-             },
-             {
-               id: 611,
-               weather: "Snow",
-               description: "neige fondue",
-               icon: "13d",
-               path: (<SnowComponent/>)
-             },
-             {
-               id: 612,
-               weather: "Snow",
-               description: "faible chute de neige fondu",
-               icon: "13d",
-               path: (<SnowComponent/>)
-             },
-             {
-               id: 613,
-               weather: "Snow",
-               description: "brève chute de neige fondu",
-               icon: "13d",
-               path: (<SnowComponent/>)
-             },
-             {
-               id: 615,
-               weather: "Snow",
-               description: "légère plui et chute de neige",
-               icon: "13d",
-               path: (<SnowComponent/>)
-             },
-             {
-               id: 616,
-               weather: "Snow",
-               description: "neige et pluie",
-               icon: "13d",
-               path: (<SnowComponent/>)
-             },
-             {
-               id: 620,
-               weather: "Snow",
-               description: "brève chute de neige de faible intensité",
-               icon: "13d",
-               path: (<SnowComponent/>)
-             },
-             {
-               id: 621,
-               weather: "Snow",
-               description: "brève chute de neige",
-               icon: "13d",
-               path: (<SnowComponent/>)
-             },
-             {
-               id: 622,
-               weather: "Snow",
-               description: "forte chute de neige par intermitence",
-               icon: "13d",
-               path: (<SnowComponent/>)
-             },
-             {
-               id: 701,
-               weather: "Mist",
-               description: "brouillard",
-               icon: "50d"
-             },
-             {
-               id: 711,
-               weather: "Smoke",
-               description: "fumée",
-               icon: "50d"
-             },
-             {
-               id: 721,
-               weather: "Haze",
-               description: "brume",
-               icon: "50d"
-             },
-             {
-               id: 731,
-               weather: "Dust",
-               description: "Sable/poussière",
-               icon: "50d"
-             },
-             {
-               id: 741,
-               weather: "Fog",
-               description: "brouillard",
-               icon: "50d"
-             },
-             {
-               id: 751,
-               weather: "Sand",
-               description: "sable",
-               icon: "50d"
-             },
-             {
-               id: 761,
-               weather: "Dust",
-               description: "poussière",
-               icon: "50d"
-             },
-             {
-               id: 701,
-               weather: "Ash",
-               description: "cendre volcanic/cendre",
-               icon: "50d"
-             },
-             {
-               id: 771,
-               weather: "Squall",
-               description: "bourrasque",
-               icon: "50d"
-             },
-             {
-               id: 781,
-               weather: "Tornado",
-               description: "tornade",
-               icon: "50d"
-             },
-             {
-               id: 800,
-               weather: "Clear",
-               description: "ciel dégagé",
-               icon: "01d",
-               path:(<SoleilComponent/>)
-             },
-             {
-               id: 801,
-               weather: "Clouds",
-               description: "entre 11-25% de nuage",
-               icon: "02d",
-               path: (<CouldsComponent/>)
-             },
-             {
-               id: 802,
-               weather: "Clouds",
-               description: "entre 25-50% de nuage",
-               icon: "03d",
-               path: (<CouldsComponent/>)
-             },
-             {
-               id: 803,
-               weather: "Clouds",
-               description: "entre 50-84% de nuage",
-               icon: "04d",
-               path: (<CouldsComponent/>)
-             },
-             {
-               id: 804,
-               weather: "Clouds",
-               description: "entre 85-100% de nuage",
-               icon: "04d",
-               path: (<CouldsComponent/>)
-             },
+              {
+                id: 200,
+                weather: "Orage",
+                description: "orage avec pluie légère",
+                icon: "11d",
+                path: (<ThunderComponent/>)
+              },
+              {
+                id: 201,
+                weather: "Orage",
+                description: "orage avec pluie ",
+                icon: "11d",
+                path: (<ThunderComponent/>)
+              },
+              {
+                id: 202,
+                weather: "Orage",
+                description: "orage avec forte pluie",
+                icon: "11d",
+                path: (<ThunderComponent/>)
+              },
+              {
+                id: 210,
+                weather: "Orage",
+                description: "orage léger",
+                icon: "11d",
+                path: (<ThunderComponent/>)
+              },
+              {
+                id: 211,
+                weather: "Orage",
+                description: "orage",
+                icon: "11d",
+                path: (<ThunderComponent/>)
+              },
+              {
+                id: 212,
+                weather: "Orage",
+                description: "fort orage",
+                icon: "11d",
+                path: (<ThunderComponent/>)
+              },
+              {
+                id: 221,
+                weather: "Orage",
+                description: "orage",
+                icon: "11d",
+                path: (<ThunderComponent/>)
+              },
+              {
+                id: 230,
+                weather: "Orage",
+                description: "orage avec bruine légère",
+                icon: "11d",
+                path: (<ThunderComponent/>)
+              },
+              {
+                id: 231,
+                weather: "Orage",
+                description: "orage avec bruine ",
+                icon: "11d",
+                path: (<ThunderComponent/>)
+              },
+              {
+                id: 232,
+                weather: "Orage",
+                description: "orage avec forte bruine",
+                icon: "11d",
+                path: (<ThunderComponent/>)
+              },
+              {
+                id: 300,
+                weather: "Drizzle",
+                description: "bruine d'intensité légère",
+                icon: "09d",
+                path: (<RainComponent/>)
+              },
+              {
+                id: 301,
+                weather: "Drizzle",
+                description: "bruine",
+                icon: "09d",
+                path: (<RainComponent/>)
+              },
+              {
+                id: 302,
+                weather: "Drizzle",
+                description: "bruine de forte intensité",
+                icon: "09d",
+                path: (<RainComponent/>)
+              },
+              {
+                id: 310,
+                weather: "Drizzle",
+                description: "bruine d'intensité légère et pluie",
+                icon: "09d",
+                path: (<RainComponent/>)
+              },
+              {
+                id: 311,
+                weather: "Drizzle",
+                description: "bruine et pluie",
+                icon: "09d",
+                path: (<RainComponent/>)
+              },
+              {
+                id: 312,
+                weather: "Drizzle",
+                description: "forte bruine pluie forte",
+                icon: "09d",
+                path: (<RainComponent/>)
+              },
+              {
+                id: 313,
+                weather: "Drizzle",
+                description: "brèves averses et bruine",
+                icon: "09d",
+                path: (<RainComponent/>)
+              },
+              {
+                id: 314,
+                weather: "Drizzle",
+                description: "fortes averses pluie forte",
+                icon: "09d",
+                path: (<RainComponent/>)
+              },
+              {
+                id: 321,
+                weather: "Drizzle",
+                description: "brèves bruine",
+                icon: "09d",
+                path: (<RainComponent/>)
+              },
+              {
+                id: 500,
+                weather: "Rain",
+                description: "légère pluie",
+                icon: "10d",
+                path: (<LightRainComponent/>)
+              },
+              {
+                id: 501,
+                weather: "Rain",
+                description: "pluie modéré",
+                icon: "10d",
+                path: (<LightRainComponent/>)
+              },
+              {
+                id: 502,
+                weather: "Rain",
+                description: "pluie de forte intensité",
+                icon: "10d",
+                path: (<LightRainComponent/>)
+              },
+              {
+                id: 503,
+                weather: "Rain",
+                description: "très forte pluie",
+                icon: "10d",
+                path: (<LightRainComponent/>)
+              },
+              {
+                id: 504,
+                weather: "Rain",
+                description: "pluie extrème",
+                icon: "10d",
+                path: (<LightRainComponent/>)
+              },
+              {
+                id: 511,
+                weather: "Rain",
+                description: "pluie verglaçante",
+                icon: "10d",
+                path: (<LightRainComponent/>)
+              },
+              {
+                id: 520,
+                weather: "520",
+                description: "pluie légère par intermitence",
+                icon: "10d",
+                path: (<LightRainComponent/>)
+              },
+              {
+                id: 521,
+                weather: "Rain",
+                description: "pluie par intermitence",
+                icon: "10d",
+                path: (<LightRainComponent/>)
+              },
+              {
+                id: 522,
+                weather: "Rain",
+                description: "forte pluie par intermitence",
+                icon: "10d",
+                path: (<LightRainComponent/>)
+              },
+              {
+                id: 531,
+                weather: "Rain",
+                description: "forte pluie par intermitence",
+                icon: "10d",
+                path: (<LightRainComponent/>)
+              },
+              {
+                id: 600,
+                weather: "Snow",
+                description: "faible chute de neige",
+                icon: "13d",
+                path: (<SnowComponent/>)
+              },
+              {
+                id: 601,
+                weather: "Snow",
+                description: "neige",
+                icon: "13d",
+                path: (<SnowComponent/>)
+              },
+              {
+                id: 602,
+                weather: "Snow",
+                description: "forte chute de neige",
+                icon: "13d",
+                path: (<SnowComponent/>)
+              },
+              {
+                id: 611,
+                weather: "Snow",
+                description: "neige fondue",
+                icon: "13d",
+                path: (<SnowComponent/>)
+              },
+              {
+                id: 612,
+                weather: "Snow",
+                description: "faible chute de neige fondu",
+                icon: "13d",
+                path: (<SnowComponent/>)
+              },
+              {
+                id: 613,
+                weather: "Snow",
+                description: "brève chute de neige fondu",
+                icon: "13d",
+                path: (<SnowComponent/>)
+              },
+              {
+                id: 615,
+                weather: "Snow",
+                description: "légère plui et chute de neige",
+                icon: "13d",
+                path: (<SnowComponent/>)
+              },
+              {
+                id: 616,
+                weather: "Snow",
+                description: "neige et pluie",
+                icon: "13d",
+                path: (<SnowComponent/>)
+              },
+              {
+                id: 620,
+                weather: "Snow",
+                description: "brève chute de neige de faible intensité",
+                icon: "13d",
+                path: (<SnowComponent/>)
+              },
+              {
+                id: 621,
+                weather: "Snow",
+                description: "brève chute de neige",
+                icon: "13d",
+                path: (<SnowComponent/>)
+              },
+              {
+                id: 622,
+                weather: "Snow",
+                description: "forte chute de neige par intermitence",
+                icon: "13d",
+                path: (<SnowComponent/>)
+              },
+              {
+                id: 701,
+                weather: "Mist",
+                description: "brouillard",
+                icon: "50d",
+                path: (<FogComponent/>)
+              },
+              {
+                id: 711,
+                weather: "Smoke",
+                description: "fumée",
+                icon: "50d",
+                path: (<FogComponent/>)
+              },
+              {
+                id: 721,
+                weather: "Haze",
+                description: "brume",
+                icon: "50d",
+                path: (<FogComponent/>)
+              },
+              {
+                id: 731,
+                weather: "Dust",
+                description: "Sable/poussière",
+                icon: "50d",
+                path: (<FogComponent/>)
+              },
+              {
+                id: 741,
+                weather: "Fog",
+                description: "brouillard",
+                icon: "50d",
+                path: (<FogComponent/>)
+              },
+              {
+                id: 751,
+                weather: "Sand",
+                description: "sable",
+                icon: "50d",
+                path: (<FogComponent/>)
+              },
+              {
+                id: 761,
+                weather: "Dust",
+                description: "poussière",
+                icon: "50d",
+                path: (<FogComponent/>)
+              },
+              {
+                id: 701,
+                weather: "Ash",
+                description: "cendre volcanic/cendre",
+                icon: "50d",
+                path: (<FogComponent/>)
+              },
+              {
+                id: 771,
+                weather: "Squall",
+                description: "bourrasque",
+                icon: "50d",
+                path: (<FogComponent/>)
+              },
+              {
+                id: 781,
+                weather: "Tornado",
+                description: "tornade",
+                icon: "50d",
+                path: (<FogComponent/>)
+              },
+              {
+                id: 800,
+                weather: "Clear",
+                description: "ciel dégagé",
+                icon: "01d",
+                path:(<SoleilComponent/>)
+              },
+              {
+                id: 801,
+                weather: "Clouds",
+                description: "entre 11-25% de nuage",
+                icon: "02d",
+                path: (<CouldsSunComponent/>)
+              },
+              {
+                id: 802,
+                weather: "Clouds",
+                description: "entre 25-50% de nuage",
+                icon: "03d",
+                path: (<CloudComponent/>)
+              },
+              {
+                id: 803,
+                weather: "Clouds",
+                description: "entre 50-84% de nuage",
+                icon: "04d",
+                path: (<CloudsComponent/>)
+              },
+              {
+                id: 804,
+                weather: "Clouds",
+                description: "entre 85-100% de nuage",
+                icon: "04d",
+                path: (<CloudsComponent/>)
+              },
             ]
       }
   }
@@ -391,9 +416,8 @@ export default class City extends Component {
   _iconMeteo = () => {
     this.state.conditionWeather.forEach( value => {
         if(value == null){
-          console.log('il y a un null ici')
         }
-        if(this.props.responseApiMeteo.weather[0].id == value.id){
+        if(this.props.icon == value.id){
             var cond = {
                 path: value.path
             }
@@ -406,7 +430,7 @@ export default class City extends Component {
 
   const color = this.props.color
   const propsState = this.props
-  console.log(this.props)
+
   if(this.state.condition == null){
     return (
       <View data-layer="c5ca152e-c30f-4771-8df6-e408d0aa3faf" style={styles.city}>
@@ -471,7 +495,7 @@ const styles = StyleSheet.create({
     "paddingBottom": 0,
     "paddingLeft": 0,
     "width": "auto",
-    "height": 300,
+    "height": 100,
     "left": 0,
     "top": 0,
     "right": 0,
