@@ -16,7 +16,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import Amplify from 'aws-amplify';
 import { Auth } from 'aws-amplify';
 
-export const FavoriteView = ({props, navigation}) => {
+const FavoriteView = ({props, navigation}) => {
 
   const dispatch = useDispatch()
   const listFavorite = useSelector(state => state.listFavorite)
@@ -31,8 +31,6 @@ export const FavoriteView = ({props, navigation}) => {
   const [tmpId, setTmpId] = useState(null)
 
   useEffect(() => {
-    console.log('user')
-    console.log(user)
     if(user.length > 0){
       var userInfos = user.shift().idUsers
 
@@ -48,34 +46,22 @@ export const FavoriteView = ({props, navigation}) => {
         console.error(error);
       });
     }
+  }, [user])
+
+  useEffect(() => {
     if(typeof listFavorite != "undefined" && listFavorite.length > 0){
-      console.log('test')
       listFavorite.map((item) => {
         item.map((value) => {
-          console.log(item)
           searchByCity(value)
         })
       })
     }
-  }, [listFavorite, user])
+  }, [listFavorite])
 
 
-  function colorIndex(responseApiAir){
-    if (responseApiAir.data.aqi >= 0 && responseApiAir.data.aqi <= 50){
-      setColor("#28D3B0")
-      return "#28D3B0"
-    }else if (responseApiAir.data.aqi >= 51 && responseApiAir.data.aqi <= 150){
-      setColor("#FFBB00")
-      return "#FFBB00"
-    }else if (responseApiAir.data.aqi >= 151){
-      setColor("#FF5656")
-      return "#FF5656"
-    }
-  }
+
 
   function searchByCity(all){
-    console.log('all')
-    console.log(all);
       fetch('https://api.openweathermap.org/data/2.5/weather?lat='+all.latitude+'&lon='+all.longitude+'&APPID=505c84426a182da1a7178151dccdb616', {
         method: 'GET'})
       .then((response) => response.json())
@@ -86,6 +72,14 @@ export const FavoriteView = ({props, navigation}) => {
           .then((responseJsonWaqi) => {
           setResponseApiAir(responseJsonWaqi);
           setResponseApiMeteo(resultat)
+          if (responseJsonWaqi.data.aqi >= 0 && responseJsonWaqi.data.aqi <= 50){
+            var tmpColor = "#28D3B0"
+          }else if (responseJsonWaqi.data.aqi >= 51 && responseJsonWaqi.data.aqi <= 150){
+            var tmpColor = "#FFBB00"
+          }else if (responseJsonWaqi.data.aqi >= 151){
+            var tmpColor = "#FF5656"
+          }
+          var i = 0
           var line = {
             id: all.idFavoris,
             country: resultat.sys.country,
@@ -94,10 +88,18 @@ export const FavoriteView = ({props, navigation}) => {
             temperatureFeel: (resultat.main.feels_like - 273.15).toFixed(1) + "°C",
             idMeteo: 200,
             ville: resultat.name,
-            color: colorIndex(responseJsonWaqi)
+            color: tmpColor,
+            responseApiAir: responseJsonWaqi,
+            responseApiMeteo: resultat
           }
-
-          setListSearch(listSearch => listSearch.concat(line))
+          listSearch.map((value) => {
+            if(value.id == all.idFavoris){
+              i++
+            }
+          })
+          if(i == 0){
+            setListSearch(listSearch => listSearch.concat(line))
+          }
           return responseJsonWaqi
         }).catch (error => {
           setErrorFetch(error)
@@ -128,14 +130,13 @@ export const FavoriteView = ({props, navigation}) => {
   }
 
   if(listSearch && listSearch.length > 0){
-    console.log(listSearch)
     return (
         <SafeAreaView style={styles.favoris}>
           <FlatList
             bounces={false}
             data={listSearch}
             keyExtractor={item => item.id.toString()}
-            renderItem={({item}) =>  <TouchableOpacity onPress={() => navigation.navigate('Detail', {responseApiAir: responseApiAir, responseApiMeteo: responseApiMeteo, color: color})}><City icon={item.idMeteo} icon={responseApiMeteo.weather[0].id} aqi={item.aqi} color={item.color} temp={item.temperature} tr={item.temperatureFeel} ville={item.ville} pays={item.country} /></TouchableOpacity>}
+            renderItem={({item}) =>  <TouchableOpacity onPress={() => navigation.navigate('Detail', {responseApiAir: item.responseApiAir, responseApiMeteo: item.responseApiMeteo, color: item.color})}><City icon={item.idMeteo} icon={responseApiMeteo.weather[0].id} aqi={item.aqi} color={item.color} temp={item.temperature} tr={item.temperatureFeel} ville={item.ville} pays={item.country} /></TouchableOpacity>}
           />
         </SafeAreaView>
     )

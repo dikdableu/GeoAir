@@ -49,7 +49,7 @@ import FogComponent from './Icones/50d.js'
 
 
 
-const HomeView = () => {
+function HomeView() {
 
   const listFavorite = useSelector(state => state.listFavorite)
   const user = useSelector(state => state.user)
@@ -476,6 +476,25 @@ const HomeView = () => {
 
   }, [])
 
+  useEffect(() => {
+    console.log(user)
+    if(user.length > 0){
+      var userInfos = user.shift().idUsers
+
+      fetch('http://3.126.246.233:3000/listFavoris?idFkUsers='+ userInfos, {
+        method: 'get'
+      })
+      .then((response) => response.json())
+      .then((resultat) => {
+        dispatch({type: "INIT_FAVORITE", data: resultat })
+      })
+      .catch( error => {
+        setErrorFetch(error)
+        console.error(error);
+      });
+    }
+  }, [user])
+
 
 
   useEffect(() => {
@@ -502,7 +521,7 @@ const HomeView = () => {
   }, [responseApiMeteo])
 
 
-  _getLocationAsync = async () => {
+  const _getLocationAsync = async () => {
       let { status } = await Permissions.askAsync(Permissions.LOCATION);
       if (status !== 'granted'){
         console.log('Permission to access location was denied');
@@ -511,13 +530,13 @@ const HomeView = () => {
       setLocation(await Location.getCurrentPositionAsync({}))
   };
 
-  _apiAir = (lat, long) => {
+  const _apiAir = (lat, long) => {
     fetch('https://api.waqi.info/feed/geo:'+lat+';'+long+'/?token=85ab63dee549b4825ea4e18973ba6076cbaf3dd4', {
       method: 'GET'})
     .then((responsewaqi) => responsewaqi.json())
     .then((responseJsonWaqi) => {
       setResponseApiAir(responseJsonWaqi)
-      _colorIndex();
+      _colorIndex(responseJsonWaqi);
       fetch('https://api.openweathermap.org/data/2.5/weather?lat='+lat+'&lon='+long+'4&APPID=505c84426a182da1a7178151dccdb616', {
       method: 'GET'})
       .then((responseWeather) => responseWeather.json())
@@ -546,21 +565,22 @@ const HomeView = () => {
     });
   }
 
-  _colorIndex = () => {
-    if (responseApiAir.data.aqi >= 0 && responseApiAir.data.aqi <= 50){
+  const _colorIndex = (response) => {
+    if (response.data.aqi >= 0 && response.data.aqi <= 50){
       setColor("#28D3B0")
       setTextInside("La qualité de l'air est jugée satisfaisante, et la pollution de l'air pose peu ou pas de risque.")
 
-    }else if (responseApiAir.data.aqi >= 51 && responseApiAir.data.aqi <= 150){
+    }else if (response.data.aqi >= 51 && response.data.aqi <= 150){
       setColor("#FFBB00")
       setTextInside("La qualité de l'air est acceptable; Cependant, pour certains polluants, il peut y avoir un problème de santé modérée pour un très petit nombre de personnes qui sont particulièrement sensibles à la pollution de l'air.")
-    }else if (responseApiAir.data.aqi >= 151){
+    }else if (response.data.aqi >= 151){
       setColor("#FF5656")
       setTextInside("Avertissements de santé de conditions d'urgence. Toutes la population est plus susceptible d'être affecté.")
     }
   }
 
-  _addFavorite = () => {
+  const _addFavorite = () => {
+    console.log(listFavorite)
     if(user.length > 0){
       var userInfos = user[0].username
 
