@@ -1,4 +1,4 @@
-import React,{ useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Dimensions, TouchableOpacity } from 'react-native';
 
 import HomeView from './src/view/HomeView';
@@ -208,21 +208,19 @@ const styles = StyleSheet.create({
 
 const AppContainer = createAppContainer(TabNavigator);
 
-class App extends React.Component {
-  constructor(props, context) {
-    super(props, context)
-    this.state = {
-      dataLoaded: false
-    }
-    DBLocal.createDB()
-  }
+const App = (props) => {
 
-render(){
-  if(!this.state.dataLoaded){
+  const [dataLoaded, setDataLoaded] = useState(false)
+
+  useEffect(() => {
+    DBLocal.createDB()
+  }, [])
+
+  if(!dataLoaded){
       return (
         <AppLoading
           startAsync={fetchFonts}
-          onFinish={() => this.setState({dataLoaded: true})}
+          onFinish={() => setDataLoaded(true)}
         />
       );
     }
@@ -231,7 +229,6 @@ render(){
       <SafeAreaProvider><AppContainer /></SafeAreaProvider>
     </Provider>
     )
-  }
 }
 
 
