@@ -11,16 +11,18 @@ class DBLocal {
   export function createDB() {
     db.transaction(tx => {
       tx.executeSql(
-        "create table if not exists Favoris (id int(6) primary key not null auto_increment, villes varchar(250) not null , pays varchar(10) not null, latitude decimal(9,6) not null, longitude decimal(9,6) not null);", [], (_, { rows: { _array } }) => this.items = _array, (e) => console.log(e))
-    }, (e) => {console.log(e)});
+        "create table if not exists Favoris (id INTEGER PRIMARY KEY AUTOINCREMENT, villes text not null UNIQUE, pays text not null, latitude decimal(9,6) not null, longitude decimal(9,6) not null);", [], (_, { rows: { _array } }) => this.items = _array, (transaction, e) => console.log(e))
+    }, (transaction, e) => console.log(e));
   };
 
   export function listFavoris() {
+    var result
     db.transaction(tx => {
       tx.executeSql(
         `select * from Favoris`,[],
-        (_, { rows: { _array } }) => this.items = _array, (e) => console.log(e))
+        (_, { rows: { _array } }) => this.items = _array, (transaction, e) => console.log(e))
     });
+    return this.items
   }
 
   export function deleteFavoris(id) {
@@ -34,6 +36,7 @@ class DBLocal {
   export function insertFavoris(villes, pays, latitude, longitude) {
     db.transaction(tx => {
       tx.executeSql(
-        `insert into Favoris(villes, pays, latitude, longitude) values(?, ?, ?, ?)`, [villes, pays, latitude, longitude], (_, { rows: { _array } }) => this.items = _array, (e) => console.log(e))
+        `insert into Favoris(villes, pays, latitude, longitude) values(?, ?, ?, ?)`, [villes, pays, latitude, longitude], (_, { rows: { _array } }) => console.log(_array), (transaction, e) => console.log(e))
   })
+  console.log(this)
 }

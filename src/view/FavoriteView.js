@@ -32,30 +32,9 @@ const FavoriteView = ({props, navigation}) => {
   const [tmpId, setTmpId] = useState(null)
 
   useEffect(() => {
-<<<<<<< HEAD
 
     dispatch({type: "INIT_FAVORITE", data: DBLocal.listFavoris() })
 
-=======
-    if(user.length > 0){
-      var userInfos = user.shift().idUsers
-
-      fetch('http://3.126.246.233:3000/listFavoris?idFkUsers='+ userInfos, {
-        method: 'get'
-      })
-      .then((response) => response.json())
-      .then((resultat) => {
-        dispatch({type: "INIT_FAVORITE", data: resultat })
-      })
-      .catch( error => {
-        setErrorFetch(error)
-        console.error(error);
-      });
-    }
-  }, [user])
-
-  useEffect(() => {
->>>>>>> 92c3a063746dcbacd92c4aae86a816299d3cd11f
     if(typeof listFavorite != "undefined" && listFavorite.length > 0){
       listFavorite.map((item) => {
         item.map((value) => {

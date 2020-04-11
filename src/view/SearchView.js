@@ -16,11 +16,8 @@ import Toast from 'react-native-root-toast';
 import * as data from '../../db/favorite.json';
 import { connect } from 'react-redux'
 import Autocomplete from 'react-native-autocomplete-input'
-<<<<<<< HEAD
 import * as DBLocal from '../../db/DBLocal.js'
-=======
-import ListComponent from "./ListComponent.js"
->>>>>>> 92c3a063746dcbacd92c4aae86a816299d3cd11f
+import ListComponent from './ListComponent.js'
 
 
 export default function SearchView({props, navigation}) {
@@ -119,13 +116,7 @@ export default function SearchView({props, navigation}) {
 
     }
 
-<<<<<<< HEAD
   _addFavorite = () => {
-=======
-  const _addFavorite = () => {
-    if(user.length > 0){
-      var userInfos = user[0].username
->>>>>>> 92c3a063746dcbacd92c4aae86a816299d3cd11f
 
     dispatch({type: "ADD_FAVORITE", listFavorite: DBLocal.insertFavoris(responseApiMeteo.name, responseApiMeteo.sys.country, responseApiMeteo.coord.lat, responseApiMeteo.coord.lon)})
 
@@ -138,52 +129,6 @@ export default function SearchView({props, navigation}) {
       delay: 0,
     });
 
-<<<<<<< HEAD
-=======
-      Toast.show('Ajouté aux favoris', {
-        duration: Toast.durations.SHORT,
-        position: Toast.positions.CENTER,
-        shadow: true,
-        animation: true,
-        hideOnPress: true,
-        delay: 0,
-      });
-    }else {
-      fetch('http://3.126.246.233:3000/addUser?username='+ Auth.user.username, {
-        method: 'get'
-      })
-      .then((response) => response.json())
-      .then((resultat) => {
-        console.log(resultat[0])
-        dispatch({type: "ADD_USER", user: resultat[0]})
-        fetch('http:/3.126.246.233:3000/addFavorite?username='+ resultat[0].username+'&villes='+responseApiMeteo.name+'&latitude='+responseApiMeteo.coord.lat+'&longitude='+responseApiMeteo.coord.lon+'&pays='+ responseApiMeteo.sys.country, {
-          method: 'get'
-        })
-        .then((resp) => resp.json())
-        .then((res) => {
-          dispatch({type: "ADD_FAVORITE", listFavorite: res})
-          return res
-        })
-        .catch( error => {
-          setErrorFetch(error)
-          console.error(error);
-        });
-
-        Toast.show('Ajouté aux favoris', {
-          duration: Toast.durations.SHORT,
-          position: Toast.positions.CENTER,
-          shadow: true,
-          animation: true,
-          hideOnPress: true,
-          delay: 0,
-        });
-      })
-      .catch( error => {
-        alert(error)
-        console.error(error);
-      });
-    }
->>>>>>> 92c3a063746dcbacd92c4aae86a816299d3cd11f
   }
 
   const _setInput = (input) => {

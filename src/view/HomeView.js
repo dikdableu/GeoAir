@@ -566,14 +566,7 @@ function HomeView() {
     }
   }
 
-<<<<<<< HEAD
   _addFavorite = () => {
-=======
-  const _addFavorite = () => {
-    console.log(listFavorite)
-    if(user.length > 0){
-      var userInfos = user[0].username
->>>>>>> 92c3a063746dcbacd92c4aae86a816299d3cd11f
 
       dispatch({type: "ADD_FAVORITE", listFavorite: DBLocal.insertFavoris(responseApiMeteo.name, responseApiMeteo.sys.country, responseApiMeteo.coord.lat, responseApiMeteo.coord.lon)})
 
