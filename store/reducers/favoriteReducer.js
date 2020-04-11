@@ -7,6 +7,7 @@ function toggleFavorite(state = [], action) {
       break;
     case 'INIT_FAVORITE':
       console.log("init")
+      console.log(action.data)
       return [
         ...state, action.data
       ]

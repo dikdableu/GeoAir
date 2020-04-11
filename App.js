@@ -30,7 +30,7 @@ import {Image as SvgImage} from 'react-native-svg';
 import { Provider } from 'react-redux'
 import Store from './store/configureStore'
 
-Amplify.configure(config.cognito);
+import * as DBLocal from './db/DBLocal.js'
 
 var {height, width} = Dimensions.get('window');
 var indiceHeight = width < height ? 812/height : 375/height
@@ -214,7 +214,7 @@ class App extends React.Component {
     this.state = {
       dataLoaded: false
     }
-
+    DBLocal.createDB()
   }
 
 render(){
@@ -234,10 +234,5 @@ render(){
   }
 }
 
-Amplify.I18n.setLanguage('fr');
 
-export default withAuthenticator(App, {
-  signUpConfig: {
-    defaultCountryCode: "33"
-  },
-})
+export default App

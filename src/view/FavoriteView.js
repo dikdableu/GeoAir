@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import Amplify from 'aws-amplify';
 import { Auth } from 'aws-amplify';
+import * as DBLocal from '../../db/DBLocal.js'
 
 export const FavoriteView = ({props, navigation}) => {
 
@@ -31,23 +32,9 @@ export const FavoriteView = ({props, navigation}) => {
   const [tmpId, setTmpId] = useState(null)
 
   useEffect(() => {
-    console.log('user')
-    console.log(user)
-    if(user.length > 0){
-      var userInfos = user.shift().idUsers
 
-      fetch('http://3.126.246.233:3000/listFavoris?idFkUsers='+ userInfos, {
-        method: 'get'
-      })
-      .then((response) => response.json())
-      .then((resultat) => {
-        dispatch({type: "INIT_FAVORITE", data: resultat })
-      })
-      .catch( error => {
-        setErrorFetch(error)
-        console.error(error);
-      });
-    }
+    dispatch({type: "INIT_FAVORITE", data: DBLocal.listFavoris() })
+
     if(typeof listFavorite != "undefined" && listFavorite.length > 0){
       console.log('test')
       listFavorite.map((item) => {

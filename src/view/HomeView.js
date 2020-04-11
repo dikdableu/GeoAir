@@ -47,7 +47,7 @@ import ThunderComponent from './Icones/11d.js'
 import SnowComponent from './Icones/13d.js'
 import FogComponent from './Icones/50d.js'
 
-
+import * as DBLocal from '../../db/DBLocal.js'
 
 const HomeView = () => {
 
@@ -460,20 +460,7 @@ const HomeView = () => {
   )
 
   useEffect(() => {
-
     _getLocationAsync()
-    fetch('http://3.126.246.233:3000/addUser?username='+ Auth.user.username, {
-      method: 'get'
-    })
-    .then((response) => response.json())
-    .then((resultat) => {
-      dispatch({type: "ADD_USER", user: resultat[0]})
-    })
-    .catch( error => {
-      alert(error)
-      console.error(error);
-    });
-
   }, [])
 
 
@@ -561,21 +548,8 @@ const HomeView = () => {
   }
 
   _addFavorite = () => {
-    if(user.length > 0){
-      var userInfos = user[0].username
 
-      fetch('http:/3.126.246.233:3000/addFavorite?username='+ userInfos+'&villes='+responseApiMeteo.name+'&latitude='+responseApiMeteo.coord.lat+'&longitude='+responseApiMeteo.coord.lon+'&pays='+ responseApiMeteo.sys.country, {
-        method: 'get'
-      })
-      .then((response) => response.json())
-      .then((resultat) => {
-        dispatch({type: "ADD_FAVORITE", listFavorite: resultat})
-        return resultat
-      })
-      .catch( error => {
-        setErrorFetch(error)
-        console.error(error);
-      });
+      dispatch({type: "ADD_FAVORITE", listFavorite: DBLocal.insertFavoris(responseApiMeteo.name, responseApiMeteo.sys.country, responseApiMeteo.coord.lat, responseApiMeteo.coord.lon)})
 
       Toast.show('Ajouté aux favoris', {
         duration: Toast.durations.SHORT,
@@ -586,7 +560,7 @@ const HomeView = () => {
         delay: 0,
       });
     }
-  }
+
     if(loading){
       return (
       <View style={{flex: 1}}>

@@ -16,6 +16,7 @@ import Toast from 'react-native-root-toast';
 import * as data from '../../db/favorite.json';
 import { connect } from 'react-redux'
 import Autocomplete from 'react-native-autocomplete-input'
+import * as DBLocal from '../../db/DBLocal.js'
 
 
 export default function SearchView({props, navigation}) {
@@ -38,7 +39,6 @@ export default function SearchView({props, navigation}) {
   const [charged, setCharged] = useState('')
 
     useEffect(() => {
-      console.log(search)
       fetch('http://3.126.246.233:3000/autocomplete?villes='+ search, {
         method: 'get'
       })
@@ -151,31 +151,18 @@ export default function SearchView({props, navigation}) {
     }
 
   _addFavorite = () => {
-    if(user.length > 0){
-      var userInfos = user[0].username
 
-      fetch('http:/3.126.246.233:3000/addFavorite?username='+ userInfos+'&villes='+responseApiMeteo.name+'&latitude='+responseApiMeteo.coord.lat+'&longitude='+responseApiMeteo.coord.lon+'&pays='+ responseApiMeteo.sys.country, {
-        method: 'get'
-      })
-      .then((response) => response.json())
-      .then((resultat) => {
-        dispatch({type: "ADD_FAVORITE", listFavorite: resultat})
-        return resultat
-      })
-      .catch( error => {
-        setErrorFetch(error)
-        console.error(error);
-      });
+    dispatch({type: "ADD_FAVORITE", listFavorite: DBLocal.insertFavoris(responseApiMeteo.name, responseApiMeteo.sys.country, responseApiMeteo.coord.lat, responseApiMeteo.coord.lon)})
 
-      Toast.show('Ajouté aux favoris', {
-        duration: Toast.durations.SHORT,
-        position: Toast.positions.CENTER,
-        shadow: true,
-        animation: true,
-        hideOnPress: true,
-        delay: 0,
-      });
-    }
+    Toast.show('Ajouté aux favoris', {
+      duration: Toast.durations.SHORT,
+      position: Toast.positions.CENTER,
+      shadow: true,
+      animation: true,
+      hideOnPress: true,
+      delay: 0,
+    });
+
   }
 
   _setInput = (input) => {
