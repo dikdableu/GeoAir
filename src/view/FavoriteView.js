@@ -9,16 +9,9 @@ import City from "./city.js"
 import { AppLoading} from 'expo';
 import Toast from 'react-native-root-toast';
 import { useDispatch, useSelector } from 'react-redux'
-<<<<<<< HEAD
 import * as DBLocal from '../../db/DBLocal.js'
-=======
-
-import Amplify from 'aws-amplify';
-import { Auth } from 'aws-amplify';
-import * as SQLite from "expo-sqlite";
 
 const db = SQLite.openDatabase("db.db");
->>>>>>> 02071d4d1815c5509d383fc86c529908e1aa4b89
 
 const FavoriteView = ({props, navigation}) => {
 
