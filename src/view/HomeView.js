@@ -53,9 +53,7 @@ function HomeView() {
 
   const listFavorite = useSelector(state => state.listFavorite)
   const user = useSelector(state => state.user)
-
   const dispatch = useDispatch()
-
   const [location, setLocation] = useState(null)
   const [loading, setLoading] = useState(true)
   const [responseApiAir, setResponseApiAir] = useState({})
@@ -462,27 +460,6 @@ function HomeView() {
   useEffect(() => {
     _getLocationAsync()
   }, [])
-
-  useEffect(() => {
-    console.log(user)
-    if(user.length > 0){
-      var userInfos = user.shift().idUsers
-
-      fetch('http://3.126.246.233:3000/listFavoris?idFkUsers='+ userInfos, {
-        method: 'get'
-      })
-      .then((response) => response.json())
-      .then((resultat) => {
-        dispatch({type: "INIT_FAVORITE", data: resultat })
-      })
-      .catch( error => {
-        setErrorFetch(error)
-        console.error(error);
-      });
-    }
-  }, [user])
-
-
 
   useEffect(() => {
     if(location || location != null){

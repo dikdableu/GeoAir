@@ -15,7 +15,9 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import Amplify from 'aws-amplify';
 import { Auth } from 'aws-amplify';
-import * as DBLocal from '../../db/DBLocal.js'
+import * as SQLite from "expo-sqlite";
+
+const db = SQLite.openDatabase("db.db");
 
 const FavoriteView = ({props, navigation}) => {
 
@@ -32,15 +34,34 @@ const FavoriteView = ({props, navigation}) => {
   const [tmpId, setTmpId] = useState(null)
 
   useEffect(() => {
+    db.transaction(tx => {
+      tx.executeSql(
+        `select * from Favoris`,[],
+        (_, { rows: { _array } }) => dispatch({type: "INIT_FAVORITE", data: _array }), (transaction, e) => console.log(e))
+    });
+  }, [])
 
-    dispatch({type: "INIT_FAVORITE", data: DBLocal.listFavoris() })
-
+  useEffect(() => {
+    console.log(listFavorite)
     if(typeof listFavorite != "undefined" && listFavorite.length > 0){
-      listFavorite.map((item) => {
-        item.map((value) => {
-          searchByCity(value)
+      console.log(listSearch)
+      if(listSearch.length == 0 || typeof listSearch == 'undefined'){
+        listFavorite.map((item) => {
+          item.map((value) => {
+            searchByCity(value)
+          })
         })
-      })
+      }else{
+        listSearch.map((value) => {
+          listFavorite.map((item) => {
+            item.map((val) => {
+              if(value.id != val.id){
+                searchByCity(val)
+              }
+            })
+          })
+        })
+      }
     }
   }, [listFavorite])
 
@@ -67,7 +88,7 @@ const FavoriteView = ({props, navigation}) => {
           }
           var i = 0
           var line = {
-            id: all.idFavoris,
+            id: all.id,
             country: resultat.sys.country,
             aqi: responseJsonWaqi.data.aqi,
             temperature: (resultat.main.temp - 273.15).toFixed(1) + "°C",
@@ -79,7 +100,7 @@ const FavoriteView = ({props, navigation}) => {
             responseApiMeteo: resultat
           }
           listSearch.map((value) => {
-            if(value.id == all.idFavoris){
+            if(value.id == all.id){
               i++
             }
           })
