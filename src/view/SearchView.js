@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import PropTypes from "prop-types";
-import {StyleSheet, Text, View, TextInput, FlatList, Picker, ScrollView, TouchableHighlight, Dimensions} from 'react-native';
+import {StyleSheet, Text, View, TextInput, FlatList, Picker, ScrollView, TouchableHighlight, Dimensions, PixelRatio} from 'react-native';
 import {Image as ReactImage, TouchableOpacity, SafeAreaView} from 'react-native';
 import Svg, {Defs, Pattern} from 'react-native-svg';
 import {Path as SvgPath} from 'react-native-svg';
@@ -221,6 +221,8 @@ export default function SearchView({props, navigation}) {
   }
 }
 var {height, width} = Dimensions.get('window');
+var ratio = PixelRatio.get()
+var indiceScreen = ratio == 1 ? 0.25 : ratio == 1.5 ? 0.5 : ratio == 2 ? 0.75 : ratio == 3 ? 1 : ratio > 3 ? 1.2 : 0.2;
 
 const styles = StyleSheet.create({
   "ajouterUnLieux": {

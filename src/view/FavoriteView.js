@@ -1,20 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from "prop-types";
-import {StyleSheet, Text, View, TextInput, FlatList, Picker, ScrollView, TouchableHighlight, Dimensions} from 'react-native';
-import {Image as ReactImage, TouchableOpacity, SafeAreaView} from 'react-native';
+import {StyleSheet, Text, View, TextInput, FlatList, ScrollView, Dimensions, Image as ReactImage, TouchableOpacity, SafeAreaView} from 'react-native';
 import Svg, {Defs, Pattern} from 'react-native-svg';
 import {Path as SvgPath} from 'react-native-svg';
 import {Text as SvgText} from 'react-native-svg';
 import {Image as SvgImage} from 'react-native-svg';
 import City from "./city.js"
-import * as Font from 'expo-font';
 import { AppLoading} from 'expo';
-import * as data from '../../db/favorite.json';
 import Toast from 'react-native-root-toast';
 import { useDispatch, useSelector } from 'react-redux'
-
-import Amplify from 'aws-amplify';
-import { Auth } from 'aws-amplify';
 import * as DBLocal from '../../db/DBLocal.js'
 
 const FavoriteView = ({props, navigation}) => {

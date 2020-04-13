@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, Dimensions, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Dimensions, TouchableOpacity, PixelRatio } from 'react-native';
 
 import HomeView from './src/view/HomeView';
 import SearchView from './src/view/SearchView';
@@ -33,11 +33,8 @@ import Store from './store/configureStore'
 import * as DBLocal from './db/DBLocal.js'
 
 var {height, width} = Dimensions.get('window');
-var indiceHeight = width < height ? 812/height : 375/height
-var indiceWidth = width < height ? 375/width : 812/width
-var indiceScreen = indiceWidth+indiceHeight >= 2 ? 1 : (indiceWidth + indiceHeight) - 0.2
-
-const screenWidth = Math.round(Dimensions.get('window').width);
+var ratio = PixelRatio.get()
+var indiceScreen = ratio == 1 ? 0.25 : ratio == 1.5 ? 0.5 : ratio == 2 ? 0.75 : ratio == 3 ? 1 : ratio > 3 ? 1.2 : 0.2;
 
 
 const Home = createStackNavigator(
