@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import PropTypes from "prop-types";
-import {StyleSheet, Text, View, TextInput, FlatList, Picker, ScrollView, TouchableHighlight, TouchableOpacity, Dimensions} from 'react-native';
+import {StyleSheet, Text, View, TextInput, FlatList, Picker, ScrollView, TouchableHighlight, TouchableOpacity, Dimensions, PixelRatio} from 'react-native';
 import {Image as ReactImage} from 'react-native';
 import Svg, {Defs, Pattern} from 'react-native-svg';
 import {Path as SvgPath} from 'react-native-svg';
@@ -581,7 +581,8 @@ DetailView.defaultProps = {
 var {height, width} = Dimensions.get('window');
 var indiceHeight = width < height ? 812/height : 375/height
 var indiceWidth = width < height ? 375/width : 812/width
-var indiceScreen = indiceWidth+indiceHeight >= 2 ? 1 : (indiceWidth + indiceHeight) - 0.2
+var ratio = PixelRatio.get()
+var indiceScreen = ratio <= 3 ? 1 : ratio > 3 ? 1.2 : 0.2;
 
 
 const styles = StyleSheet.create({
