@@ -30,7 +30,7 @@ class DBLocal {
       tx.executeSql(
         `delete from Favoris where id = ?`,
         [id])
-      })
+      }, (transaction, e) => console.log(e))
     }
 
   export function insertFavoris(villes, pays, latitude, longitude) {

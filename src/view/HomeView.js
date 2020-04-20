@@ -48,7 +48,8 @@ import SnowComponent from './Icones/13d.js'
 import FogComponent from './Icones/50d.js'
 
 import * as DBLocal from '../../db/DBLocal.js'
-
+import * as SQLite from "expo-sqlite";
+const db = SQLite.openDatabase("db.db");
 function HomeView() {
 
   const listFavorite = useSelector(state => state.listFavorite)
@@ -459,6 +460,11 @@ function HomeView() {
 
   useEffect(() => {
     _getLocationAsync()
+    db.transaction(tx => {
+      tx.executeSql(
+        `select * from Favoris`,[],
+        (_, { rows: { _array } }) => dispatch({type: "INIT_FAVORITE", data: _array }), (transaction, e) => console.log(e))
+    });
   }, [])
 
   useEffect(() => {
@@ -544,18 +550,22 @@ function HomeView() {
   }
 
   _addFavorite = () => {
+    DBLocal.insertFavoris(responseApiMeteo.name, responseApiMeteo.sys.country, responseApiMeteo.coord.lat, responseApiMeteo.coord.lon)
+    db.transaction(tx => {
+      tx.executeSql(
+        `select * from Favoris`,[],
+        (_, { rows: { _array } }) => dispatch({type: "INIT_FAVORITE", data: _array }), (transaction, e) => console.log(e))
+    });
+    Toast.show('Ajouté aux favoris', {
+      duration: Toast.durations.SHORT,
+      position: Toast.positions.CENTER,
+      shadow: true,
+      animation: true,
+      hideOnPress: true,
+      delay: 0,
+    });
 
-      dispatch({type: "ADD_FAVORITE", listFavorite: DBLocal.insertFavoris(responseApiMeteo.name, responseApiMeteo.sys.country, responseApiMeteo.coord.lat, responseApiMeteo.coord.lon)})
-
-      Toast.show('Ajouté aux favoris', {
-        duration: Toast.durations.SHORT,
-        position: Toast.positions.CENTER,
-        shadow: true,
-        animation: true,
-        hideOnPress: true,
-        delay: 0,
-      });
-    }
+  }
 
     if(loading){
       return (

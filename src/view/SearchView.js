@@ -18,7 +18,8 @@ import { connect } from 'react-redux'
 import Autocomplete from 'react-native-autocomplete-input'
 import * as DBLocal from '../../db/DBLocal.js'
 import ListComponent from './ListComponent.js'
-
+import * as SQLite from "expo-sqlite";
+const db = SQLite.openDatabase("db.db");
 
 export default function SearchView({props, navigation}) {
   const listFavorite = useSelector(state => state.listFavorite)
@@ -117,9 +118,12 @@ export default function SearchView({props, navigation}) {
     }
 
   _addFavorite = () => {
-
-    dispatch({type: "ADD_FAVORITE", listFavorite: DBLocal.insertFavoris(responseApiMeteo.name, responseApiMeteo.sys.country, responseApiMeteo.coord.lat, responseApiMeteo.coord.lon)})
-
+    vider()
+    db.transaction(tx => {
+      tx.executeSql(
+        `select * from Favoris`,[],
+        (_, { rows: { _array } }) => dispatch({type: "INIT_FAVORITE", data: _array }), (transaction, e) => console.log(e))
+    });
     Toast.show('Ajouté aux favoris', {
       duration: Toast.durations.SHORT,
       position: Toast.positions.CENTER,

@@ -495,12 +495,11 @@ const styles = StyleSheet.create({
     "paddingBottom": 0,
     "paddingLeft": 0,
     "width": "auto",
-    "height": 100,
+    "height": 55,
     "left": 0,
-    "top": 0,
+    "top": -35,
     "right": 0,
     "bottom": 0,
-    "zIndex": 99
   },
   "city_city46e4674a": {
     "opacity": 1,

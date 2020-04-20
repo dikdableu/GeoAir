@@ -31,6 +31,7 @@ import { Provider } from 'react-redux'
 import Store from './store/configureStore'
 
 import * as DBLocal from './db/DBLocal.js'
+import * as SQLite from "expo-sqlite";
 
 var {height, width} = Dimensions.get('window');
 var ratio = PixelRatio.get()

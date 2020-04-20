@@ -19,6 +19,7 @@ import LightRainComponent from './Icones/10d.js'
 import ThunderComponent from './Icones/11d.js'
 import SnowComponent from './Icones/13d.js'
 import FogComponent from './Icones/50d.js'
+import * as SQLite from "expo-sqlite";
 
 export default function DetailView({props, navigation}) {
 

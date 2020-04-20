@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from "prop-types";
-import {StyleSheet, Text, View, TextInput, FlatList, ScrollView, Dimensions, Image as ReactImage, TouchableOpacity, SafeAreaView} from 'react-native';
+import {StyleSheet, Text, View, TextInput, FlatList, ScrollView, Dimensions, Image as ReactImage, TouchableOpacity, SafeAreaView, TouchableHighlight} from 'react-native';
 import Svg, {Defs, Pattern} from 'react-native-svg';
 import {Path as SvgPath} from 'react-native-svg';
 import {Text as SvgText} from 'react-native-svg';
@@ -10,6 +10,8 @@ import { AppLoading} from 'expo';
 import Toast from 'react-native-root-toast';
 import { useDispatch, useSelector } from 'react-redux'
 import * as DBLocal from '../../db/DBLocal.js'
+import * as SQLite from "expo-sqlite";
+import Swipeout from 'react-native-swipeout';
 
 const db = SQLite.openDatabase("db.db");
 
@@ -26,19 +28,11 @@ const FavoriteView = ({props, navigation}) => {
   const [color, setColor] = useState(null)
   const [errorFetch, setErrorFetch] = useState(null)
   const [tmpId, setTmpId] = useState(null)
+  const [rowOpen, setRowOpen] = useState(null)
 
   useEffect(() => {
-    db.transaction(tx => {
-      tx.executeSql(
-        `select * from Favoris`,[],
-        (_, { rows: { _array } }) => dispatch({type: "INIT_FAVORITE", data: _array }), (transaction, e) => console.log(e))
-    });
-  }, [])
 
-  useEffect(() => {
-    console.log(listFavorite)
     if(typeof listFavorite != "undefined" && listFavorite.length > 0){
-      console.log(listSearch)
       if(listSearch.length == 0 || typeof listSearch == 'undefined'){
         listFavorite.map((item) => {
           item.map((value) => {
@@ -124,20 +118,37 @@ const FavoriteView = ({props, navigation}) => {
       });
   }
 
-  function callApi(ville){
-    setTimeout(() => {
-      searchByCity(ville)
-    }, 1000)
+  const deleteFav = () => {
+    db.transaction(tx => {
+      tx.executeSql(`delete from Favoris where id = ?; select * from Favoris;`, [rowOpen], (_, { rows: { _array } }) => dispatch({type: "INIT_FAVORITE", data: _array }), (transaction, e) => console.log(e))
+    }, (transaction, err) => console.log(err))
+    var index = listSearch.findIndex(x => x.id === rowOpen)
+    setListSearch(listSearch.filter((_,i)=> i!== index))
   }
 
+
+
   if(listSearch && listSearch.length > 0){
+    let swipeBtns = [{
+        text: 'Delete',
+        backgroundColor: 'red',
+        underlayColor: 'black',
+        onPress: () => { deleteFav() }
+      }];
+
     return (
         <SafeAreaView style={styles.favoris}>
           <FlatList
             bounces={false}
             data={listSearch}
             keyExtractor={item => item.id.toString()}
-            renderItem={({item}) =>  <TouchableOpacity onPress={() => navigation.navigate('Detail', {responseApiAir: item.responseApiAir, responseApiMeteo: item.responseApiMeteo, color: item.color})}><City icon={item.idMeteo} icon={responseApiMeteo.weather[0].id} aqi={item.aqi} color={item.color} temp={item.temperature} tr={item.temperatureFeel} ville={item.ville} pays={item.country} /></TouchableOpacity>}
+            renderItem={({item}) =>  <Swipeout onOpen={() => {setRowOpen(item.id)}}right={swipeBtns}
+              autoClose='true'
+              backgroundColor= 'transparent'
+              style={{height: 80}}>
+              <TouchableOpacity onPress={() => navigation.navigate('Detail', {responseApiAir: item.responseApiAir, responseApiMeteo: item.responseApiMeteo, color: item.color})}><City icon={item.idMeteo} icon={responseApiMeteo.weather[0].id} aqi={item.aqi} color={item.color} temp={item.temperature} tr={item.temperatureFeel} ville={item.ville} pays={item.country} /></TouchableOpacity>
+            </Swipeout>
+          }
           />
         </SafeAreaView>
     )
@@ -181,23 +192,6 @@ const styles = StyleSheet.create({
     "left": 0,
     "top": 0,
     "right": 0
-  },
-  "favoris_city215502f3": {
-    "opacity": 1,
-    "position": "absolute",
-    "backgroundColor": "transparent",
-    "marginTop": 0,
-    "marginRight": 0,
-    "marginBottom": 0,
-    "marginLeft": 0,
-    "paddingTop": 0,
-    "paddingRight": 0,
-    "paddingBottom": 0,
-    "paddingLeft": 0,
-    "width": 306,
-    "height": 44,
-    "left": 35,
-    "top": 199
   },
 });
 
