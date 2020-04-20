@@ -651,7 +651,7 @@ HomeView.defaultProps = {
 
 var {height, width} = Dimensions.get('window');
 var ratio = PixelRatio.get()
-var indiceScreen = ratio == 1 ? 0.25 : ratio == 1.5 ? 0.5 : ratio == 2 ? 0.75 : ratio == 3 ? 1 : ratio > 3 ? 1.2 : 0.2;
+var indiceScreen = ratio <= 3 ? 1 : ratio > 3 ? 1.2 : 0.2;
 
 
 const styles = StyleSheet.create({
