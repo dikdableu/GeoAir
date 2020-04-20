@@ -31,29 +31,12 @@ const FavoriteView = ({props, navigation}) => {
   const [rowOpen, setRowOpen] = useState(null)
 
   useEffect(() => {
-
     if(typeof listFavorite != "undefined" && listFavorite.length > 0){
-      if(listSearch.length == 0 || typeof listSearch == 'undefined'){
-        listFavorite.map((item) => {
-          item.map((value) => {
-            searchByCity(value)
-          })
-        })
-      }else{
-        listSearch.map((value) => {
-          listFavorite.map((item) => {
-            item.map((val) => {
-              if(value.id != val.id){
-                searchByCity(val)
-              }
-            })
-          })
-        })
-      }
+      listFavorite[0].map((value) => {
+        searchByCity(value)
+      })
     }
   }, [listFavorite])
-
-
 
 
   function searchByCity(all){
@@ -120,8 +103,11 @@ const FavoriteView = ({props, navigation}) => {
 
   const deleteFav = () => {
     db.transaction(tx => {
-      tx.executeSql(`delete from Favoris where id = ?; select * from Favoris;`, [rowOpen], (_, { rows: { _array } }) => dispatch({type: "INIT_FAVORITE", data: _array }), (transaction, e) => console.log(e))
-    }, (transaction, err) => console.log(err))
+      tx.executeSql(`delete from Favoris where id = ?;`, [rowOpen])
+    }, db.transaction(txt => {
+      txt.executeSql(`select * from Favoris;`, (_, { rows: { _array } }) => dispatch({type: "INIT_FAVORITE", data: _array }), (transaction, e) => console.log(e))
+    }, (transaction, err) => console.log(err)),(transaction, err) => console.log(err))
+
     var index = listSearch.findIndex(x => x.id === rowOpen)
     setListSearch(listSearch.filter((_,i)=> i!== index))
   }

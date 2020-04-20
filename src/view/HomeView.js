@@ -550,21 +550,44 @@ function HomeView() {
   }
 
   _addFavorite = () => {
-    DBLocal.insertFavoris(responseApiMeteo.name, responseApiMeteo.sys.country, responseApiMeteo.coord.lat, responseApiMeteo.coord.lon)
     db.transaction(tx => {
-      tx.executeSql(
-        `select * from Favoris`,[],
-        (_, { rows: { _array } }) => dispatch({type: "INIT_FAVORITE", data: _array }), (transaction, e) => console.log(e))
-    });
-    Toast.show('Ajouté aux favoris', {
-      duration: Toast.durations.SHORT,
-      position: Toast.positions.CENTER,
-      shadow: true,
-      animation: true,
-      hideOnPress: true,
-      delay: 0,
-    });
-
+        tx.executeSql(
+          `select * from Favoris`,[],
+          (_, { rows: { _array } }) => {
+            var i = 0
+            _array.map((item) => {
+              if(_array.villes == responseApiMeteo.name){
+                i++
+              }
+            })
+            if(i == 0){
+              tx.executeSql( `insert into Favoris(villes, pays, latitude, longitude) values(?, ?, ?, ?)`, [responseApiMeteo.name, responseApiMeteo.sys.country, responseApiMeteo.coord.lat, responseApiMeteo.coord.lon], db.transaction(tx => {
+                tx.executeSql(
+                  `select * from Favoris`,[],
+                  (_, { rows: { _array } }) => {
+                    dispatch({type: "INIT_FAVORITE", data: _array })
+                    Toast.show('Ajouté aux favoris', {
+                      duration: Toast.durations.SHORT,
+                      position: Toast.positions.CENTER,
+                      shadow: true,
+                      animation: true,
+                      hideOnPress: true,
+                      delay: 0,
+                    });
+                  }, (transaction, e) => console.log(e))
+              }), (transaction, e) => console.log(e, transaction))
+            }else{
+              Toast.show('Existe déjà dans les favoris', {
+                duration: Toast.durations.SHORT,
+                position: Toast.positions.CENTER,
+                shadow: true,
+                animation: true,
+                hideOnPress: true,
+                delay: 0,
+              });
+            }
+          }, (transaction, e) => console.log(e))
+    })
   }
 
     if(loading){

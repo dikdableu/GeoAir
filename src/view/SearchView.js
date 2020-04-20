@@ -120,10 +120,14 @@ export default function SearchView({props, navigation}) {
   _addFavorite = () => {
     vider()
     db.transaction(tx => {
-      tx.executeSql(
-        `select * from Favoris`,[],
-        (_, { rows: { _array } }) => dispatch({type: "INIT_FAVORITE", data: _array }), (transaction, e) => console.log(e))
-    });
+      tx.executeSql( `insert into Favoris(villes, pays, latitude, longitude) values(?, ?, ?, ?)`, [responseApiMeteo.name, responseApiMeteo.sys.country, responseApiMeteo.coord.lat, responseApiMeteo.coord.lon], db.transaction(tx => {
+        tx.executeSql(
+          `select * from Favoris`,[],
+          (_, { rows: { _array } }) => dispatch({type: "INIT_FAVORITE", data: _array }), (transaction, e) => console.log(e))
+      }), (transaction, e) => console.log(e, transaction))
+    })
+
+
     Toast.show('Ajouté aux favoris', {
       duration: Toast.durations.SHORT,
       position: Toast.positions.CENTER,
