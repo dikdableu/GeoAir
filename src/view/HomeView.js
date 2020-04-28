@@ -14,7 +14,6 @@ import * as Location from 'expo-location';
 import * as Permissions from 'expo-permissions';
 import SafeAreaView from 'react-native-safe-area-view';
 import * as InAppPurchases from 'expo-in-app-purchases';
-import * as FacebookAds from 'expo-ads-facebook';
 import {
   AdMobBanner,
   AdMobInterstitial,

@@ -31,7 +31,7 @@
       "buildNumber": "1.0.24",
       "config": {
         // ...
-        "googleMobileAdsAppId": "ca-app-pub-8614556057049331~7751095108" // sample id, replace with your own
+        "googleMobileAdsAppId": "ca-app-pub-8614556057049331/5612210449" // sample id, replace with your own
       }
     },
     "android": {
@@ -48,7 +48,7 @@
       ],
       "config": {
         // ...
-        "googleMobileAdsAppId": "ca-app-pub-8614556057049331~5831508770" // sample id, replace with your own
+        "googleMobileAdsAppId": "ca-app-pub-8614556057049331/8209974696" // sample id, replace with your own
       }
     }
   }
