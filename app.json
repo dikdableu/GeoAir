@@ -11,7 +11,7 @@
       "android",
       "web"
     ],
-    "version": "1.0.23",
+    "version": "1.0.24",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -28,11 +28,15 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.bastienchoisy.geoair",
-      "buildNumber": "1.0.23"
+      "buildNumber": "1.0.24",
+      "config": {
+        // ...
+        "googleMobileAdsAppId": "ca-app-pub-8614556057049331~7751095108" // sample id, replace with your own
+      }
     },
     "android": {
       "package": "com.bastienchoisy.geoair",
-      "versionCode": 16,
+      "versionCode": 17,
       "permissions": [
         "ACCESS_COARSE_LOCATION",
         "ACCESS_FINE_LOCATION",
@@ -41,7 +45,11 @@
         "WAKE_LOCK",
         "WRITE_EXTERNAL_STORAGE",
         "com.android.launcher.permission.INSTALL_SHORTCUT"
-      ]
+      ],
+      "config": {
+        // ...
+        "googleMobileAdsAppId": "ca-app-pub-8614556057049331~5831508770" // sample id, replace with your own
+      }
     }
   }
 }

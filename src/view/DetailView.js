@@ -490,9 +490,13 @@ export default function DetailView({props, navigation}) {
             </TouchableOpacity>
         </View>
         <View data-layer="24dcd44e-e852-4f05-962a-19ad1cf55bef" style={styles.ville_groupe192}>
+            <View data-layer="cb85ea2d-4dc3-44fd-bcba-edbc6b2a71f1" style={styles.ville_groupe192_groupe185}>
+                <Text data-layer="613b6418-8ae0-4a52-9140-b028ffc59683" style={styles.ville_groupe192_groupe185_nuage}>Conditions météo</Text>
+                <Text data-layer="5078d6dc-4f4c-43bf-b90b-6ef8e0ec1130" style={styles.ville_groupe192_groupe185_x43Ms}>{condition == null ? null : condition.description}</Text>
+            </View>
             <View data-layer="cb85ea2d-4dc3-44fd-bcba-edbc6b2a71f1" style={styles.ville_groupe192_groupe186}>
                 <Text data-layer="613b6418-8ae0-4a52-9140-b028ffc59683" style={styles.ville_groupe192_groupe186_vitesseDuVent}>Vitesse du vent</Text>
-                <Text data-layer="5078d6dc-4f4c-43bf-b90b-6ef8e0ec1130" style={styles.ville_groupe192_groupe186_x43Ms}>{responseApiMeteo.wind.speed + ' m/s'}</Text>
+                <Text data-layer="5078d6dc-4f4c-43bf-b90b-6ef8e0ec1130" style={styles.ville_groupe192_groupe186_x43Ms}>{(responseApiMeteo.wind.speed)* 3.6 + ' km/h'}</Text>
             </View>
             <View data-layer="fdecae97-e068-4a14-ae6f-016f243f37c4" style={styles.ville_groupe192_groupe188}>
                 <Text data-layer="c6eb792f-512d-45be-8993-d8d3b51a7902" style={styles.ville_groupe192_groupe188_humidite}>Humidité</Text>
@@ -748,7 +752,7 @@ const styles = StyleSheet.create({
     "top": 330,
     "right": 36
   },
-  "ville_groupe192_groupe186": {
+  "ville_groupe192_groupe185": {
     "opacity": 1,
     "position": "absolute",
     "backgroundColor": "transparent",
@@ -764,6 +768,70 @@ const styles = StyleSheet.create({
     "height": 19,
     "left": 0,
     "top": 0,
+    "right": 0
+  },
+  "ville_groupe192_groupe185_nuage": {
+    "opacity": 1,
+    "position": "absolute",
+    "backgroundColor": "rgba(255, 255, 255, 0)",
+    "color": "rgba(42, 44, 53, 1)",
+    "fontSize": 14*indiceScreen,
+    "fontWeight": "700",
+    "fontStyle": "normal",
+    "fontFamily": "roboto-bold",
+    "textAlign": "left",
+    "marginTop": 0,
+    "marginRight": 0,
+    "marginBottom": 0,
+    "marginLeft": 0,
+    "paddingTop": 0,
+    "paddingRight": 0,
+    "paddingBottom": 0,
+    "paddingLeft": 0,
+    "width": 'auto',
+    "height": 19,
+    "left": 0,
+    "top": 0
+  },
+  "ville_groupe192_groupe185_x43Ms": {
+    "opacity": 1,
+    "position": "absolute",
+    "backgroundColor": "rgba(255, 255, 255, 0)",
+    "color": "rgba(42, 44, 53, 1)",
+    "fontSize": 14*indiceScreen,
+    "fontWeight": "700",
+    "fontStyle": "normal",
+    "fontFamily": "roboto-bold",
+    "textAlign": "right",
+    "marginTop": 0,
+    "marginRight": 0,
+    "marginBottom": 0,
+    "marginLeft": 0,
+    "paddingTop": 0,
+    "paddingRight": 0,
+    "paddingBottom": 0,
+    "paddingLeft": 0,
+    "width": 'auto',
+    "height": 19,
+    "top": 0,
+    "right": 0
+  },
+  "ville_groupe192_groupe186": {
+    "opacity": 1,
+    "position": "absolute",
+    "backgroundColor": "transparent",
+    "marginTop": 0,
+    "marginRight": 0,
+    "marginBottom": 0,
+    "marginLeft": 0,
+    "paddingTop": 0,
+    "paddingRight": 0,
+    "paddingBottom": 0,
+    "paddingLeft": 0,
+    "width": "auto",
+    "height": 19,
+    "left": 0,
+    "top": 23,
     "right": 0
   },
   "ville_groupe192_groupe186_vitesseDuVent": {
@@ -827,7 +895,7 @@ const styles = StyleSheet.create({
     "width": "auto",
     "height": 19,
     "left": 0,
-    "top": 23,
+    "top": 69,
     "right": 0
   },
   "ville_groupe192_groupe188_humidite": {
@@ -891,7 +959,7 @@ const styles = StyleSheet.create({
     "width": "auto",
     "height": 19,
     "left": 0,
-    "top": 67,
+    "top": 92,
     "right": 0
   },
   "ville_groupe192_groupe189_visibilite": {
@@ -955,7 +1023,7 @@ const styles = StyleSheet.create({
     "width": "auto",
     "height": 19,
     "left": 0,
-    "top": 111,
+    "top": 138,
     "right": 0
   },
   "ville_groupe192_groupe217_coucherDuSoleil": {
@@ -1019,7 +1087,7 @@ const styles = StyleSheet.create({
     "width": "auto",
     "height": 19,
     "left": 0,
-    "top": 89,
+    "top": 115,
     "right": 0
   },
   "ville_groupe192_groupe218_leverDuSoleil": {
@@ -1603,7 +1671,7 @@ const styles = StyleSheet.create({
     "width": "auto",
     "height": 2,
     "left": 0,
-    "top": 490,
+    "top": 513,
     "right": 0
   },
   "ville_line": {
@@ -1625,7 +1693,7 @@ const styles = StyleSheet.create({
     "width": "auto",
     "height": 2,
     "left": 0,
-    "top": 550,
+    "top": 573,
     "right": 0
   },
   "ville_time": {
@@ -1643,7 +1711,7 @@ const styles = StyleSheet.create({
     "width": 397,
     "height": 20,
     "left": "50%",
-    "top": 512
+    "top": 535
   },
   "ville_time_x1200a8d3bbd1": {
     "opacity": 1,

@@ -13,6 +13,14 @@ import Constants from 'expo-constants';
 import * as Location from 'expo-location';
 import * as Permissions from 'expo-permissions';
 import SafeAreaView from 'react-native-safe-area-view';
+import * as InAppPurchases from 'expo-in-app-purchases';
+import * as FacebookAds from 'expo-ads-facebook';
+import {
+  AdMobBanner,
+  AdMobInterstitial,
+  PublisherBanner,
+  AdMobRewarded
+} from 'expo-ads-admob';
 
 import React, { useState, useEffect } from 'react';
 import PropTypes from "prop-types";
@@ -600,6 +608,14 @@ function HomeView() {
       return(
         <SafeAreaView style={{display: 'flex', flex: 1, position: 'relative'}}>
             <View data-layer="13614dff-3bb8-47ff-9a88-81264c364874" style={styles.home}>
+                <AdMobBanner
+                  style={styles.bottomBanner}
+                  bannerSize="fullBanner"
+                  adUnitID={Platform.OS === 'ios' ? "ca-app-pub-8614556057049331/5612210449" : "ca-app-pub-8614556057049331/8209974696"}
+                  servePersonalizedAds={true}
+                  setTestDeviceID="EMULATOR"
+                  didFailToReceiveAdWithError={error => console.log(error + 'error')}
+                />
                 <View data-layer="ba686c87-cb59-4c46-baed-6f1eec515b14" style={styles.home_line8cf6fdea}></View>
                 <View data-layer="f25280e4-4f48-4c2a-be2d-9ebe03c9ff61" style={styles.home_line}></View>
                 <View data-layer="a26dc001-9ab5-4ffd-9f28-9301663a0804" style={styles.home_time}>
@@ -696,6 +712,27 @@ const styles = StyleSheet.create({
     "top": 0,
     "right": 0,
     "bottom": 0,
+  },
+  "bottomBanner": {
+    "opacity": 1,
+    "position": "absolute",
+    "backgroundColor": "transparent",
+    "marginTop": 0,
+    "marginRight": 0,
+    "marginBottom": 0,
+    "marginLeft": 0,
+    "paddingTop": 0,
+    "paddingRight": 0,
+    "paddingBottom": 0,
+    "paddingLeft": 0,
+    "borderTopLeftRadius": 0,
+    "borderTopRightRadius": 0,
+    "borderBottomLeftRadius": 0,
+    "borderBottomRightRadius": 0,
+    "width": "auto",
+    "height": height - 550,
+    "left": 0,
+    "top": 523,
   },
   "home_line8cf6fdea": {
     "opacity": 1,
