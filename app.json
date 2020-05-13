@@ -2,7 +2,7 @@
   "expo": {
     "name": "GeoAir",
     "scheme": "geoair",
-    "icon": "./assets/logoGeoAir.png",
+    "icon": "./assets/icon.png",
     "slug": "GeoAir",
     "privacy": "unlisted",
     "sdkVersion": "36.0.0",
@@ -11,9 +11,8 @@
       "android",
       "web"
     ],
-    "version": "1.0.24",
+    "version": "1.0.31",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
@@ -28,15 +27,11 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.bastienchoisy.geoair",
-      "buildNumber": "1.0.24",
-      "config": {
-        // ...
-        "googleMobileAdsAppId": "ca-app-pub-8614556057049331/5612210449" // sample id, replace with your own
-      }
+      "buildNumber": "1.0.31"
     },
     "android": {
       "package": "com.bastienchoisy.geoair",
-      "versionCode": 17,
+      "versionCode": 24,
       "permissions": [
         "ACCESS_COARSE_LOCATION",
         "ACCESS_FINE_LOCATION",
@@ -45,11 +40,7 @@
         "WAKE_LOCK",
         "WRITE_EXTERNAL_STORAGE",
         "com.android.launcher.permission.INSTALL_SHORTCUT"
-      ],
-      "config": {
-        // ...
-        "googleMobileAdsAppId": "ca-app-pub-8614556057049331/8209974696" // sample id, replace with your own
-      }
+      ]
     }
   }
 }

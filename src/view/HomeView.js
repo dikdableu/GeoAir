@@ -1,18 +1,12 @@
-import { AppRegistry,
-  Image,
-  Platform,
-  StatusBar,
-  RefreshControl,
-  Dimensions,
-  ActivityIndicator,
-  TouchableOpacity,
-  Button,
-  Alert
-  } from 'react-native';
+import { AppRegistry, Image, Platform, StatusBar, RefreshControl, Dimensions, ActivityIndicator, TouchableOpacity, Button, Alert, StyleSheet, Text, View, TextInput, FlatList, Picker, ScrollView, TouchableHighlight, PixelRatio, SafeAreaView } from 'react-native';
+import React, { useState, useEffect, useMemo } from 'react';
+import {Image as ReactImage} from 'react-native';
+import { useDispatch, useSelector } from 'react-redux'
+
 import Constants from 'expo-constants';
 import * as Location from 'expo-location';
 import * as Permissions from 'expo-permissions';
-import SafeAreaView from 'react-native-safe-area-view';
+
 import * as InAppPurchases from 'expo-in-app-purchases';
 import {
   AdMobBanner,
@@ -21,10 +15,7 @@ import {
   AdMobRewarded
 } from 'expo-ads-admob';
 
-import React, { useState, useEffect } from 'react';
 import PropTypes from "prop-types";
-import {StyleSheet, Text, View, TextInput, FlatList, Picker, ScrollView, TouchableHighlight, PixelRatio} from 'react-native';
-import {Image as ReactImage} from 'react-native';
 import Svg, { Defs, ClipPath, Path, G } from "react-native-svg"
 import {Path as SvgPath} from 'react-native-svg';
 import {Text as SvgText} from 'react-native-svg';
@@ -32,15 +23,7 @@ import {Image as SvgImage} from 'react-native-svg';
 
 import * as Font from 'expo-font';
 import { AppLoading} from 'expo';
-
-import * as data from '../../db/favorite.json';
-
-import Amplify, { Auth } from 'aws-amplify';
-import { config } from '../../config/config.js';
-
 import Toast from 'react-native-root-toast';
-import { useDispatch, useSelector } from 'react-redux'
-
 import RefreshComponent from './Icones/Refresh.js'
 import AddComponent from './Icones/Add.js'
 
@@ -56,7 +39,9 @@ import FogComponent from './Icones/50d.js'
 
 import * as DBLocal from '../../db/DBLocal.js'
 import * as SQLite from "expo-sqlite";
+
 const db = SQLite.openDatabase("db.db");
+
 function HomeView() {
 
   const listFavorite = useSelector(state => state.listFavorite)
@@ -466,7 +451,7 @@ function HomeView() {
   )
 
   useEffect(() => {
-    _getLocationAsync()
+  _getLocationAsync()
     db.transaction(tx => {
       tx.executeSql(
         `select * from Favoris`,[],
@@ -499,12 +484,17 @@ function HomeView() {
 
 
   const _getLocationAsync = async () => {
-      let { status } = await Permissions.askAsync(Permissions.LOCATION);
-      if (status !== 'granted'){
-        console.log('Permission to access location was denied');
-      }
+    const abortController = new AbortController()
+    const signal = abortController.signal
+    let { status } = await Permissions.askAsync(Permissions.LOCATION);
+    if (status !== 'granted'){
+      console.log('Permission to access location was denied');
+    }
 
-      setLocation(await Location.getCurrentPositionAsync({}))
+    setLocation(await Location.getCurrentPositionAsync({}))
+    return function cleanUp(){
+      abortController.abort()
+    }
   };
 
   const _apiAir = (lat, long) => {
@@ -609,7 +599,7 @@ function HomeView() {
             <View data-layer="13614dff-3bb8-47ff-9a88-81264c364874" style={styles.home}>
                 <AdMobBanner
                   style={styles.bottomBanner}
-                  bannerSize="fullBanner"
+                  bannerSize="smartBannerPortrait"
                   adUnitID={Platform.OS === 'ios' ? "ca-app-pub-8614556057049331/5612210449" : "ca-app-pub-8614556057049331/8209974696"}
                   servePersonalizedAds={true}
                   setTestDeviceID="EMULATOR"
@@ -728,8 +718,7 @@ const styles = StyleSheet.create({
     "borderTopRightRadius": 0,
     "borderBottomLeftRadius": 0,
     "borderBottomRightRadius": 0,
-    "width": "auto",
-    "height": height - 550,
+    "width": 'auto',
     "left": 0,
     "top": 523,
   },

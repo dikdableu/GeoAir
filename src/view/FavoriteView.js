@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import PropTypes from "prop-types";
 import {StyleSheet, Text, View, TextInput, FlatList, ScrollView, Dimensions, Image as ReactImage, TouchableOpacity, SafeAreaView, TouchableHighlight, PixelRatio} from 'react-native';
 import Svg, {Defs, Pattern} from 'react-native-svg';
@@ -12,6 +12,12 @@ import { useDispatch, useSelector } from 'react-redux'
 import * as DBLocal from '../../db/DBLocal.js'
 import * as SQLite from "expo-sqlite";
 import Swipeout from 'react-native-swipeout';
+import {
+  AdMobBanner,
+  AdMobInterstitial,
+  PublisherBanner,
+  AdMobRewarded
+} from 'expo-ads-admob';
 
 const db = SQLite.openDatabase("db.db");
 
@@ -30,7 +36,7 @@ const FavoriteView = ({props, navigation}) => {
   const [tmpId, setTmpId] = useState(null)
   const [rowOpen, setRowOpen] = useState(null)
 
-  useEffect(() => {
+  useMemo(() => {
     if(typeof listFavorite != "undefined" && listFavorite.length > 0){
       listFavorite[0].map((value) => {
         searchByCity(value)
@@ -124,6 +130,13 @@ const FavoriteView = ({props, navigation}) => {
 
     return (
         <SafeAreaView style={styles.favoris}>
+          <AdMobBanner
+            bannerSize="smartBannerPortrait"
+            adUnitID={Platform.OS === 'ios' ? "ca-app-pub-8614556057049331/5612210449" : "ca-app-pub-8614556057049331/8209974696"}
+            servePersonalizedAds={true}
+            setTestDeviceID="EMULATOR"
+            didFailToReceiveAdWithError={error => console.log(error + 'error')}
+          />
           <FlatList
             bounces={false}
             data={listSearch}
@@ -175,7 +188,6 @@ const styles = StyleSheet.create({
     "paddingBottom": 0,
     "paddingLeft": 0,
     "width": "auto",
-    "height": 812,
     "left": 0,
     "top": 0,
     "right": 0

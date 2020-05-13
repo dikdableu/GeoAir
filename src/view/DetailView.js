@@ -7,7 +7,12 @@ import Svg, {Defs, Pattern} from 'react-native-svg';
 import {Path as SvgPath} from 'react-native-svg';
 import {Text as SvgText} from 'react-native-svg';
 import {Image as SvgImage} from 'react-native-svg';
-
+import {
+  AdMobBanner,
+  AdMobInterstitial,
+  PublisherBanner,
+  AdMobRewarded
+} from 'expo-ads-admob';
 import AddComponent from './Icones/Add.js'
 
 import SoleilComponent from './Icones/01d.js'
@@ -424,7 +429,6 @@ export default function DetailView({props, navigation}) {
         if(responseApiMeteo.weather[0].id == value.id){
             var cond = {
                 description: value.description,
-                icon: "http://openweathermap.org/img/wn/"+ value.icon +"@2x.png",
                 id: value.id,
                 main: value.main,
                 path: value.path
@@ -480,6 +484,13 @@ export default function DetailView({props, navigation}) {
 
     return (
     <View data-layer="4f1b034a-7282-4eb8-9a4f-fe1e74b0e35b" style={styles.ville}>
+    <AdMobBanner
+      bannerSize="smartBannerPortrait"
+      adUnitID={Platform.OS === 'ios' ? "ca-app-pub-8614556057049331/5612210449" : "ca-app-pub-8614556057049331/8209974696"}
+      servePersonalizedAds={true}
+      setTestDeviceID="EMULATOR"
+      didFailToReceiveAdWithError={error => console.log(error + 'error')}
+    />
         <View data-layer="3d1674d8-b866-413a-b6f1-d4d4843c5c0b" style={styles.ville_searchcity}>
             <Text data-layer="35e40b9c-0c10-4b39-9378-5716d6ae6453" style={styles.ville_searchcity_versailles}>{responseApiMeteo.name.length > 23 ? responseApiMeteo.name.slice(0,23) + '...' : responseApiMeteo.name}</Text>
             <Text data-layer="8a61130c-2565-4b9f-ba8c-cae5c64598dc" style={styles.ville_searchcity_yvelinesFrance}>{responseApiMeteo.sys.country}</Text>
@@ -490,9 +501,9 @@ export default function DetailView({props, navigation}) {
             </TouchableOpacity>
         </View>
         <View data-layer="24dcd44e-e852-4f05-962a-19ad1cf55bef" style={styles.ville_groupe192}>
-            <View data-layer="cb85ea2d-4dc3-44fd-bcba-edbc6b2a71f1" style={styles.ville_groupe192_groupe185}>
-                <Text data-layer="613b6418-8ae0-4a52-9140-b028ffc59683" style={styles.ville_groupe192_groupe185_nuage}>Conditions météo</Text>
-                <Text data-layer="5078d6dc-4f4c-43bf-b90b-6ef8e0ec1130" style={styles.ville_groupe192_groupe185_x43Ms}>{condition == null ? null : condition.description}</Text>
+            <View style={styles.ville_groupe192_groupe185}>
+                <Text style={styles.ville_groupe192_groupe185_nuage}>Conditions météo</Text>
+                <Text style={styles.ville_groupe192_groupe185_x43Ms}>{condition == null ? null : condition.description}</Text>
             </View>
             <View data-layer="cb85ea2d-4dc3-44fd-bcba-edbc6b2a71f1" style={styles.ville_groupe192_groupe186}>
                 <Text data-layer="613b6418-8ae0-4a52-9140-b028ffc59683" style={styles.ville_groupe192_groupe186_vitesseDuVent}>Vitesse du vent</Text>
