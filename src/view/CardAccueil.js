@@ -39,7 +39,7 @@ const CardAccueil = props => {
         <Text style={styles.yvelinesFrance}>{propsState.pays}</Text>
 
 
-        <Image source={require("../../assets/01d.png")} style={styles.d} />
+        <Image source={require("../assets/01d.png")} style={styles.d} />
 
 
         <Text style={styles.c}>{propsState.temp}</Text>

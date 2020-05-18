@@ -1,4 +1,4 @@
-import { AppRegistry, Image, Platform, StatusBar, RefreshControl, Dimensions, ActivityIndicator, TouchableOpacity, Button, Alert, StyleSheet, Text, View, TextInput, FlatList, Picker, ScrollView, TouchableHighlight, PixelRatio, SafeAreaView } from 'react-native';
+import { AppRegistry, Image, Platform, StatusBar, RefreshControl, Dimensions, ActivityIndicator, TouchableOpacity, Button, Alert, StyleSheet, Text, View, TextInput, FlatList, Picker, ScrollView, TouchableHighlight, PixelRatio, SafeAreaView, ImageBackground } from 'react-native';
 import React, { useState, useEffect, useMemo } from 'react';
 import {Image as ReactImage} from 'react-native';
 import { useDispatch, useSelector } from 'react-redux'
@@ -7,7 +7,6 @@ import Constants from 'expo-constants';
 import * as Location from 'expo-location';
 import * as Permissions from 'expo-permissions';
 
-import * as InAppPurchases from 'expo-in-app-purchases';
 import {
   AdMobBanner,
   AdMobInterstitial,
@@ -26,6 +25,17 @@ import { AppLoading} from 'expo';
 import Toast from 'react-native-root-toast';
 import RefreshComponent from './Icones/Refresh.js'
 import AddComponent from './Icones/Add.js'
+
+import Bg from "../components/Bg";
+import Admob from "../components/Admob";
+import IconesAjouter from "../components/IconesAjouter";
+import IconesCouvert from "../components/IconesCouvert";
+import IndiceAir from "../components/IndiceAir";
+import Heure01 from "../components/Heure01";
+import IconesActualiser from "../components/IconesActualiser";
+import IconesMenu from "../components/IconesMenu";
+import MenuHome from "../components/MenuHome";
+import Interface from "../components/Interface";
 
 import SoleilComponent from './Icones/01d.js'
 import CouldsSunComponent from './Icones/02d.js'
@@ -484,17 +494,13 @@ function HomeView() {
 
 
   const _getLocationAsync = async () => {
-    const abortController = new AbortController()
-    const signal = abortController.signal
+
     let { status } = await Permissions.askAsync(Permissions.LOCATION);
     if (status !== 'granted'){
       console.log('Permission to access location was denied');
     }
 
     setLocation(await Location.getCurrentPositionAsync({}))
-    return function cleanUp(){
-      abortController.abort()
-    }
   };
 
   const _apiAir = (lat, long) => {
@@ -589,84 +595,106 @@ function HomeView() {
 
     if(loading){
       return (
-      <View style={{flex: 1}}>
-        <ActivityIndicator style={{flex:1, alignItems: "center", justifyContent: "center", backgroundColor: "white" }} size="large" color="#0000ff" />
+      <View style={styles.container}>
+        <View style={styles.bgStack}>
+          <Bg style={styles.bg}></Bg>
+          <ActivityIndicator style={{flex:1, alignItems: "center", justifyContent: "center", backgroundColor: "transparent" }} size="large" color="#0000ff" />
+        </View>
       </View>
     );
     }else{
       return(
-        <SafeAreaView style={{display: 'flex', flex: 1, position: 'relative'}}>
-            <View data-layer="13614dff-3bb8-47ff-9a88-81264c364874" style={styles.home}>
-                <AdMobBanner
-                  style={styles.bottomBanner}
-                  bannerSize="smartBannerPortrait"
-                  adUnitID={Platform.OS === 'ios' ? "ca-app-pub-8614556057049331/5612210449" : "ca-app-pub-8614556057049331/8209974696"}
-                  servePersonalizedAds={true}
-                  setTestDeviceID="EMULATOR"
-                  didFailToReceiveAdWithError={error => console.log(error + 'error')}
-                />
-                <View data-layer="ba686c87-cb59-4c46-baed-6f1eec515b14" style={styles.home_line8cf6fdea}></View>
-                <View data-layer="f25280e4-4f48-4c2a-be2d-9ebe03c9ff61" style={styles.home_line}></View>
-                <View data-layer="a26dc001-9ab5-4ffd-9f28-9301663a0804" style={styles.home_time}>
-                    <Text data-layer="9a56958e-2d40-49f2-a8bc-c54a080d1c88" style={styles.home_time_x1200303d8887}>12 : 00</Text>
-                    <Text data-layer="43a27cd7-422c-4aef-bf60-5d05a84dbfd4" style={styles.home_time_x1200cc93c759}>12 : 00</Text>
-                    <Text data-layer="951d2dc7-9ece-4caa-9e99-a9583fdf0134" style={styles.home_time_x12005e70baf0}>12 : 00</Text>
-                    <Text data-layer="608d07ce-0678-4ee1-8ae8-313ef306ab00" style={styles.home_time_x1200f9879df1}>12 : 00</Text>
-                    <Text data-layer="1cdb565a-e3c7-46a1-913c-6772032fc806" style={styles.home_time_x1200}>12 : 00</Text>
-                </View>
-                <View data-layer="f24bcd06-3188-4e29-b0b8-1617ca1a5c65" style={styles.home_groupe205}>
-                    <View data-layer="09af10b5-c90e-41a5-8022-88aa02b5cd5e" style={[styles.home_groupe205_rectangle, {borderWidth: 1 ,borderColor: color}]}>
-                      <Text data-layer="7150d953-1902-4408-87cb-6ab655001bdc" style={[styles.home_groupe205_loremIpsumDolorSitAmetAdipiscingElitDonecVulputate, {color: color}]}>{textInside}</Text>
-                    </View>
-                </View>
-                <View data-layer="17b224e8-ca18-4bb8-beeb-ef167bacb82d" style={styles.home_groupe209}>
-                    <View data-layer="e97e27e2-2ba3-4663-9cf1-b8e6a87404ea" style={styles.home_groupe209_searchcity}>
-                        <Text data-layer="0566535a-1279-4dc0-bf84-314d2bf4cbeb" style={styles.home_groupe209_searchcity_versailles}>{responseApiMeteo.name}</Text>
-                        <Text data-layer="ec71f28a-dd55-4cb6-a52d-b7c93ad5c018" style={styles.home_groupe209_searchcity_yvelinesFrance}>{responseApiMeteo.sys.country}</Text>
-                        <AddComponent style={styles.home_groupe213_groupe209_searchcity_iconadd}/>
-                    </View>
-                    <TouchableOpacity onPress={() => {_addFavorite()}} >
-                      <View data-layer="3568ea33-fc37-4f12-96a5-1681fd4178a9" style={styles.home_groupe213_groupe209_rectangle280}></View>
-                    </TouchableOpacity>
-                </View>
-                <View data-layer="adc02b6d-f8e4-4014-b787-5bcc88729d4f" style={styles.home_groupe207}>
-                    <Text data-layer="8f879b30-4046-4eb3-b96e-277a55d04826" style={styles.home_groupe207_actualiser}>Actualiser</Text>
-                    <Text data-layer="699344fd-f3c3-4637-91c6-9e22dabbc0b9" style={styles.home_groupe207_lieuxAProximite}>Lieux à proximité</Text>
-                    <RefreshComponent style={styles.home_groupe214_groupe207_iconmonstrRefresh2}/>
-                    <View data-layer="32f32dff-d3fc-4a50-8c29-42aad3939253" style={styles.home_groupe207_groupe206}>
-                        <View data-layer="4dc4caac-6c61-4719-8b20-15042a4d6c8b" style={styles.home_groupe207_groupe206_rectanglea6da2d5c}></View>
-                    </View>
-                    <TouchableOpacity onPress={() => {_getLocationAsync()}} >
-                      <View data-layer="b31d0d4d-c9e6-42b5-ae15-0f73e61b769c" style={styles.home_groupe214_groupe207_rectangle281}></View>
-                    </TouchableOpacity>
-                </View>
-                <View data-layer="be86a2d7-3e32-4675-9c37-d5c8d629bdd9" style={styles.home_groupe212}>
-                    <View data-layer="01c94066-2b12-48e5-9d3a-9620b1a4214c" style={styles.home_groupe212_airqualityindex}>
-                        <View data-layer="e22a0d65-2293-4022-856e-4853fad7221f" style={[styles.home_groupe212_airqualityindex_rectangle190, {borderColor: color}]}></View>
-                        <Text data-layer="65c2a307-84e5-488f-8d7f-4b6107009b76" style={[styles.home_groupe212_airqualityindex_x102, {color: color}]}>{responseApiAir.data.aqi}</Text>
-                    </View>
-                    <View data-layer="94a3af68-7070-4f53-849e-311c1edcc16f" style={styles.home_groupe212_groupe211}>
-                        <Text data-layer="fcff8157-0898-4499-ba77-8c9c5c1399f4" style={styles.home_groupe212_groupe211_x10c}>{(responseApiMeteo.main.temp - 273.15).toFixed(1) + "°C"}</Text>
-                        <Text data-layer="e3a238f9-d269-489b-abdc-16c159f8bdfd" style={styles.home_groupe212_groupe211_min}>MIN</Text>
-                        <Text data-layer="aa2caedb-af91-4980-91db-1dea85c1ac6b" style={styles.home_groupe212_groupe211_max}>MAX</Text>
-                        <Text data-layer="1aff345a-b725-49c3-9873-1a98823d7b24" style={styles.home_groupe212_groupe211_x8c}>{(responseApiMeteo.main.temp_min - 273.15).toFixed(1) + "°C"}</Text>
-                        <Text data-layer="947b1b79-cf69-4852-adf7-d4ad1f9e5d19" style={styles.home_groupe212_groupe211_x13c}>{(responseApiMeteo.main.temp_max - 273.15).toFixed(1) + "°C"}</Text>
-                        <Text data-layer="eaa8bd00-b2cf-4b94-8626-b80c9dfd7fb4" style={styles.home_groupe212_groupe211_temp}>Temp.</Text>
-                        <View data-layer="d6d2d453-b0f3-4806-ad24-4344c723948f" style={styles.home_groupe212_groupe211_groupe210}>
-                            <View data-layer="9d65069b-0dc9-420f-8ada-5928312e3310" style={styles.home_groupe212_groupe211_groupe210_groupe208325c65e5}>
-                                <View data-layer="3ea825a4-c7e1-46cb-b30a-e31db441ca50" style={styles.home_groupe212_groupe211_groupe210_groupe208325c65e5_rectanglec24f8a8d}></View>
-                            </View>
+        <View style={styles.container}>
+          <View style={styles.bgStack}>
+            <Bg style={styles.bg}></Bg>
+            <AdMobBanner
+              style={styles.admob}
+              bannerSize="smartBannerPortrait"
+              adUnitID={Platform.OS === 'ios' ? "ca-app-pub-8614556057049331/5612210449" : "ca-app-pub-8614556057049331/8209974696"}
+              servePersonalizedAds={true}
+              setTestDeviceID="EMULATOR"
+              didFailToReceiveAdWithError={error => console.log(error + 'error')}
+            />
+            <View style={styles.cardContenu}>
+              <View style={styles.rectangleBlanc}>
+                <View style={styles.ville}>
+                  <View style={styles.rectangle}>
+                    <View style={styles.ville1Row}>
+                      <View style={styles.ville1}>
+                        <View style={styles.yvelinesFranceStack}>
+                          <Text style={styles.yvelinesFrance}>
+                            {responseApiMeteo.sys.country}
+                          </Text>
+                          <Text style={styles.versailles}>{responseApiMeteo.name}</Text>
                         </View>
-                        <View data-layer="edfed02e-1326-48d5-9935-25a9cb06b14c" style={styles.home_groupe212_groupe211_x09d}>
-                            {condition.path}
-                        </View>
+                      </View>
+                      <TouchableOpacity onPress={() => {_addFavorite()}} >
+                        <IconesAjouter style={styles.iconesAjouter}></IconesAjouter>
+                      </TouchableOpacity>
                     </View>
+                  </View>
                 </View>
+                <View style={styles.infos}>
+                  <View style={styles.nuageuxRow}>
+                    <View style={styles.nuageux}>
+                      <IconesCouvert style={styles.iconesCouvert}></IconesCouvert>
+                      <Text style={styles.nuageux1}>Nuageux</Text>
+                    </View>
+                    <View style={styles.temperature}>
+                      <View style={styles.styleRow}>
+                        <Text style={styles.style}>{(responseApiMeteo.main.temp - 273.15).toFixed(0)}</Text>
+                        <View style={styles.cStack}>
+                          <Text style={styles.c}>C</Text>
+                          <Text style={styles.style1}>°</Text>
+                        </View>
+                      </View>
+                    </View>
+                    <View style={styles.minMax}>
+                      <View style={styles.maxCopyStack}>
+                        <Text style={styles.maxCopy}>MAX</Text>
+                        <Text style={styles.cCopy}>{(responseApiMeteo.main.temp_max - 273.15).toFixed(1)}°C</Text>
+                        <Text style={styles.minCopy}>MIN</Text>
+                        <Text style={styles.cCopy1}>{(responseApiMeteo.main.temp_min - 273.15).toFixed(1)}°C</Text>
+                      </View>
+                    </View>
+                    <IndiceAir style={styles.indiceAir} indice={responseApiAir.data.aqi} color={color}></IndiceAir>
+                  </View>
+                </View>
+                <View style={styles.journee}>
+                  <View style={styles.rectangleDegradeGrisStack}>
+                    <ImageBackground
+                      style={styles.rectangleDegradeGris}
+                      imageStyle={styles.rectangleDegradeGris_imageStyle}
+                      source={require("../assets/images/Gradient_XefJXP1.png")}
+                    ></ImageBackground>
+                    <Heure01 style={styles.heure01}></Heure01>
+                    <Heure01 style={styles.heure011}></Heure01>
+                    <Heure01 style={styles.heure012}></Heure01>
+                    <Heure01 style={styles.heure013}></Heure01>
+                    <Heure01 style={styles.heure014}></Heure01>
+                  </View>
+                </View>
+              </View>
             </View>
-      </SafeAreaView>
+            <View style={styles.aProximite}>
+              <View style={styles.lieuxAProximiteRow}>
+                <Text style={styles.lieuxAProximite}>LIEUX À PROXIMITÉ</Text>
+                <View style={styles.btnActualiser}>
+                  <View style={styles.rectangle1}>
+                    <TouchableOpacity onPress={() => {_getLocationAsync()}} >
+                      <View style={styles.actualiserRow}>
+                        <Text style={styles.actualiser}>Actualiser</Text>
+                        <IconesActualiser style={styles.iconesActualiser}></IconesActualiser>
+                      </View>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
       )
     }
-
 }
 
 HomeView.propTypes = {
@@ -677,1045 +705,439 @@ HomeView.defaultProps = {
 
 }
 
-var {height, width} = Dimensions.get('window');
-var ratio = PixelRatio.get()
-var indiceScreen = ratio <= 3 ? 1 : ratio > 3 ? 1.2 : 0.2;
-
-
 const styles = StyleSheet.create({
-  "home": {
-    "opacity": 1,
-    "position": "absolute",
-    "backgroundColor": "rgba(255, 255, 255, 1)",
-    "marginTop": 0,
-    "marginRight": 0,
-    "marginBottom": 0,
-    "marginLeft": 0,
-    "paddingTop": 0,
-    "paddingRight": 0,
-    "paddingBottom": 0,
-    "paddingLeft": 0,
-    "width": "auto",
-    "height": height,
-    "left": 0,
-    "top": 0,
-    "right": 0,
-    "bottom": 0,
+  container: {
+    backgroundColor: "rgba(255,255,255,1)",
+    flex: 1
   },
-  "bottomBanner": {
-    "opacity": 1,
-    "position": "absolute",
-    "backgroundColor": "transparent",
-    "marginTop": 0,
-    "marginRight": 0,
-    "marginBottom": 0,
-    "marginLeft": 0,
-    "paddingTop": 0,
-    "paddingRight": 0,
-    "paddingBottom": 0,
-    "paddingLeft": 0,
-    "borderTopLeftRadius": 0,
-    "borderTopRightRadius": 0,
-    "borderBottomLeftRadius": 0,
-    "borderBottomRightRadius": 0,
-    "width": 'auto',
-    "left": 0,
-    "top": 523,
+  bg: {
+    position: "absolute",
+    top: -100,
+    left: 0,
+    height: 812,
+    width: 375,
+    opacity: 1,
+    backgroundColor: "transparent"
   },
-  "home_line8cf6fdea": {
-    "opacity": 1,
-    "position": "absolute",
-    "backgroundColor": "rgba(42, 44, 53, 0.050980392156862744)",
-    "marginTop": 0,
-    "marginRight": 0,
-    "marginBottom": 0,
-    "marginLeft": 0,
-    "paddingTop": 0,
-    "paddingRight": 0,
-    "paddingBottom": 0,
-    "paddingLeft": 0,
-    "borderTopLeftRadius": 0,
-    "borderTopRightRadius": 0,
-    "borderBottomLeftRadius": 0,
-    "borderBottomRightRadius": 0,
-    "width": "auto",
-    "height": 2,
-    "left": 0,
-    "top": 450,
-    "right": 0,
+  admob: {
+    position: "absolute",
+    top: 460,
+    height: 170,
+    width: 'auto',
+    opacity: 1,
+    backgroundColor: "transparent",
   },
-  "home_line": {
-    "opacity": 1,
-    "position": "absolute",
-    "backgroundColor": "rgba(42, 44, 53, 0.050980392156862744)",
-    "marginTop": 0,
-    "marginRight": 0,
-    "marginBottom": 0,
-    "marginLeft": 0,
-    "paddingTop": 0,
-    "paddingRight": 0,
-    "paddingBottom": 0,
-    "paddingLeft": 0,
-    "borderTopLeftRadius": 0,
-    "borderTopRightRadius": 0,
-    "borderBottomLeftRadius": 0,
-    "borderBottomRightRadius": 0,
-    "width": "auto",
-    "height": 2,
-    "left": 0,
-    "top": 510,
-    "right": 0
+  cardContenu: {
+    position: "absolute",
+    top: 100,
+    left: 11,
+    height: 348,
+    width: 353,
+    opacity: 1
   },
-  "home_time": {
-    "opacity": 1,
-    "position": "absolute",
-    "backgroundColor": "transparent",
-    "marginTop": 0,
-    "marginRight": 0,
-    "marginBottom": 0,
-    "marginLeft": -198.5,
-    "paddingTop": 0,
-    "paddingRight": 0,
-    "paddingBottom": 0,
-    "paddingLeft": 0,
-    "width": 397,
-    "height": 20,
-    "left": "50%",
-    "top": 472
+  rectangleBlanc: {
+    height: 348,
+    width: 353,
+    borderRadius: 28,
+    shadowColor: "rgba(0,0,0,0.1115876311188811)",
+    shadowOffset: {
+      height: 2,
+      width: 0
+    },
+    shadowRadius: 32,
+    shadowOpacity: 1,
+    backgroundColor: "rgba(255,255,255,1)"
   },
-  "home_time_x1200303d8887": {
-    "opacity": 1,
-    "position": "absolute",
-    "backgroundColor": "rgba(255, 255, 255, 0)",
-    "color": "rgba(42, 44, 53, 0.25098039215686274)",
-    "fontSize": 15* indiceScreen,
-    "fontWeight": "700",
-    "fontStyle": "normal",
-    "fontFamily": "roboto-bold",
-    "textAlign": "left",
-    "marginTop": 0,
-    "marginRight": 0,
-    "marginBottom": 0,
-    "marginLeft": 0,
-    "paddingTop": 0,
-    "paddingRight": 0,
-    "paddingBottom": 0,
-    "paddingLeft": 0,
-    "width": 'auto',
-    "height": 20,
-    "left": 88,
-    "top": 0
+  ville: {
+    height: 93,
+    width: 353,
+    opacity: 1
   },
-  "home_time_x1200cc93c759": {
-    "opacity": 1,
-    "position": "absolute",
-    "backgroundColor": "rgba(255, 255, 255, 0)",
-    "color": "rgba(42, 44, 53, 0.25098039215686274)",
-    "fontSize": 15* indiceScreen,
-    "fontWeight": "700",
-    "fontStyle": "normal",
-    "fontFamily": "roboto-bold",
-    "textAlign": "left",
-    "marginTop": 0,
-    "marginRight": 0,
-    "marginBottom": 0,
-    "marginLeft": 0,
-    "paddingTop": 0,
-    "paddingRight": 0,
-    "paddingBottom": 0,
-    "paddingLeft": 0,
-    "width": 'auto',
-    "height": 20,
-    "left": 174,
-    "top": 0
+  rectangle: {
+    height: 93,
+    width: 353,
+    borderRadius: 28,
+    shadowColor: "rgba(0,0,0,0.1115876311188811)",
+    shadowOffset: {
+      height: 2,
+      width: 0
+    },
+    shadowRadius: 30,
+    shadowOpacity: 1,
+    backgroundColor: "rgba(255,255,255,1)",
+    flexDirection: "row"
   },
-  "home_groupe213_groupe209_rectangle280": {
-    "opacity": 1,
-    "position": "absolute",
-    "backgroundColor": "transparent",
-    "marginTop": 0,
-    "marginRight": 0,
-    "marginBottom": 0,
-    "marginLeft": 0,
-    "paddingTop": 0,
-    "paddingRight": 0,
-    "paddingBottom": 0,
-    "paddingLeft": 0,
-    "borderTopLeftRadius": 0,
-    "borderTopRightRadius": 0,
-    "borderBottomLeftRadius": 0,
-    "borderBottomRightRadius": 0,
-    "width": 27,
-    "height": 25,
-    "top": 5,
-    "right": 0
+  ville1: {
+    height: 46,
+    width: 150,
+    opacity: 1
   },
-  "home_time_x12005e70baf0": {
-    "opacity": 1,
-    "position": "absolute",
-    "backgroundColor": "rgba(255, 255, 255, 0)",
-    "color": "rgba(42, 44, 53, 0.25098039215686274)",
-    "fontSize": 15* indiceScreen,
-    "fontWeight": "700",
-    "fontStyle": "normal",
-    "fontFamily": "roboto-bold",
-    "textAlign": "left",
-    "marginTop": 0,
-    "marginRight": 0,
-    "marginBottom": 0,
-    "marginLeft": 0,
-    "paddingTop": 0,
-    "paddingRight": 0,
-    "paddingBottom": 0,
-    "paddingLeft": 0,
-    "width": 'auto',
-    "height": 20,
-    "left": 263,
-    "top": 0
+  yvelinesFrance: {
+    position: "absolute",
+    top: 27,
+    left: 0,
+    height: 19,
+    width: 150,
+    opacity: 1,
+    backgroundColor: "transparent",
+    color: "rgba(127,141,154,1)",
+    fontSize: 14
   },
-  "home_time_x1200f9879df1": {
-    "opacity": 1,
-    "position": "absolute",
-    "backgroundColor": "rgba(255, 255, 255, 0)",
-    "color": "rgba(42, 44, 53, 0.25098039215686274)",
-    "fontSize": 15* indiceScreen,
-    "fontWeight": "700",
-    "fontStyle": "normal",
-    "fontFamily": "roboto-bold",
-    "textAlign": "left",
-    "marginTop": 0,
-    "marginRight": 0,
-    "marginBottom": 0,
-    "marginLeft": 0,
-    "paddingTop": 0,
-    "paddingRight": 0,
-    "paddingBottom": 0,
-    "paddingLeft": 0,
-    "width": 'auto',
-    "height": 20,
-    "left": 351,
-    "top": 0
+  versailles: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    height: 36,
+    width: 150,
+    opacity: 1,
+    backgroundColor: "transparent",
+    color: "rgba(66,77,88,1)",
+    fontSize: 20
   },
-  "home_time_x1200": {
-    "opacity": 1,
-    "position": "absolute",
-    "backgroundColor": "rgba(255, 255, 255, 0)",
-    "color": "rgba(42, 44, 53, 0.25098039215686274)",
-    "fontSize": 15* indiceScreen,
-    "fontWeight": "700",
-    "fontStyle": "normal",
-    "fontFamily": "roboto-bold",
-    "textAlign": "left",
-    "marginTop": 0,
-    "marginRight": 0,
-    "marginBottom": 0,
-    "marginLeft": 0,
-    "paddingTop": 0,
-    "paddingRight": 0,
-    "paddingBottom": 0,
-    "paddingLeft": 0,
-    "width": 'auto',
-    "height": 20,
-    "left": 0,
-    "top": 0
+  yvelinesFranceStack: {
+    width: 150,
+    height: 46
   },
-  "home_groupe205": {
-    "opacity": 1,
-    "position": "absolute",
-    "backgroundColor": "transparent",
-    "marginTop": 0,
-    "marginRight": 0,
-    "marginBottom": 0,
-    "marginLeft": 0,
-    "paddingTop": 0,
-    "paddingRight": 0,
-    "paddingBottom": 0,
-    "paddingLeft": 0,
-    "width": "auto",
-    "height": 130,
-    "left": 34,
-    "top": 280,
-    "right": 35
+  iconesAjouter: {
+    height: 38,
+    width: 38,
+    opacity: 1,
+    backgroundColor: "transparent",
+    marginLeft: 122,
+    marginTop: 4
   },
-  "home_groupe205_rectangle": {
-    "opacity": 1,
-    "position": "absolute",
-    "marginTop": 0,
-    "marginRight": 0,
-    "marginBottom": 0,
-    "marginLeft": 0,
-    "paddingTop": 0,
-    "paddingRight": 0,
-    "paddingBottom": 0,
-    "paddingLeft": 0,
-    "borderTopLeftRadius": 3,
-    "borderTopRightRadius": 3,
-    "borderBottomLeftRadius": 3,
-    "borderBottomRightRadius": 3,
-    "width": "auto",
-    "height": 'auto',
-    "left": 0,
-    "top": 0,
-    "right": 0
+  ville1Row: {
+    height: 46,
+    flexDirection: "row",
+    flex: 1,
+    marginRight: 23,
+    marginLeft: 20,
+    marginTop: 24
   },
-  "home_groupe205_loremIpsumDolorSitAmetAdipiscingElitDonecVulputate": {
-    "opacity": 1,
-    "position": "relative",
-    "backgroundColor": "transparent",
-    "color": "rgba(255, 187, 0, 1)",
-    "fontSize": 12.4* indiceScreen,
-    "fontWeight": "500",
-    "fontStyle": "normal",
-    "fontFamily": "roboto-bold",
-    "textAlign": "center",
-    "lineHeight": 18,
-    "marginTop": 0,
-    "marginRight": 10,
-    "marginBottom": 20,
-    "marginLeft": 10,
-    "paddingTop": 20,
-    "paddingRight": 0,
-    "paddingBottom": 0,
-    "paddingLeft": 0,
-    "width": "auto",
-    "height": "auto",
-    "top": 0
+  infos: {
+    height: 65,
+    width: 319,
+    opacity: 1,
+    flexDirection: "row",
+    marginTop: 30,
+    marginLeft: 11
   },
-  "home_groupe209": {
-    "opacity": 1,
-    "position": "absolute",
-    "backgroundColor": "transparent",
-    "marginTop": 0,
-    "marginRight": 0,
-    "marginBottom": 0,
-    "marginLeft": 0,
-    "paddingTop": 0,
-    "paddingRight": 0,
-    "paddingBottom": 0,
-    "paddingLeft": 0,
-    "width": "auto",
-    "height": "auto",
-    "left": 31,
-    "top": 120,
-    "right": 34,
-    "bottom": 395
+  nuageux: {
+    height: 58,
+    width: 76,
+    opacity: 1,
+    marginTop: 4
   },
-  "home_groupe209_searchcity": {
-    "opacity": 1,
-    "position": "absolute",
-    "backgroundColor": "transparent",
-    "marginTop": 0,
-    "marginRight": 0,
-    "marginBottom": 0,
-    "marginLeft": 0,
-    "paddingTop": 0,
-    "paddingRight": 0,
-    "paddingBottom": 0,
-    "paddingLeft": 0,
-    "width": "auto",
-    "height": 43,
-    "left": 3,
-    "top": 5,
-    "right": 1
+  iconesCouvert: {
+    height: 40,
+    width: 40,
+    opacity: 1,
+    backgroundColor: "transparent",
+    marginLeft: 18
   },
-  "home_groupe209_searchcity_versailles": {
-    "opacity": 1,
-    "position": "absolute",
-    "backgroundColor": "rgba(255, 255, 255, 0)",
-    "color": "rgba(42, 44, 53, 1)",
-    "fontSize": 20* indiceScreen,
-    "fontWeight": "700",
-    "fontStyle": "normal",
-    "fontFamily": "roboto-bold",
-    "textAlign": "left",
-    "marginTop": 0,
-    "marginRight": 0,
-    "marginBottom": 0,
-    "marginLeft": 0,
-    "paddingTop": 0,
-    "paddingRight": 0,
-    "paddingBottom": 0,
-    "paddingLeft": 0,
-    "width": 235,
-    "height": 24,
-    "left": 0,
-    "top": 0
+  nuageux1: {
+    height: 18,
+    width: 76,
+    opacity: 1,
+    backgroundColor: "transparent",
+    textAlign: "center",
+    color: "rgba(127,141,154,1)",
+    fontSize: 13
   },
-  "home_groupe209_searchcity_yvelinesFrance": {
-    "opacity": 1,
-    "position": "absolute",
-    "backgroundColor": "rgba(255, 255, 255, 0)",
-    "color": "rgba(42, 44, 53, 1)",
-    "fontSize": 14* indiceScreen,
-    "fontWeight": "500",
-    "fontStyle": "normal",
-    "fontFamily": "roboto-bold",
-    "textAlign": "left",
-    "marginTop": 0,
-    "marginRight": 0,
-    "marginBottom": 0,
-    "marginLeft": 0,
-    "paddingTop": 0,
-    "paddingRight": 0,
-    "paddingBottom": 0,
-    "paddingLeft": 0,
-    "width": 148,
-    "height": 17,
-    "left": 0,
-    "bottom": 0
+  temperature: {
+    height: 65,
+    width: 86,
+    opacity: 1,
+    flexDirection: "row",
+    marginLeft: 14,
   },
-  "home_groupe209_searchcity_iconadd": {
-    "opacity": 1,
-    "position": "absolute",
-    "marginTop": 0,
-    "marginRight": 0,
-    "marginBottom": 0,
-    "marginLeft": 0,
-    "paddingTop": 0,
-    "paddingRight": 0,
-    "paddingBottom": 0,
-    "paddingLeft": 0,
-    "width": 15,
-    "height": "auto",
-    "top": 4,
-    "right": 0,
-    "bottom": 24
+  style: {
+    height: 65,
+    width: 55,
+    opacity: 1,
+    backgroundColor: "transparent",
+    textAlign: "center",
+    color: "rgba(66,77,88,1)",
+    fontSize: 50,
+    marginTop: 5,
+    letterSpacing: -5,
   },
-  "home_groupe209_groupe208": {
-    "opacity": 1,
-    "position": "absolute",
-    "backgroundColor": "transparent",
-    "marginTop": 0,
-    "marginRight": 0,
-    "marginBottom": 0,
-    "marginLeft": 0,
-    "paddingTop": 0,
-    "paddingRight": 0,
-    "paddingBottom": 0,
-    "paddingLeft": 0,
-    "width": "auto",
-    "height": 55,
-    "left": 0,
-    "top": 0,
-    "right": 0
+  c: {
+    position: "absolute",
+    top: 0,
+    left: 9,
+    height: 52,
+    width: 19,
+    opacity: 1,
+    backgroundColor: "transparent",
+    lineHeight: 39,
+    color: "rgba(66,77,88,1)",
+    fontSize: 20
   },
-  "home_groupe209_groupe208_rectangle72e8c560": {
-    "opacity": 1,
-    "position": "absolute",
-    "backgroundColor": "transparent",
-    "marginTop": 0,
-    "marginRight": 0,
-    "marginBottom": 0,
-    "marginLeft": 0,
-    "paddingTop": 0,
-    "paddingRight": 0,
-    "paddingBottom": 0,
-    "paddingLeft": 0,
-    "borderTopLeftRadius": 3,
-    "borderTopRightRadius": 3,
-    "borderBottomLeftRadius": 3,
-    "borderBottomRightRadius": 3,
-    "width": "auto",
-    "height": "auto",
-    "left": 0,
-    "top": 0,
-    "right": 0,
-    "bottom": 0
+  style1: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    height: 52,
+    width: 19,
+    opacity: 1,
+    backgroundColor: "transparent",
+    lineHeight: 39,
+    color: "rgba(66,77,88,1)",
+    fontSize: 20
   },
-  "home_groupe207": {
-    "opacity": 1,
-    "position": "absolute",
-    "backgroundColor": "transparent",
-    "marginTop": 0,
-    "marginRight": 0,
-    "marginBottom": 0,
-    "marginLeft": 0,
-    "paddingTop": 0,
-    "paddingRight": 0,
-    "paddingBottom": 0,
-    "paddingLeft": 0,
-    "width": "auto",
-    "height": 87,
-    "left": 34,
-    "top": 20,
-    "right": 34
+  cStack: {
+    width: 28,
+    height: 52,
+    marginLeft: 2
   },
-  "home_groupe207_actualiser": {
-    "opacity": 1,
-    "position": "absolute",
-    "backgroundColor": "rgba(255, 255, 255, 0)",
-    "color": "rgba(42, 44, 53, 1)",
-    "fontSize": 14* indiceScreen,
-    "fontWeight": "500",
-    "fontStyle": "normal",
-    "fontFamily": "roboto-bold",
-    "textAlign": "left",
-    "lineHeight": 36,
-    "marginTop": 0,
-    "marginRight": 0,
-    "marginBottom": 0,
-    "marginLeft": 0,
-    "paddingTop": 0,
-    "paddingRight": 0,
-    "paddingBottom": 0,
-    "paddingLeft": 0,
-    "width": 'auto',
-    "height": 41,
-    "top": -8.5,
-    "right": 25
+  styleRow: {
+    height: 65,
+    flexDirection: "row",
+    flex: 1,
   },
-  "home_groupe207_lieuxAProximite": {
-    "opacity": 1,
-    "position": "absolute",
-    "backgroundColor": "rgba(255, 255, 255, 0)",
-    "color": "rgba(42, 44, 53, 1)",
-    "fontSize": 30* indiceScreen,
-    "fontWeight": "700",
-    "fontStyle": "normal",
-    "fontFamily": "roboto-bold",
-    "textAlign": "left",
-    "lineHeight": 35,
-    "marginTop": 0,
-    "marginRight": 0,
-    "marginBottom": 0,
-    "marginLeft": 0,
-    "paddingTop": 0,
-    "paddingRight": 0,
-    "paddingBottom": 0,
-    "paddingLeft": 0,
-    "width": 215,
-    "height": 90,
-    "left": 0,
-    "top": 4
+  minMax: {
+    height: 40,
+    width: 61,
+    opacity: 1,
+    marginLeft: 8,
+    marginTop: 17
   },
-  "home_groupe207_iconmonstrRefresh2": {
-    "opacity": 1,
-    "position": "absolute",
-    "marginTop": 0,
-    "marginRight": 0,
-    "marginBottom": 0,
-    "marginLeft": 0,
-    "paddingTop": 0,
-    "paddingRight": 0,
-    "paddingBottom": 0,
-    "paddingLeft": 0,
-    "width": 14,
-    "height": 12.25,
-    "top": 4.38,
-    "right": 1
+  maxCopy: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    height: 22,
+    width: 52,
+    opacity: 1,
+    backgroundColor: "transparent",
+    color: "rgba(66,77,88,1)",
+    fontSize: 13
   },
-  "home_groupe207_groupe206": {
-    "opacity": 1,
-    "position": "absolute",
-    "backgroundColor": "transparent",
-    "marginTop": 0,
-    "marginRight": 0,
-    "marginBottom": 0,
-    "marginLeft": 0,
-    "paddingTop": 0,
-    "paddingRight": 0,
-    "paddingBottom": 0,
-    "paddingLeft": 0,
-    "width": 306,
-    "height": 85,
-    "right": 0,
-    "bottom": 0
+  cCopy: {
+    position: "absolute",
+    top: 0,
+    left: 35,
+    height: 24,
+    width: 46,
+    opacity: 1,
+    backgroundColor: "transparent",
+    textAlign: "right",
+    color: "rgba(66,77,88,1)",
+    fontSize: 13
   },
-  "home_groupe207_groupe206_rectanglea6da2d5c": {
-    "opacity": 1,
-    "position": "absolute",
-    "backgroundColor": "transparent",
-    "marginTop": 0,
-    "marginRight": 0,
-    "marginBottom": 0,
-    "marginLeft": 0,
-    "paddingTop": 0,
-    "paddingRight": 0,
-    "paddingBottom": 0,
-    "paddingLeft": 0,
-    "borderTopLeftRadius": 3,
-    "borderTopRightRadius": 3,
-    "borderBottomLeftRadius": 3,
-    "borderBottomRightRadius": 3,
-    "width": "auto",
-    "height": "auto",
-    "left": 0,
-    "top": 0,
-    "right": 0,
-    "bottom": 0
+  minCopy: {
+    position: "absolute",
+    top: 19,
+    left: 0,
+    height: 19,
+    width: 52,
+    opacity: 1,
+    backgroundColor: "transparent",
+    color: "rgba(127,141,154,1)",
+    fontSize: 13
   },
-  "home_groupe212": {
-    "opacity": 1,
-    "position": "absolute",
-    "backgroundColor": "transparent",
-    "marginTop": 0,
-    "marginRight": 0,
-    "marginBottom": 0,
-    "marginLeft": 0,
-    "paddingTop": 0,
-    "paddingRight": 0,
-    "paddingBottom": 0,
-    "paddingLeft": 0,
-    "width": "auto",
-    "height": 55,
-    "left": 33,
-    "top": 200,
-    "right": 32
+  cCopy1: {
+    position: "absolute",
+    top: 19,
+    left: 35,
+    height: 21,
+    width: 46,
+    opacity: 1,
+    backgroundColor: "transparent",
+    textAlign: "right",
+    color: "rgba(127,141,154,1)",
+    fontSize: 13
   },
-  "home_groupe212_airqualityindex": {
-    "opacity": 1,
-    "position": "absolute",
-    "backgroundColor": "transparent",
-    "marginTop": 0,
-    "marginRight": 0,
-    "marginBottom": 0,
-    "marginLeft": 0,
-    "paddingTop": 0,
-    "paddingRight": 0,
-    "paddingBottom": 0,
-    "paddingLeft": 0,
-    "width": 49.03,
-    "height": 35.25,
-    "top": 10,
-    "right": 2.97
+  maxCopyStack: {
+    width: 65,
+    height: 40
   },
-  "home_groupe212_airqualityindex_rectangle190": {
-    "opacity": 1,
-    "position": "absolute",
-    "backgroundColor": "transparent",
-    "marginTop": 0,
-    "marginRight": 0,
-    "marginBottom": 0,
-    "marginLeft": 0,
-    "paddingTop": 0,
-    "paddingRight": 0,
-    "paddingBottom": 0,
-    "paddingLeft": 0,
-    "borderTopWidth": 1.5,
-    "borderRightWidth": 1.5,
-    "borderBottomWidth": 1.5,
-    "borderLeftWidth": 1.5,
-    "borderTopLeftRadius": 3,
-    "borderTopRightRadius": 3,
-    "borderBottomLeftRadius": 3,
-    "borderBottomRightRadius": 3,
-    "width": 49.03,
-    "height": 35.25,
-    "left": 0,
-    "top": 0
+  indiceAir: {
+    height: 44,
+    width: 34,
+    opacity: 1,
+    backgroundColor: "transparent",
+    marginLeft: 40,
+    marginTop: 13
   },
-  "home_groupe212_airqualityindex_x102": {
-    "opacity": 1,
-    "position": "absolute",
-    "backgroundColor": "rgba(255, 255, 255, 0)",
-    "color": "rgba(255, 187, 0, 1)",
-    "fontSize": 16* indiceScreen,
-    "fontWeight": "700",
-    "fontStyle": "normal",
-    "fontFamily": "roboto-bold",
-    "textAlign": "left",
-    "marginTop": 0,
-    "marginRight": 0,
-    "marginBottom": 0,
-    "marginLeft": 0,
-    "paddingTop": 0,
-    "paddingRight": 0,
-    "paddingBottom": 0,
-    "paddingLeft": 0,
-    "width": "auto",
-    "height": 21,
-    "left": 11,
-    "top": 6.5,
-    "right": 10.03
+  nuageuxRow: {
+    height: 65,
+    flexDirection: "row",
+    flex: 1
   },
-  "home_groupe212_groupe211": {
-    "opacity": 1,
-    "position": "absolute",
-    "backgroundColor": "transparent",
-    "marginTop": 0,
-    "marginRight": 0,
-    "marginBottom": 0,
-    "marginLeft": 0,
-    "paddingTop": 0,
-    "paddingRight": 0,
-    "paddingBottom": 0,
-    "paddingLeft": 0,
-    "width": "auto",
-    "height": "auto",
-    "left": 0,
-    "top": 0,
-    "right": 0,
-    "bottom": 0
+  journee: {
+    height: 105,
+    width: 353,
+    opacity: 1,
+    marginTop: 32
   },
-  "home_groupe212_groupe211_x10c": {
-    "opacity": 1,
-    "position": "absolute",
-    "backgroundColor": "rgba(255, 255, 255, 0)",
-    "color": "rgba(42, 44, 53, 1)",
-    "fontSize": 17* indiceScreen,
-    "fontWeight": "700",
-    "fontStyle": "normal",
-    "fontFamily": "roboto-bold",
-    "textAlign": "left",
-    "marginTop": 0,
-    "marginRight": 0,
-    "marginBottom": 0,
-    "marginLeft": 0,
-    "paddingTop": 0,
-    "paddingRight": 0,
-    "paddingBottom": 0,
-    "paddingLeft": 0,
-    "width": 'auto',
-    "height": 23,
-    "left": 56,
-    "top": 6
+  rectangleDegradeGris: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    height: 34,
+    width: 353,
+    backgroundColor: "transparent"
   },
-  "home_groupe212_groupe211_min": {
-    "opacity": 1,
-    "position": "absolute",
-    "backgroundColor": "rgba(255, 255, 255, 0)",
-    "color": "rgba(42, 44, 53, 1)",
-    "fontSize": 14* indiceScreen,
-    "fontWeight": "700",
-    "fontStyle": "normal",
-    "fontFamily": "roboto-bold",
-    "textAlign": "left",
-    "marginTop": 0,
-    "marginRight": 0,
-    "marginBottom": 0,
-    "marginLeft": 0,
-    "paddingTop": 0,
-    "paddingRight": 0,
-    "paddingBottom": 0,
-    "paddingLeft": 0,
-    "width": 'auto',
-    "height": 19,
-    "left": 120,
-    "top": 27
+  rectangleDegradeGris_imageStyle: {
+    opacity: 1
   },
-  "home_groupe212_groupe211_max": {
-    "opacity": 1,
-    "position": "absolute",
-    "backgroundColor": "rgba(255, 255, 255, 0)",
-    "color": "rgba(42, 44, 53, 1)",
-    "fontSize": 14* indiceScreen,
-    "fontWeight": "700",
-    "fontStyle": "normal",
-    "fontFamily": "roboto-bold",
-    "textAlign": "left",
-    "marginTop": 0,
-    "marginRight": 0,
-    "marginBottom": 0,
-    "marginLeft": 0,
-    "paddingTop": 0,
-    "paddingRight": 0,
-    "paddingBottom": 0,
-    "paddingLeft": 0,
-    "width": 'auto',
-    "height": 19,
-    "left": 120,
-    "top": 10
+  heure01: {
+    position: "absolute",
+    top: 11,
+    left: 293,
+    height: 94,
+    width: 41,
+    opacity: 1,
+    backgroundColor: "transparent"
   },
-  "home_groupe212_groupe211_x8c": {
-    "opacity": 1,
-    "position": "absolute",
-    "backgroundColor": "rgba(255, 255, 255, 0)",
-    "color": "rgba(42, 44, 53, 1)",
-    "fontSize": 14* indiceScreen,
-    "fontWeight": "700",
-    "fontStyle": "normal",
-    "fontFamily": "roboto-bold",
-    "textAlign": "right",
-    "marginTop": 0,
-    "marginRight": 0,
-    "marginBottom": 0,
-    "marginLeft": 0,
-    "paddingTop": 0,
-    "paddingRight": 0,
-    "paddingBottom": 0,
-    "paddingLeft": 0,
-    "width": 'auto',
-    "height": 19,
-    "left": 165,
-    "top": 27
+  heure011: {
+    position: "absolute",
+    top: 11,
+    left: 224,
+    height: 94,
+    width: 41,
+    opacity: 1,
+    backgroundColor: "transparent"
   },
-  "home_groupe212_groupe211_x13c": {
-    "opacity": 1,
-    "position": "absolute",
-    "backgroundColor": "rgba(255, 255, 255, 0)",
-    "color": "rgba(42, 44, 53, 1)",
-    "fontSize": 14* indiceScreen,
-    "fontWeight": "700",
-    "fontStyle": "normal",
-    "fontFamily": "roboto-bold",
-    "textAlign": "right",
-    "marginTop": 0,
-    "marginRight": 0,
-    "marginBottom": 0,
-    "marginLeft": 0,
-    "paddingTop": 0,
-    "paddingRight": 0,
-    "paddingBottom": 0,
-    "paddingLeft": 0,
-    "width": 'auto',
-    "height": 19,
-    "left": 165,
-    "top": 10
+  heure012: {
+    position: "absolute",
+    top: 11,
+    left: 155,
+    height: 94,
+    width: 41,
+    opacity: 1,
+    backgroundColor: "transparent"
   },
-  "home_groupe212_groupe211_temp": {
-    "opacity": 1,
-    "position": "absolute",
-    "backgroundColor": "rgba(255, 255, 255, 0)",
-    "color": "rgba(42, 44, 53, 1)",
-    "fontSize": 14* indiceScreen,
-    "fontWeight": "700",
-    "fontStyle": "normal",
-    "fontFamily": "roboto-bold",
-    "textAlign": "left",
-    "marginTop": 0,
-    "marginRight": 0,
-    "marginBottom": 0,
-    "marginLeft": 0,
-    "paddingTop": 0,
-    "paddingRight": 0,
-    "paddingBottom": 0,
-    "paddingLeft": 0,
-    "width": 'auto',
-    "height": 19,
-    "left": 56,
-    "top": 27
+  heure013: {
+    position: "absolute",
+    top: 11,
+    left: 87,
+    height: 94,
+    width: 41,
+    opacity: 1,
+    backgroundColor: "transparent"
   },
-  "home_groupe212_groupe211_groupe210": {
-    "opacity": 1,
-    "position": "absolute",
-    "backgroundColor": "transparent",
-    "marginTop": 0,
-    "marginRight": 0,
-    "marginBottom": 0,
-    "marginLeft": 0,
-    "paddingTop": 0,
-    "paddingRight": 0,
-    "paddingBottom": 0,
-    "paddingLeft": 0,
-    "width": "auto",
-    "height": "auto",
-    "left": 0,
-    "top": 0,
-    "right": 0,
-    "bottom": 0
+  heure014: {
+    position: "absolute",
+    top: 11,
+    left: 18,
+    height: 94,
+    width: 41,
+    opacity: 1,
+    backgroundColor: "transparent"
   },
-  "home_groupe212_groupe211_groupe210_groupe208325c65e5": {
-    "opacity": 1,
-    "position": "absolute",
-    "backgroundColor": "transparent",
-    "marginTop": 0,
-    "marginRight": 0,
-    "marginBottom": 0,
-    "marginLeft": 0,
-    "paddingTop": 0,
-    "paddingRight": 0,
-    "paddingBottom": 0,
-    "paddingLeft": 0,
-    "width": "auto",
-    "height": "auto",
-    "left": 0,
-    "top": 0,
-    "right": 0,
-    "bottom": 0
+  rectangleDegradeGrisStack: {
+    width: 353,
+    height: 105
   },
-  "home_groupe212_groupe211_groupe210_groupe208325c65e5_rectanglec24f8a8d": {
-    "opacity": 1,
-    "position": "absolute",
-    "backgroundColor": "transparent",
-    "marginTop": 0,
-    "marginRight": 0,
-    "marginBottom": 0,
-    "marginLeft": 0,
-    "paddingTop": 0,
-    "paddingRight": 0,
-    "paddingBottom": 0,
-    "paddingLeft": 0,
-    "borderTopLeftRadius": 3,
-    "borderTopRightRadius": 3,
-    "borderBottomLeftRadius": 3,
-    "borderBottomRightRadius": 3,
-    "width": "auto",
-    "height": "auto",
-    "left": 0,
-    "top": 0,
-    "right": 0,
-    "bottom": 0
+  aProximite: {
+    position: "absolute",
+    top: 30,
+    left: 20,
+    height: 38,
+    width: 'auto',
+    opacity: 1,
+    flexDirection: "row"
   },
-  "home_groupe212_groupe211_x09d": {
-    "opacity": 1,
-    "position": "absolute",
-    "backgroundColor": "transparent",
-    "marginTop": 0,
-    "marginRight": 0,
-    "marginBottom": 0,
-    "marginLeft": 0,
-    "paddingTop": 0,
-    "paddingRight": 0,
-    "paddingBottom": 0,
-    "paddingLeft": 0,
-    "width": 32.36,
-    "height": 35,
-    "left": 1,
-    "top": 8
+  lieuxAProximite: {
+    height: 38,
+    width: 167,
+    opacity: 1,
+    backgroundColor: "transparent",
+    lineHeight: 35,
+    color: "rgba(255,255,255,1)",
+    fontSize: 14,
+    letterSpacing: 1.788888888888888
   },
-  "home_groupe212_groupe211_x09d_trace110": {
-    "opacity": 1,
-    "position": "absolute",
-    "marginTop": 0,
-    "marginRight": 0,
-    "marginBottom": 0,
-    "marginLeft": 0,
-    "paddingTop": 0,
-    "paddingRight": 0,
-    "paddingBottom": 0,
-    "paddingLeft": 0,
-    "width": 5,
-    "height": 8.84,
-    "left": 15.2,
-    "top": 27.16
+  btnActualiser: {
+    height: 36,
+    width: 130,
+    opacity: 1,
+    marginLeft: 38,
+    marginTop: 1,
   },
-  "home_groupe212_groupe211_x09d_trace111": {
-    "opacity": 1,
-    "position": "absolute",
-    "marginTop": 0,
-    "marginRight": 0,
-    "marginBottom": 0,
-    "marginLeft": 0,
-    "paddingTop": 0,
-    "paddingRight": 0,
-    "paddingBottom": 0,
-    "paddingLeft": 0,
-    "width": 5,
-    "height": 8.84,
-    "left": 5.97,
-    "top": 27.16
+  rectangle1: {
+    height: 36,
+    width: 130,
+    borderRadius: 19,
+    backgroundColor: "rgba(255,255,255,0.206635974702381)",
+    flexDirection: "row",
   },
-  "home_groupe212_groupe211_x09d_trace112": {
-    "opacity": 1,
-    "position": "absolute",
-    "marginTop": 0,
-    "marginRight": 0,
-    "marginBottom": 0,
-    "marginLeft": 0,
-    "paddingTop": 0,
-    "paddingRight": 0,
-    "paddingBottom": 0,
-    "paddingLeft": 0,
-    "width": 5,
-    "height": 8.84,
-    "left": 24.83,
-    "top": 27.16
+  actualiser: {
+    height: 27,
+    width: 75,
+    opacity: 1,
+    backgroundColor: "transparent",
+    color: "rgba(255,255,255,1)",
+    fontSize: 14,
   },
-  "home_groupe212_groupe211_x09d_groupe153": {
-    "opacity": 1,
-    "position": "absolute",
-    "backgroundColor": "transparent",
-    "marginTop": 0,
-    "marginRight": 0,
-    "marginBottom": 0,
-    "marginLeft": 0,
-    "paddingTop": 0,
-    "paddingRight": 0,
-    "paddingBottom": 0,
-    "paddingLeft": 0,
-    "width": 32.36,
-    "height": 24.2,
-    "left": 0,
-    "top": 0
+  iconesActualiser: {
+    height: 18,
+    width: 25,
+    opacity: 1,
+    backgroundColor: "transparent",
+    marginLeft: 0,
+    marginTop: 0
   },
-  "home_groupe212_groupe211_x09d_groupe153_trace113": {
-    "opacity": 1,
-    "position": "absolute",
-    "marginTop": 0,
-    "marginRight": 0,
-    "marginBottom": 0,
-    "marginLeft": 0,
-    "paddingTop": 0,
-    "paddingRight": 0,
-    "paddingBottom": 0,
-    "paddingLeft": 0,
-    "width": 2.04,
-    "height": 2,
-    "left": 12.02,
-    "top": 23.2
+  actualiserRow: {
+    height: 27,
+    flexDirection: "row",
+    flex: 1,
+    marginRight: 10,
+    marginLeft: 12,
+    marginTop: 5,
   },
-  "home_groupe212_groupe211_x09d_groupe153_trace114": {
-    "opacity": 1,
-    "position": "absolute",
-    "marginTop": 0,
-    "marginRight": 0,
-    "marginBottom": 0,
-    "marginLeft": 0,
-    "paddingTop": 0,
-    "paddingRight": 0,
-    "paddingBottom": 0,
-    "paddingLeft": 0,
-    "width": 34.36,
-    "height": 25.16,
-    "left": -1,
-    "top": -1
+  lieuxAProximiteRow: {
+    height: 38,
+    flexDirection: "row",
+    flex: 1
   },
-  "home_groupe214_groupe207_rectangle281": {
-    "opacity": 1,
-    "position": "absolute",
-    "backgroundColor": "transparent",
-    "marginTop": 0,
-    "marginRight": 0,
-    "marginBottom": 0,
-    "marginLeft": 0,
-    "paddingTop": 0,
-    "paddingRight": 0,
-    "paddingBottom": 0,
-    "paddingLeft": 0,
-    "borderTopLeftRadius": 0,
-    "borderTopRightRadius": 0,
-    "borderBottomLeftRadius": 0,
-    "borderBottomRightRadius": 0,
-    "width": 94,
-    "height": 23,
-    "top": 0,
-    "right": 0
+  nav: {
+    position: "absolute",
+    top: 58,
+    left: 113,
+    height: 36,
+    width: 242,
+    opacity: 1,
+    flexDirection: "row"
   },
-  "home_groupe213_groupe209_searchcity_iconadd": {
-    "opacity": 1,
-    "position": "absolute",
-    "marginTop": 0,
-    "marginRight": 0,
-    "marginBottom": 0,
-    "marginLeft": 0,
-    "paddingTop": 0,
-    "paddingRight": 0,
-    "paddingBottom": 0,
-    "paddingLeft": 0,
-    "width": 15,
-    "height": "auto",
-    "top": 4,
-    "right": 0,
-    "bottom": 24
+  iconesMenu: {
+    height: 24,
+    width: 24,
+    opacity: 1,
+    backgroundColor: "transparent",
+    marginLeft: 68,
+    marginTop: 6
   },
-  "home_groupe214_groupe207_iconmonstrRefresh2": {
-    "opacity": 1,
-    "position": "absolute",
-    "marginTop": 0,
-    "marginRight": 0,
-    "marginBottom": 0,
-    "marginLeft": 0,
-    "paddingTop": 0,
-    "paddingRight": 0,
-    "paddingBottom": 0,
-    "paddingLeft": 0,
-    "width": 14,
-    "height": 15,
-    "top": 4.38,
-    "right": 3
+  geoAirRow: {
+    height: 36,
+    flexDirection: "row",
+    flex: 1
   },
+  menuHome: {
+    position: "absolute",
+    top: 742,
+    left: 0,
+    height: 70,
+    width: 375,
+    opacity: 1,
+    backgroundColor: "transparent"
+  },
+  interface: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    height: 44,
+    width: 375,
+    opacity: 1,
+    backgroundColor: "transparent"
+  },
+  bgStack: {
+    width: 376,
+    height: 812
+  }
 });
-
-
 
 export default HomeView;

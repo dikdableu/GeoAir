@@ -8,9 +8,9 @@ import { AppLoading } from 'expo';
 
 const fetchFonts = () => {
   return Font.loadAsync({
-  'roboto-bold': require('../../assets/Roboto-Bold.ttf'),
-  'roboto-italic': require('../../assets/Roboto-Italic.ttf'),
-  'roboto-regular': require('../../assets/Roboto-Regular.ttf')
+  'roboto-bold': require('../assets/Roboto-Bold.ttf'),
+  'roboto-italic': require('../assets/Roboto-Italic.ttf'),
+  'roboto-regular': require('../assets/Roboto-Regular.ttf')
   });
 };
 

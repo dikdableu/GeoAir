@@ -20,9 +20,9 @@ export default class Connexion extends SignIn {
   }
   fetchFonts() {
     return Font.loadAsync({
-    'roboto-bold': require('../../assets/Roboto-Bold.ttf'),
-    'roboto-italic': require('../../assets/Roboto-Italic.ttf'),
-    'roboto-regular': require('../../assets/Roboto-Regular.ttf')
+    'roboto-bold': require('../assets/Roboto-Bold.ttf'),
+    'roboto-italic': require('../assets/Roboto-Italic.ttf'),
+    'roboto-regular': require('../assets/Roboto-Regular.ttf')
     });
   };
 
@@ -58,9 +58,9 @@ export default class Connexion extends SignIn {
           </View>
         </TouchableOpacity>
         <View data-layer="e2f219eb-e8e6-467f-abcc-350aae1d3a86" style={styles.connexion_split}></View>
-        <ReactImage data-layer="08375958-26f5-45af-a0ce-717782219803" source={require('../../assets/icongoogle.png')} style={styles.connexion_icongoogle} />
-        <ReactImage data-layer="c25e316e-85ad-4e63-9aac-f6eb957bb10f" source={require('../../assets/iconapple.png')} style={styles.connexion_iconapple} />
-        <ReactImage data-layer="0776e6f5-96f3-4e4f-83be-46a0b4d1873a" source={require('../../assets/iconfacebook.png')} style={styles.connexion_iconfacebook} />
+        <ReactImage data-layer="08375958-26f5-45af-a0ce-717782219803" source={require('../assets/icongoogle.png')} style={styles.connexion_icongoogle} />
+        <ReactImage data-layer="c25e316e-85ad-4e63-9aac-f6eb957bb10f" source={require('../assets/iconapple.png')} style={styles.connexion_iconapple} />
+        <ReactImage data-layer="0776e6f5-96f3-4e4f-83be-46a0b4d1873a" source={require('../assets/iconfacebook.png')} style={styles.connexion_iconfacebook} />
         <Svg data-layer="624d74d7-427d-4da9-896d-4ec33929edd7" style={styles.connexion_iconadd} preserveAspectRatio="none" viewBox="-5944.99951171875 -2494.0009765625 15 15" fill="rgba(42, 44, 53, 1)"><SvgPath d="M -5938.65380859375 -2480.15478515625 L -5938.65380859375 -2485.3466796875 L -5943.845703125 -2485.3466796875 C -5944.4833984375 -2485.3466796875 -5944.99951171875 -2485.86376953125 -5944.99951171875 -2486.500732421875 C -5944.99951171875 -2487.137939453125 -5944.4833984375 -2487.654541015625 -5943.845703125 -2487.654541015625 L -5938.65380859375 -2487.654541015625 L -5938.65380859375 -2492.846923828125 C -5938.65380859375 -2493.48388671875 -5938.13623046875 -2494.0009765625 -5937.49951171875 -2494.0009765625 C -5936.8623046875 -2494.0009765625 -5936.345703125 -2493.48388671875 -5936.345703125 -2492.846923828125 L -5936.345703125 -2487.654541015625 L -5931.15380859375 -2487.654541015625 C -5930.51611328125 -2487.654541015625 -5929.99951171875 -2487.137939453125 -5929.99951171875 -2486.500732421875 C -5929.99951171875 -2485.86376953125 -5930.51611328125 -2485.3466796875 -5931.15380859375 -2485.3466796875 L -5936.345703125 -2485.3466796875 L -5936.345703125 -2480.15478515625 C -5936.345703125 -2479.517333984375 -5936.8623046875 -2479.0009765625 -5937.49951171875 -2479.0009765625 C -5938.13623046875 -2479.0009765625 -5938.65380859375 -2479.517333984375 -5938.65380859375 -2480.15478515625 Z"  /></Svg>
       </form>
     </ScrollView>

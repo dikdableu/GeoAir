@@ -2,19 +2,18 @@
   "expo": {
     "name": "GeoAir",
     "scheme": "geoair",
-    "icon": "./assets/icon.png",
+    "icon": "./src/assets/icon.png",
     "slug": "GeoAir",
     "privacy": "unlisted",
-    "sdkVersion": "36.0.0",
     "platforms": [
       "ios",
       "android",
       "web"
     ],
-    "version": "1.0.31",
+    "version": "1.0.35",
     "orientation": "portrait",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./src/assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -27,11 +26,11 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.bastienchoisy.geoair",
-      "buildNumber": "1.0.31"
+      "buildNumber": "1.0.35"
     },
     "android": {
       "package": "com.bastienchoisy.geoair",
-      "versionCode": 24,
+      "versionCode": 25,
       "permissions": [
         "ACCESS_COARSE_LOCATION",
         "ACCESS_FINE_LOCATION",
