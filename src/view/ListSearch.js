@@ -9,9 +9,17 @@ import {Text as SvgText} from 'react-native-svg';
 import {Image as SvgImage} from 'react-native-svg';
 import Toast from 'react-native-root-toast';
 
+import IconesCouvert from "../components/IconesCouvert";
+import IconesNeige from "../components/IconesNeige";
+import IconesOrage from "../components/IconesOrage";
+import IconesBrume from "../components/IconesBrume";
+import IconesPluie from "../components/IconesPluie";
+import IconesSoleil from "../components/IconesSoleil";
+import IconesNuages from "../components/IconesNuages";
+
 import AddComponent from './Icones/Add.js'
 
-export default function ListComponent(props) {
+export default function listSearch(props) {
   const listFavorite = useSelector(state => state.listFavorite)
   const user = useSelector(state => state.user)
 
@@ -69,6 +77,12 @@ export default function ListComponent(props) {
                 d="M0.00 0.50 L310.00 0.50 "
               ></Path>
             </Svg>
+            <IconesCouvert1 style={styles.iconesCouvert1}></IconesCouvert1>
+            <View style={styles.temperatures2}>
+              <Text style={styles.cCopy}>13°C</Text>
+              <Text style={styles.cCopy1}>6°C</Text>
+            </View>
+            <IndiceAir1 style={styles.indiceAir1}></IndiceAir1>
           </View>
         </TouchableOpacity>
       </View>

@@ -187,7 +187,8 @@ const TabNavigator = createBottomTabNavigator({
     showIcon: true, // On informe le TabNavigator qu'on souhaite afficher les icônes définis
     tabStyle: {
       flex:1,
-      marginTop:20
+      justifyContent:"center",
+      alignItems:"center"
     },
     style:{
       height: 50,

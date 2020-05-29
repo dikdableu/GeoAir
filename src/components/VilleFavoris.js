@@ -4,21 +4,24 @@ import IconesCouvert from "./IconesCouvert";
 import IndiceAir from "./IndiceAir";
 
 function VilleFavoris(props) {
+  const color = props.color
+  const propsState = props
+
   return (
     <View style={[styles.container, props.style]}>
       <View style={styles.rect}>
         <View style={styles.rectangle5}>
           <View style={styles.villeRow}>
             <View style={styles.ville}>
-              <Text style={styles.versailles}>Versailles</Text>
-              <Text style={styles.yvelinesFrance}>Yvelines, France</Text>
+              <Text style={styles.versailles}>{propsState.ville}</Text>
+              <Text style={styles.yvelinesFrance}>{propsState.pays}</Text>
             </View>
             <IconesCouvert style={styles.iconesCouvert}></IconesCouvert>
             <View style={styles.temperatures}>
-              <Text style={styles.cCopy}>13°C</Text>
-              <Text style={styles.cCopy1}>6°C</Text>
+              <Text style={styles.cCopy}>{propsState.temp}</Text>
+              <Text style={styles.cCopy1}>{propsState.tr}</Text>
             </View>
-            <IndiceAir style={styles.indiceAir3}></IndiceAir>
+            <IndiceAir style={styles.indiceAir3} aqi={propsState.aqi} textColor={props.textColor} color={props.color} />
           </View>
         </View>
       </View>
