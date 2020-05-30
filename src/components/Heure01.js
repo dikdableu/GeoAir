@@ -1,5 +1,6 @@
 import React, { Component, useState, useEffect, useMemo } from "react";
 import { StyleSheet, View, Text } from "react-native";
+
 import IconesCouvert from "./IconesCouvert";
 import IconesNeige from "./IconesNeige";
 import IconesOrage from "./IconesOrage";
@@ -8,7 +9,7 @@ import IconesPluie from "./IconesPluie";
 import IconesSoleil from "./IconesSoleil";
 import IconesNuages from "./IconesNuages";
 
-function Heure01(props) {
+export default function Heure01(props) {
 
   const [conditionWeather, setConditionWeather] = useState(
     [
@@ -367,7 +368,7 @@ function Heure01(props) {
            weather: "Clear",
            description: "ciel dégagé",
            icon: "01d",
-           path:(<IconesSoleil/>)
+           path:(<IconesSoleil style={styles.iconesCouvert11} />)
          },
          {
            id: 801,
@@ -401,14 +402,14 @@ function Heure01(props) {
   )
   const [path, setPath] = useState(null)
 
-  useEffect((props)=>{
-
+  useEffect(() => {
     conditionWeather.forEach( value => {
         if(props.id == value.id){
         setPath(value.path)
         }
     })
-  },[])
+  })
+
   return (
     <View style={[styles.container, props.style]}>
       <View style={styles.rectangle7}>
@@ -467,14 +468,12 @@ const styles = StyleSheet.create({
   },
   c4: {
     height: 26,
-    width: 33,
+    width: 45,
     opacity: 1,
     backgroundColor: "transparent",
     textAlign: "right",
     color: "rgba(127,141,154,1)",
     fontSize: 13,
-    marginLeft: 4
+    marginLeft: -2
   }
 });
-
-export default Heure01;

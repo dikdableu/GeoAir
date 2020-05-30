@@ -683,15 +683,13 @@ function HomeView() {
                       imageStyle={styles.rectangleDegradeGris_imageStyle}
                       source={require("../assets/images/Gradient_XefJXP1.png")}
                     ></ImageBackground>
-                    <ScrollView horizontal={true}>
-                      {responseApiWeatherHour.hourly.forEach((item, index) => {
-                        if(index > 23){
-                          return null;
-                        }else{
-                          return(<Heure01 key={index} style={styles.heure01}  time={_convertDate(item.dt)} temp={(item.temp - 273.15).toFixed(1)}></Heure01>)
-                        }
-                      })}
-                    </ScrollView>
+                    <FlatList
+                      horizontal={true}
+                      data={responseApiWeatherHour.hourly.slice(0,23)}
+                      renderItem={({item}) => (<Heure01 style={styles.heure01} time={_convertDate(item.dt)} id={item.weather[0].id} temp={(item.temp - 273.15).toFixed(1)}/>)}
+                      keyExtractor={(item, index) => index.toString()}
+                      showsHorizontalScrollIndicator={false}
+                    />
                   </View>
                 </View>
               </View>
