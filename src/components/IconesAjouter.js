@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { StyleSheet, View } from "react-native";
-import Svg, { Path } from "react-native-svg";
+import Svg, { Path  } from "react-native-svg";
 import IconesPlus from "./IconesPlus";
 
 function IconesAjouter(props) {
@@ -8,14 +8,14 @@ function IconesAjouter(props) {
     <View style={[styles.container, props.style]}>
       <View style={styles.iconesAjouter}>
         <View style={styles.oval5Stack}>
-          <Svg viewBox="0 0 38 38" style={styles.oval5}>
-            <Path
+          <Svg style={{width: '100%', height: '100%'}} viewBox="0 0 38 38" style={styles.oval5}>
+            <Path scale={props.scale}
               strokeWidth={0}
               fill="rgba(103,232,211,1)"
               fillOpacity={1}
               strokeOpacity={1}
               d="M19.00 38.00 C29.49 38.00 38.00 29.49 38.00 19.00 C38.00 8.51 29.49 0.00 19.00 0.00 C8.51 0.00 0.00 8.51 0.00 19.00 C0.00 29.49 8.51 38.00 19.00 38.00 Z"
-            ></Path>
+            > </Path>
           </Svg>
           <IconesPlus style={styles.iconesPlus1}></IconesPlus>
         </View>

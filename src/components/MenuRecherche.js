@@ -3,7 +3,7 @@ import { StyleSheet, View } from "react-native";
 import IconesHome from "./IconesHome";
 import IconesFavoris from "./IconesFavoris";
 import IconesLoupe from "./IconesLoupe";
-import Svg, { Path } from "react-native-svg";
+import Svg, { Path  } from "react-native-svg";
 
 function MenuRecherche(props) {
   return (
@@ -15,14 +15,14 @@ function MenuRecherche(props) {
             <IconesFavoris style={styles.iconesFavoris}></IconesFavoris>
             <IconesLoupe style={styles.iconesLoupe}></IconesLoupe>
           </View>
-          <Svg viewBox="0 0 6 6" style={styles.oval}>
-            <Path
+          <Svg style={{width: '100%', height: '100%'}} viewBox="0 0 6 6" style={styles.oval}>
+            <Path scale={props.scale}
               strokeWidth={0}
               fill="rgba(70,192,255,1)"
               fillOpacity={1}
               strokeOpacity={1}
               d="M3.00 6.00 C4.66 6.00 6.00 4.66 6.00 3.00 C6.00 1.34 4.66 0.00 3.00 0.00 C1.34 0.00 0.00 1.34 0.00 3.00 C0.00 4.66 1.34 6.00 3.00 6.00 Z"
-            ></Path>
+            > </Path>
           </Svg>
         </View>
       </View>
