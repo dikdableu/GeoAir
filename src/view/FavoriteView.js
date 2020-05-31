@@ -162,7 +162,7 @@ const FavoriteView = ({props, navigation}) => {
                       contentContainerStyle={{ paddingBottom: 20}}
                       style={{height: 500}}
                       keyExtractor={item => item.id.toString()}
-                      renderItem={({item}) =>  <View><Swipeout onOpen={() => {setRowOpen(item.id)}}right={swipeBtns}
+                      renderItem={({item}) =>  <View><Swipeout onOpen={() => {setRowOpen(item.id)}} right={swipeBtns}
                       backgroundColor= 'transparent'
                       >
                         <TouchableOpacity onPress={() => navigation.navigate('Detail', {responseApiAir: item.responseApiAir, responseApiMeteo: item.responseApiMeteo, color: item.color})}><VilleFavoris icon={item.idMeteo} aqi={item.aqi} textColor={item.textColor} color={item.color} temp={item.temperature} tr={item.temperatureFeel} ville={item.ville} pays={item.country} style={styles.villeFavoris1} /></TouchableOpacity>

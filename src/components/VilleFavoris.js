@@ -4,13 +4,14 @@ import IconesCouvert from "./IconesCouvert";
 import IndiceAir from "./IndiceAir";
 import {TextInput, FlatList, Picker, ScrollView, TouchableHighlight, TouchableOpacity, Dimensions} from 'react-native';
 
-function VilleFavoris(props) {
+function VilleFavoris(props, navigation) {
   const propsState = props
-  if(props.search){
+  console.log(navigation)
+  if(propsState.search){
     return(
       <View style={styles.resultatsDeRecherche}>
         <View style={styles.rectangleBlanc}>
-          <TouchableOpacity onPress={() => {_addFavorite()}}>
+          <TouchableOpacity onPress={() => navigation.navigate('Detail', {responseApiAir: propsState.responseApiAir, responseApiMeteo: propsState.responseApiMeteo, color: propsState.color, textColor: propsState.textColor})} onLongPress={() => {_addFavorite()}}>
             <View style={styles.villeRecherche01}>
               <View style={styles.villeRow1}>
               <View style={styles.ville}>
@@ -55,16 +56,17 @@ function VilleFavoris(props) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
+    zIndex: 0
   },
   rect: {
     height: 93,
-    width: 353,
+    width: 'auto',
     opacity: 1
   },
   rectangle5: {
     height: 93,
-    width: 353,
+    width: 'auto',
     borderRadius: 28,
     shadowColor: "rgba(0,0,0,0.1115876311188811)",
     shadowOffset: {
@@ -147,9 +149,9 @@ const styles = StyleSheet.create({
   },
   resultatsDeRecherche: {
     position: "absolute",
-    top: 132,
-    left: 11,
-    height: 337,
+    top: 130,
+    left: 10,
+    height: 'auto',
     width: 353,
     opacity: 1
   },

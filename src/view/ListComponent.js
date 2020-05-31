@@ -48,28 +48,26 @@ export default function ListComponent(props) {
     return(
       <View style={styles.resultatsDeRecherche}>
         <View style={styles.rectangleBlanc}>
-          <TouchableOpacity onPress={() => {_addFavorite()}}>
-            <View style={styles.villeRecherche01}>
-              <View style={styles.ville2Row}>
-                <View style={styles.ville2}>
-                  <Text style={styles.versaillesCopy}>{props.name.length > 13 ? props.name.slice(0,13) + '...' : props.name}</Text>
-                  <Text style={styles.yvelinesFranceCopy}>
-                    {props.admin2_code}, {props.country_code}
-                  </Text>
-                </View>
+          <View style={styles.villeRecherche01}>
+            <View style={styles.ville2Row}>
+              <View style={styles.ville2}>
+                <Text style={styles.versaillesCopy}>{props.name.length > 13 ? props.name.slice(0,13) + '...' : props.name}</Text>
+                <Text style={styles.yvelinesFranceCopy}>
+                  {props.admin2_code}, {props.country_code}
+                </Text>
               </View>
-              <Svg viewBox="-0.5 -0.5 312 3" style={styles.line1}>
-                <Path
-                  strokeWidth={1}
-                  fill="transparent"
-                  stroke="rgba(242,242,242,1)"
-                  fillOpacity={1}
-                  strokeOpacity={1}
-                  d="M0.00 0.50 L310.00 0.50 "
-                ></Path>
-              </Svg>
             </View>
-          </TouchableOpacity>
+            <Svg viewBox="-0.5 -0.5 312 3" style={styles.line1}>
+              <Path
+                strokeWidth={1}
+                fill="transparent"
+                stroke="rgba(242,242,242,1)"
+                fillOpacity={1}
+                strokeOpacity={1}
+                d="M0.00 0.50 L310.00 0.50 "
+              ></Path>
+            </Svg>
+          </View>
         </View>
       </View>
     )
@@ -111,9 +109,9 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 132,
     left: 11,
-    height: 337,
+    height: 'auto',
     width: 353,
-    opacity: 1
+    opacity: 1,
   },
   rectangleBlanc: {
     height: 'auto',

@@ -87,24 +87,6 @@ export default function SearchView({props, navigation}) {
 
     }, [search])
 
-    useEffect(() => {
-      if(typeof responseApiAir != 'undefined' && responseApiAir && Object.keys(responseApiAir).length !== 0 && responseApiAir != 0){
-        if (responseApiAir.data.aqi >= 0 && responseApiAir.data.aqi <= 50){
-          setColor("#DCFFF9")
-          setColorText("#00EBD3")
-        }
-        if (responseApiAir.data.aqi >= 51 && responseApiAir.data.aqi <= 150){
-          setColor("#FFF3E3")
-          setColorText("#FFB553")
-        }
-        if (responseApiAir.data.aqi >= 151){
-          setColor("#FFEDEC")
-          setColorText("#FF6B53")
-        }
-      }
-    }, [responseApiAir])
-
-
     const _searchByCity = (city) => {
       toogleHide(false)
       setCharged(false)
@@ -116,12 +98,34 @@ export default function SearchView({props, navigation}) {
         .then((resultat) => {
           var id = 0
           var data = []
+          var tmpTextColor
+          var tmpColor
           if(resultat.cod == 200) {
             fetch('https://api.waqi.info/feed/geo:'+resultat.coord.lat+';'+resultat.coord.lon+'/?token=85ab63dee549b4825ea4e18973ba6076cbaf3dd4', { method: 'GET'})
             .then((responsewaqi) => responsewaqi.json())
             .then((responseJsonWaqi) => {
             setResponseApiAir(responseJsonWaqi);
             setResponseApiMeteo(resultat)
+
+            if (responseJsonWaqi.data.aqi >= 0 && responseJsonWaqi.data.aqi <= 50){
+              setColor("#DCFFF9")
+              setColorText("#00EBD3")
+              tmpColor = "#DCFFF9"
+              tmpTextColor = "#00EBD3"
+            }
+            if (responseJsonWaqi.data.aqi >= 51 && responseJsonWaqi.data.aqi <= 150){
+              setColor("#FFF3E3")
+              setColorText("#FFB553")
+              tmpColor = "#FFF3E3"
+              tmpTextColor = "#FFB553"
+            }
+            if (responseJsonWaqi.data.aqi >= 151){
+              setColor("#FFEDEC")
+              setColorText("#FF6B53")
+              tmpColor = "#FFEDEC"
+              tmpTextColor = "#FF6B53"
+            }
+
             data.push({
               id: id++,
               country: resultat.sys.country,
@@ -130,8 +134,8 @@ export default function SearchView({props, navigation}) {
               temperatureFeel: (resultat.main.feels_like - 273.15).toFixed(1) + "°C",
               idMeteo: 200,
               ville: resultat.name,
-              color: color,
-              textColor: colorText
+              color: tmpColor,
+              textColor: tmpTextColor
             })
             setListSearch(data)
             setCharged(true)
@@ -181,10 +185,11 @@ export default function SearchView({props, navigation}) {
 
   }
 
-  const _setInput = (input) => {
+  const _setInput = (item) => {
+
     toogleHide(false)
-    setSearch(input.name)
-    _searchByCity(input.name)
+    setSearch(item.address.city)
+    _searchByCity(item.address.city)
   }
 
   const toogleHide = (set) => {
@@ -220,10 +225,9 @@ export default function SearchView({props, navigation}) {
             />
               <FlatList
                 bounces={false}
-                style={styles.ajouterUnLieux_rectangle283}
                 data={listSearch}
-                keyExtractor={(item) => item.id}
-                renderItem={({item}) => <TouchableOpacity onPress={() => navigation.navigate('Detail', {responseApiAir: responseApiAir, responseApiMeteo: responseApiMeteo, color: color})} onLongPress={() => _addFavorite()}><VilleFavoris search={true} icon={item.idMeteo} aqi={item.aqi} textColor={item.textColor} color={item.color} temp={item.temperature} tr={item.temperatureFeel} ville={item.ville} pays={item.country} style={styles.villeFavoris1} /></TouchableOpacity>}
+                keyExtractor={(item) => item.id.toString()}
+                renderItem={({item}) => <VilleFavoris responseApiAir={responseApiAir} responseApiMeteo={responseApiMeteo} search={true} icon={item.idMeteo} aqi={item.aqi} textColor={item.textColor} color={item.color} temp={item.temperature} tr={item.temperatureFeel} ville={item.ville} pays={item.country} style={styles.villeFavoris1} />}
                 initialNumToRender={5}
               />
             <View style={styles.rect2}>
@@ -231,7 +235,7 @@ export default function SearchView({props, navigation}) {
                 <View style={styles.iconesLoupeRow}>
                   <IconesLoupe style={styles.iconesLoupe}></IconesLoupe>
                   <View style={styles.verStack}>
-                    <TextInput keyboardType={'web-search'} id={'searchbar'} autoFocus={true} blurOnSubmit={true} onChangeText={text => _searching(text)} onFocus={()=> toogleHide(true)} onSubmitEditing={() =>  _searchByCity(search)} value={search} data-layer="c8b80b3c-3337-47ae-ab3c-1dc6768f0807" placeholder={'Ville'}  style={styles.ver}/>
+                    <TextInput keyboardType={'web-search'} id={'searchbar'} onFocus={() => vider()} blurOnSubmit={true} onChangeText={text => _searching(text)} onFocus={()=> toogleHide(true)} onSubmitEditing={() =>  _searchByCity(search)} value={search} placeholder={'Ville'}  style={styles.ver}/>
                   </View>
                   <IconesLocaliser style={styles.iconesLocaliser}></IconesLocaliser>
                 </View>
@@ -263,7 +267,7 @@ export default function SearchView({props, navigation}) {
           style={styles.ajouterUnLieux_rectangle283}
           data={listCity}
           keyExtractor={(item) => item.idVilles.toString()}
-          renderItem={({item}) => <TouchableOpacity onPress={() => _setInput(item)}><ListComponent name={item.name} admin2_code={item.admin2_code} country_code={item.country_code}/></TouchableOpacity>}
+          renderItem={({item}) => <TouchableOpacity onLonPress={() => {_setInput(item)}}><ListComponent name={item.name} admin2_code={item.admin2_code} country_code={item.country_code}/></TouchableOpacity>}
           initialNumToRender={10}
         />)
         }
@@ -285,10 +289,10 @@ export default function SearchView({props, navigation}) {
           />
             <FlatList
               bounces={false}
-              style={styles.ajouterUnLieux_rectangle283}
               data={listCity.items}
-              keyExtractor={(item) => item.id}
-              renderItem={({item}) => <TouchableOpacity onPress={() => _setInput(item)}><ListComponent name={item.address.city} admin2_code={item.address.postalCode} country_code={item.address.countryName}/></TouchableOpacity>}
+              keyExtractor={(item) => item.id.toString()}
+              contentContainerStyle={{height : 80}}
+              renderItem={({item}) => (<TouchableOpacity style={{borderWidth: 1}} onPress={() => {_setInput(item)}}><ListComponent name={item.address.city} admin2_code={item.address.postalCode} country_code={item.address.countryName}/></TouchableOpacity>)}
               initialNumToRender={5}
             />
           <View style={styles.rect2}>
