@@ -53,6 +53,7 @@ export default function SearchView({props, navigation}) {
   const [responseApiAir, setResponseApiAir] = useState({})
   const [error, setError] = useState(null)
   const [responseApiMeteo, setResponseApiMeteo] = useState({})
+  const [responseApiWeatherHour, setResponseApiWeatherHour] = useState({})
   const [listCity, setListCity] = useState([])
   const [vide, setVide] = useState(true)
   const [latitude, setLatitude] = useState(null)
@@ -60,6 +61,7 @@ export default function SearchView({props, navigation}) {
   const [hide, setHide] = useState('')
   const [color, setColor] = useState('')
   const [colorText, setColorText] = useState('')
+  const [text, setText] = useState('')
   const [charged, setCharged] = useState('')
 
     useEffect(() => {
@@ -100,6 +102,7 @@ export default function SearchView({props, navigation}) {
           var data = []
           var tmpTextColor
           var tmpColor
+          var tmpText
           if(resultat.cod == 200) {
             fetch('https://api.waqi.info/feed/geo:'+resultat.coord.lat+';'+resultat.coord.lon+'/?token=85ab63dee549b4825ea4e18973ba6076cbaf3dd4', { method: 'GET'})
             .then((responsewaqi) => responsewaqi.json())
@@ -110,20 +113,27 @@ export default function SearchView({props, navigation}) {
             if (responseJsonWaqi.data.aqi >= 0 && responseJsonWaqi.data.aqi <= 50){
               setColor("#DCFFF9")
               setColorText("#00EBD3")
+              setText("Bonne")
               tmpColor = "#DCFFF9"
               tmpTextColor = "#00EBD3"
+              tmpText = "Bonne"
+
             }
             if (responseJsonWaqi.data.aqi >= 51 && responseJsonWaqi.data.aqi <= 150){
               setColor("#FFF3E3")
               setColorText("#FFB553")
+              setText("Moyenne")
               tmpColor = "#FFF3E3"
               tmpTextColor = "#FFB553"
+              tmpText = "Moyenne"
             }
             if (responseJsonWaqi.data.aqi >= 151){
               setColor("#FFEDEC")
               setColorText("#FF6B53")
+              setText("Mauvaise")
               tmpColor = "#FFEDEC"
               tmpTextColor = "#FF6B53"
+              tmpText = "Mauvaise"
             }
 
             data.push({
@@ -135,10 +145,18 @@ export default function SearchView({props, navigation}) {
               idMeteo: 200,
               ville: resultat.name,
               color: tmpColor,
-              textColor: tmpTextColor
+              textColor: tmpTextColor,
+              text: tmpText
             })
             setListSearch(data)
-            setCharged(true)
+            fetch('https://api.openweathermap.org/data/2.5/onecall?lat='+resultat.coord.lat+'&lon='+resultat.coord.lon+'&appid=505c84426a182da1a7178151dccdb616', {method: "GET"})
+            .then((responsWeatherHour) => responsWeatherHour.json())
+            .then((responseJsonWeatherHour) => {
+              setResponseApiWeatherHour(responseJsonWeatherHour)
+              setCharged(true)
+              return responseJsonWeatherHour
+            })
+
             setError(false)
             return responseJsonWaqi;
             })
@@ -222,14 +240,18 @@ export default function SearchView({props, navigation}) {
               servePersonalizedAds={true}
               setTestDeviceID="EMULATOR"
               didFailToReceiveAdWithError={error => console.log(error + 'error')}
-            />
-              <FlatList
-                bounces={false}
-                data={listSearch}
-                keyExtractor={(item) => item.id.toString()}
-                renderItem={({item}) => <VilleFavoris responseApiAir={responseApiAir} responseApiMeteo={responseApiMeteo} search={true} icon={item.idMeteo} aqi={item.aqi} textColor={item.textColor} color={item.color} temp={item.temperature} tr={item.temperatureFeel} ville={item.ville} pays={item.country} style={styles.villeFavoris1} />}
-                initialNumToRender={5}
-              />
+            /><View style={styles.resultatsDeRecherche}>
+                <View style={styles.rectangleBlanc}>
+                  <FlatList
+                    bounces={false}
+                    data={listSearch}
+                    keyExtractor={(item) => item.id.toString()}
+                    renderItem={({item}) =>   <TouchableOpacity onPress={() => navigation.navigate('Detail', {responseApiAir: responseApiAir, responseApiMeteo: responseApiMeteo, responseApiWeatherHour: responseApiWeatherHour, color: color, textColor: colorText, textIndex: text})} onLongPress={() => {_addFavorite()}}>
+                        <VilleFavoris search={true} icon={item.idMeteo} aqi={item.aqi} textColor={item.textColor} color={item.color} temp={item.temperature} tr={item.temperatureFeel} ville={item.ville} pays={item.country} style={styles.villeFavoris1} /></TouchableOpacity>}
+                    initialNumToRender={5}
+                  />
+                </View>
+              </View>
             <View style={styles.rect2}>
               <View style={styles.rectangle}>
                 <View style={styles.iconesLoupeRow}>
@@ -292,7 +314,7 @@ export default function SearchView({props, navigation}) {
               data={listCity.items}
               keyExtractor={(item) => item.id.toString()}
               contentContainerStyle={{height : 80}}
-              renderItem={({item}) => (<TouchableOpacity style={{borderWidth: 1}} onPress={() => {_setInput(item)}}><ListComponent name={item.address.city} admin2_code={item.address.postalCode} country_code={item.address.countryName}/></TouchableOpacity>)}
+              renderItem={({item}) => (<TouchableOpacity onPress={() => {_setInput(item)}}><ListComponent name={item.address.city} admin2_code={item.address.postalCode} country_code={item.address.countryName}/></TouchableOpacity>)}
               initialNumToRender={5}
             />
           <View style={styles.rect2}>
@@ -343,12 +365,12 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 132,
     left: 11,
-    height: 337,
+    height: 'auto',
     width: 353,
     opacity: 1
   },
   rectangleBlanc: {
-    height: 337,
+    height: 'auto',
     width: 353,
     borderRadius: 28,
     backgroundColor: "rgba(255,255,255,1)"

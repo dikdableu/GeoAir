@@ -3,7 +3,7 @@ import Svg, { Text, TSpan } from "react-native-svg"
 
 function GeoAirLogo(props) {
   return (
-    <Svg width={150} height={36} {...props}>
+    <Svg width={150} height={36} {...props} style={{zIndex: 10}}>
       <Text
         fill="#fff"
         fontSize={24}

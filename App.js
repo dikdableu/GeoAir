@@ -47,7 +47,7 @@ const Home = createStackNavigator(
           <GeoAirLogo/>
         ),
         headerRight: (
-          <TouchableOpacity onPress={() => alert('test')} style={{width: 15, marginRight: 20}}>
+          <TouchableOpacity onPress={() => alert('test')} style={{width: 30, marginRight: 20, zIndex: 10}}>
             <IconesMenu/>
           </TouchableOpacity>
         ),
@@ -98,7 +98,7 @@ const Search = createStackNavigator({
         <GeoAirLogo/>
       ),
       headerRight: (
-        <TouchableOpacity onPress={() => alert('test')} style={{width: 15, marginRight: 20}}>
+        <TouchableOpacity onPress={() => alert('test')} style={{width: 15, marginRight: 20, zIndex: 10}}>
           <IconesMenu/>
         </TouchableOpacity>
       ),

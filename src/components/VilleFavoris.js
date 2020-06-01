@@ -9,24 +9,18 @@ function VilleFavoris(props, navigation) {
   console.log(navigation)
   if(propsState.search){
     return(
-      <View style={styles.resultatsDeRecherche}>
-        <View style={styles.rectangleBlanc}>
-          <TouchableOpacity onPress={() => navigation.navigate('Detail', {responseApiAir: propsState.responseApiAir, responseApiMeteo: propsState.responseApiMeteo, color: propsState.color, textColor: propsState.textColor})} onLongPress={() => {_addFavorite()}}>
-            <View style={styles.villeRecherche01}>
-              <View style={styles.villeRow1}>
-              <View style={styles.ville}>
-                <Text style={styles.versailles}>{propsState.ville}</Text>
-                <Text style={styles.yvelinesFrance}>{propsState.pays}</Text>
-              </View>
-              <IconesCouvert style={styles.iconesCouvert}></IconesCouvert>
-              <View style={styles.temperatures}>
-                <Text style={styles.cCopy}>{propsState.temp}</Text>
-                <Text style={styles.cCopy1}>{propsState.tr}</Text>
-              </View>
-              <IndiceAir style={styles.indiceAir3} aqi={propsState.aqi} textColor={propsState.textColor} color={propsState.color} />
-              </View>
-            </View>
-          </TouchableOpacity>
+      <View style={styles.villeRecherche01}>
+        <View style={styles.villeRow1}>
+          <View style={styles.ville}>
+            <Text style={styles.versailles}>{propsState.ville}</Text>
+            <Text style={styles.yvelinesFrance}>{propsState.pays}</Text>
+          </View>
+          <IconesCouvert style={styles.iconesCouvert}></IconesCouvert>
+          <View style={styles.temperatures}>
+            <Text style={styles.cCopy}>{propsState.temp}</Text>
+            <Text style={styles.cCopy1}>{propsState.tr}</Text>
+          </View>
+          <IndiceAir style={styles.indiceAir3} aqi={propsState.aqi} textColor={propsState.textColor} color={propsState.color} />
         </View>
       </View>
     )

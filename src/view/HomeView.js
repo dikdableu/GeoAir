@@ -644,7 +644,7 @@ function HomeView() {
                           <Text style={styles.versailles}>{responseApiMeteo.name}</Text>
                         </View>
                       </View>
-                      <TouchableOpacity onPress={() => {_addFavorite()}} >
+                      <TouchableOpacity style={{width: 40, marginLeft: 122}} onPress={() => {_addFavorite()}} >
                         <IconesAjouter style={styles.iconesAjouter}></IconesAjouter>
                       </TouchableOpacity>
                     </View>
@@ -699,7 +699,7 @@ function HomeView() {
                 <Text style={styles.lieuxAProximite}>LIEUX À PROXIMITÉ</Text>
                 <View style={styles.btnActualiser}>
                   <View style={styles.rectangle1}>
-                    <TouchableOpacity onPress={() => {_getLocationAsync()}} >
+                    <TouchableOpacity style={{width: 130}} onPress={() => {_getLocationAsync()}} >
                       <View style={styles.actualiserRow}>
                         <Text style={styles.actualiser}>Actualiser</Text>
                         <IconesActualiser style={styles.iconesActualiser}></IconesActualiser>
@@ -821,7 +821,6 @@ const styles = StyleSheet.create({
     width: 38,
     opacity: 1,
     backgroundColor: "transparent",
-    marginLeft: 122,
     marginTop: 4
   },
   ville1Row: {

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { StyleSheet, View, ImageBackground } from "react-native";
 import Svg, { Path  } from "react-native-svg";
 
+
 function Bg(props) {
   return (
     <View style={[styles.container, props.style]}>
@@ -9,26 +10,26 @@ function Bg(props) {
         <ImageBackground
           style={styles.mask}
           imageStyle={styles.mask_imageStyle}
-          source={require("../assets/images/Gradient_FbrdpVn.png")}
+          source={require("../assets/images/Gradient_rgrO0Qs.png")}
         >
           <View style={styles.oval3Stack}>
-            <Svg style={{width: '100%', height: '100%'}} viewBox="0 0 438 438" style={styles.oval3}>
-              <Path scale={props.scale}
+            <Svg viewBox="0 0 438 438" style={styles.oval3}>
+              <Path
                 strokeWidth={0}
                 fill="rgba(255,255,255,1)"
                 fillOpacity={0.07942708333333333}
                 strokeOpacity={0.07942708333333333}
                 d="M219.00 438.00 C339.95 438.00 438.00 339.95 438.00 219.00 C438.00 98.05 339.95 0.00 219.00 0.00 C98.05 0.00 0.00 98.05 0.00 219.00 C0.00 339.95 98.05 438.00 219.00 438.00 Z"
-              > </Path>
+              ></Path>
             </Svg>
-            <Svg style={{width: '100%', height: '100%'}} viewBox="0 0 416 416" style={styles.oval4}>
-              <Path scale={props.scale}
+            <Svg viewBox="0 0 416 416" style={styles.oval4}>
+              <Path
                 strokeWidth={0}
                 fill="rgba(255,255,255,1)"
                 fillOpacity={0.07942708333333333}
                 strokeOpacity={0.07942708333333333}
                 d="M208.00 416.00 C322.88 416.00 416.00 322.88 416.00 208.00 C416.00 93.12 322.88 0.00 208.00 0.00 C93.12 0.00 0.00 93.12 0.00 208.00 C0.00 322.88 93.12 416.00 208.00 416.00 Z"
-              > </Path>
+              ></Path>
             </Svg>
           </View>
         </ImageBackground>
@@ -42,12 +43,12 @@ const styles = StyleSheet.create({
     flex: 1
   },
   bgBleu: {
-    height: 900,
+    height: 812,
     width: 375,
     opacity: 1
   },
   mask: {
-    height: 900,
+    height: 812,
     width: 375,
     overflow: "hidden",
     backgroundColor: "transparent"
