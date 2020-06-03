@@ -71,10 +71,33 @@ export default function ListComponent(props) {
         </View>
       </View>
     )
-  }else {
+  } else if(props.aucun){
+    return(
+      <View style={styles.resultatsDeRecherche}>
+        <View style={styles.rectangleBlanc}>
+          <View style={styles.villeRecherche01}>
+            <View style={styles.ville2Row}>
+              <View style={styles.ville2}>
+                <Text style={styles.versaillesCopy}>Aucun Résulat</Text>
+              </View>
+            </View>
+            <Svg viewBox="-0.5 -0.5 312 3" style={styles.line1}>
+              <Path
+                strokeWidth={1}
+                fill="transparent"
+                stroke="rgba(242,242,242,1)"
+                fillOpacity={1}
+                strokeOpacity={1}
+                d="M0.00 0.50 L310.00 0.50 "
+              ></Path>
+            </Svg>
+          </View>
+        </View>
+      </View>
+    )
+  } else {
     return null
   }
-
 }
 
 var {height, width} = Dimensions.get('window');
@@ -108,9 +131,9 @@ const styles = StyleSheet.create({
   resultatsDeRecherche: {
     position: "absolute",
     top: 132,
-    left: 11,
+    marginLeft: 11,
     height: 'auto',
-    width: 353,
+    width: width - 22,
     opacity: 1,
   },
   rectangleBlanc: {
@@ -124,7 +147,7 @@ const styles = StyleSheet.create({
     width: 315,
     opacity: 1,
     marginTop: 86,
-    marginLeft: 18
+    marginLeft: 18,
   },
   ville2: {
     height: 44,

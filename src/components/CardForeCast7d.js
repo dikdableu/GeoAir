@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react';
-import { StyleSheet, View, Text, ImageBackground, TouchableOpacity, FlatList } from "react-native";
+import { StyleSheet, View, Text, ImageBackground, TouchableOpacity, FlatList, Dimensions } from "react-native";
 import IconesChevronGauche from "./IconesChevronGauche";
 import Fade from "react-native-fade";
 import IconesCouvert from "./IconesCouvert";
@@ -548,13 +548,15 @@ function CardForeCast7d(props) {
   }
 }
 
+var {height, width} = Dimensions.get('window');
+
 const styles = StyleSheet.create({
   container: {
     opacity: 1
   },
   rectangleBlanc1: {
     height: 'auto',
-    width: 353,
+    width: width - 22,
     borderRadius: 28,
     shadowColor: "rgba(0,0,0,0.1115876311188811)",
     shadowOffset: {
@@ -602,12 +604,12 @@ const styles = StyleSheet.create({
   jourSemaine21: {
     position: 'relative',
     height: "auto",
-    width: 353,
+    width: width - 22,
     opacity: 1
   },
   jourSemaine13: {
     height: 44,
-    width: 264,
+    width: width / 1.375,
     opacity: 1
   },
   jour13: {
@@ -627,7 +629,7 @@ const styles = StyleSheet.create({
     fontSize: 12
   },
   jour13Column: {
-    width: 154,
+    width: width / 2.35,
     marginTop: 2
   },
   iconesCouvert5: {
@@ -690,13 +692,13 @@ const styles = StyleSheet.create({
   },
   infosDetails: {
     height: 'auto',
-    width: 353,
+    width: width - 22,
     opacity: 1,
     marginTop: 13,
   },
   rectangleDegradeGris: {
     height: 159,
-    width: 353,
+    width: width - 22,
     backgroundColor: "transparent",
     flexDirection: "row"
   },

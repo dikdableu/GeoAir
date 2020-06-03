@@ -688,7 +688,6 @@ function HomeView() {
               setTestDeviceID="EMULATOR"
               didFailToReceiveAdWithError={error => console.log(error + 'error')}
             />
-            <Button onPress={() => {_subscribe()}} title='Suscribe'/>
             <View style={styles.cardContenu}>
               <View style={styles.rectangleBlanc}>
                 <View style={styles.ville}>
@@ -781,6 +780,8 @@ HomeView.defaultProps = {
 
 }
 
+var {height, width} = Dimensions.get('window');
+
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "rgba(255,255,255,1)",
@@ -789,7 +790,6 @@ const styles = StyleSheet.create({
   bg: {
     position: "absolute",
     top: -100,
-    left: 0,
     height: 812,
     width: 375,
     opacity: 1,
@@ -806,14 +806,13 @@ const styles = StyleSheet.create({
   cardContenu: {
     position: "absolute",
     top: 100,
-    left: 11,
     height: 348,
-    width: 353,
-    opacity: 1
+    width: width,
+    opacity: 1,
   },
   rectangleBlanc: {
     height: 348,
-    width: 353,
+    width: width - 22,
     borderRadius: 28,
     shadowColor: "rgba(0,0,0,0.1115876311188811)",
     shadowOffset: {
@@ -822,7 +821,8 @@ const styles = StyleSheet.create({
     },
     shadowRadius: 32,
     shadowOpacity: 1,
-    backgroundColor: "rgba(255,255,255,1)"
+    backgroundColor: "rgba(255,255,255,1)",
+    marginLeft: 11,
   },
   ville: {
     height: 93,
@@ -831,7 +831,7 @@ const styles = StyleSheet.create({
   },
   rectangle: {
     height: 93,
-    width: 353,
+    width: width - 22,
     borderRadius: 28,
     shadowColor: "rgba(0,0,0,0.1115876311188811)",
     shadowOffset: {
@@ -841,12 +841,12 @@ const styles = StyleSheet.create({
     shadowRadius: 30,
     shadowOpacity: 1,
     backgroundColor: "rgba(255,255,255,1)",
-    flexDirection: "row"
+    flexDirection: "row",
   },
   ville1: {
     height: 46,
-    width: 150,
-    opacity: 1
+    width: width - 225,
+    opacity: 1,
   },
   yvelinesFrance: {
     position: "absolute",
@@ -887,15 +887,15 @@ const styles = StyleSheet.create({
     flex: 1,
     marginRight: 23,
     marginLeft: 20,
-    marginTop: 24
+    marginTop: 24,
   },
   infos: {
     height: 65,
-    width: 319,
+    width: width - 35,
     opacity: 1,
     flexDirection: "row",
     marginTop: 30,
-    marginLeft: 11
+    marginLeft: 11,
   },
   nuageux: {
     height: 58,
@@ -1045,7 +1045,7 @@ const styles = StyleSheet.create({
   },
   journee: {
     height: 105,
-    width: 353,
+    width: width - 22,
     opacity: 1,
     marginTop: 32
   },
@@ -1054,7 +1054,7 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     height: 34,
-    width: 353,
+    width: width - 22,
     backgroundColor: "transparent"
   },
   rectangleDegradeGris_imageStyle: {
@@ -1071,7 +1071,7 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent"
   },
   rectangleDegradeGrisStack: {
-    width: 353,
+    width: width - 22,
     height: 105
   },
   aProximite: {
@@ -1079,9 +1079,9 @@ const styles = StyleSheet.create({
     top: 30,
     left: 20,
     height: 38,
-    width: 'auto',
+    width: width -38,
     opacity: 1,
-    flexDirection: "row"
+    flexDirection: "row",
   },
   lieuxAProximite: {
     height: 38,
@@ -1177,7 +1177,7 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent"
   },
   bgStack: {
-    width: 376,
+    width: width,
     height: 812
   }
 });

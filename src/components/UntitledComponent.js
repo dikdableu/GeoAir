@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text, Dimensions } from "react-native";
 import CardAir from "./CardAir";
 import IndiceAir from "./IndiceAir";
 import Svg, { Path } from "react-native-svg";
@@ -52,6 +52,8 @@ function UntitledComponent(props) {
   );
 }
 
+var {height, width} = Dimensions.get('window');
+
 const styles = StyleSheet.create({
   container: {
     opacity: 1
@@ -61,14 +63,14 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     height: 350,
-    width: 353,
+    width: width - 22,
   },
   details: {
     position: "absolute",
     top: 29,
-    left: 20,
+    marginLeft: 20,
     height: 'auto',
-    width: 312,
+    width: width - 42,
     opacity: 1,
   },
   qualiteDeLair: {
@@ -117,7 +119,7 @@ const styles = StyleSheet.create({
   },
   line12: {
     height: 3,
-    width: 312,
+    width: width / 1.2,
     backgroundColor: "transparent",
     borderColor: "transparent",
     marginTop: 18,
@@ -132,7 +134,7 @@ const styles = StyleSheet.create({
   },
   vitesseDuVentHumi1: {
     height: 'auto',
-    width: 157,
+    width: width / 2.31,
     opacity: 1,
     backgroundColor: "transparent",
     lineHeight: 16,
@@ -141,7 +143,7 @@ const styles = StyleSheet.create({
   },
   mS931027HPa1: {
     height: 'auto',
-    width: 154,
+    width: width / 2.35,
     opacity: 1,
     backgroundColor: "transparent",
     lineHeight: 16,
@@ -155,7 +157,7 @@ const styles = StyleSheet.create({
     flex: 1
   },
   cardAirStack: {
-    width: 353,
+    width: width - 22,
     height: 300,
   }
 });

@@ -1,5 +1,5 @@
 import React, { Component, useState, useEffect } from "react";
-import { StyleSheet, View, Text, ImageBackground, FlatList, TouchableOpacity } from "react-native";
+import { StyleSheet, View, Text, ImageBackground, FlatList, TouchableOpacity, Dimensions } from "react-native";
 
 import IconesCouvert from "../components/IconesCouvert";
 import IconesNeige from "../components/IconesNeige";
@@ -547,13 +547,15 @@ function CardAccueil(props) {
   );
 }
 
+var {height, width} = Dimensions.get('window');
+
 const styles = StyleSheet.create({
   container: {
     opacity: 1
   },
   rectangleBlanc3: {
     height: 353,
-    width: 353,
+    width: width - 22,
     borderRadius: 28,
     shadowColor: "rgba(0,0,0,0.1115876311188811)",
     shadowOffset: {
@@ -571,7 +573,7 @@ const styles = StyleSheet.create({
   },
   rectangle: {
     height: 93,
-    width: 353,
+    width: width - 22,
     borderRadius: 28,
     shadowColor: "rgba(0,0,0,0.1115876311188811)",
     shadowOffset: {
@@ -585,7 +587,7 @@ const styles = StyleSheet.create({
   },
   ville1: {
     height: 46,
-    width: 150,
+    width: width / 2.3,
     opacity: 1
   },
   yvelinesFrance: {
@@ -632,14 +634,14 @@ const styles = StyleSheet.create({
   },
   infosEcranDetails: {
     height: 94,
-    width: 344,
+    width: width / 1.05,
     opacity: 1,
     flexDirection: "row",
     marginTop: 23
   },
   temperature: {
     height: 94,
-    width: 128,
+    width: width / 2.83,
     opacity: 1
   },
   style: {
@@ -647,7 +649,7 @@ const styles = StyleSheet.create({
     left: 0,
     top: 12,
     height: 94,
-    width: 109,
+    width: width / 3.1,
     opacity: 1,
     backgroundColor: "transparent",
     textAlign: "center",
@@ -670,7 +672,7 @@ const styles = StyleSheet.create({
   styleStack: {
     top: 5,
     left: 0,
-    width: 119,
+    width: width / 3.05,
     height: 94,
     position: "absolute"
   },
@@ -687,14 +689,14 @@ const styles = StyleSheet.create({
     fontSize: 20
   },
   styleStackStack: {
-    width: 128,
+    width: width / 2.83,
     height: 94
   },
   minMax: {
     height: 45,
     width: 61,
     opacity: 1,
-    marginLeft: 8,
+    marginLeft: width / 16,
     marginTop: 30
   },
   maxCopy: {
@@ -749,9 +751,9 @@ const styles = StyleSheet.create({
   },
   nuageaux: {
     height: 80,
-    width: 104,
+    width: width / 3.49,
     opacity: 1,
-    marginLeft: 35,
+    marginLeft: width / 10,
     marginTop: 0
   },
   nuageux: {
@@ -786,7 +788,7 @@ const styles = StyleSheet.create({
   },
   journee: {
     height: 105,
-    width: 353,
+    width: width - 22,
     opacity: 1,
     marginTop: 16
   },
@@ -795,7 +797,7 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     height: 34,
-    width: 353,
+    width: width - 22,
     backgroundColor: "transparent"
   },
   rectangleDegradeGris1_imageStyle: {
@@ -848,7 +850,7 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent"
   },
   rectangleDegradeGris1Stack: {
-    width: 353,
+    width: width - 22,
     height: 105
   }
 });

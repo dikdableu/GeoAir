@@ -247,7 +247,7 @@ export default function SearchView({props, navigation}) {
                     data={listSearch}
                     keyExtractor={(item) => item.id.toString()}
                     renderItem={({item}) =>   <TouchableOpacity onPress={() => navigation.navigate('Detail', {responseApiAir: responseApiAir, responseApiMeteo: responseApiMeteo, responseApiWeatherHour: responseApiWeatherHour, color: color, textColor: colorText, textIndex: text})} onLongPress={() => {_addFavorite()}}>
-                        <VilleFavoris search={true} icon={item.idMeteo} aqi={item.aqi} textColor={item.textColor} color={item.color} temp={item.temperature} tr={item.temperatureFeel} ville={item.ville} pays={item.country} style={styles.villeFavoris1} /></TouchableOpacity>}
+                        <VilleFavoris search={true} icon={item.idMeteo} aqi={item.aqi} textColor={item.textColor} color={item.color} temp={item.temperature} tr={item.temperatureFeel} ville={item.ville} pays={item.country} /></TouchableOpacity>}
                     initialNumToRender={5}
                   />
                 </View>
@@ -268,32 +268,38 @@ export default function SearchView({props, navigation}) {
       )
     }else{
       return (
-        <SafeAreaView data-layer="6dda1349-d279-47db-9d4c-e405c98361fa" style={styles.ajouterUnLieux}>
-        <AdMobBanner
-          style={styles.bottomBanner}
-          bannerSize="smartBannerPortrait"
-          adUnitID={Platform.OS === 'ios' ? "ca-app-pub-8614556057049331/5612210449" : "ca-app-pub-8614556057049331/8209974696"}
-          servePersonalizedAds={true}
-          setTestDeviceID="EMULATOR"
-          didFailToReceiveAdWithError={error => console.log(error + 'error')}
-        />
-        <View data-layer="59cd9a49-e71f-4f3c-8add-6de16b43c754" style={styles.ajouterUnLieux_groupe215}>
-          <TextInput keyboardType={'web-search'} id={'searchbar'} blurOnSubmit={true} onChangeText={text => _searching(text)} onFocus={()=> vider()} onSubmitEditing={() => setTimeout(() => {_searchByCity(search)}, 500)} value={search} data-layer="c8b80b3c-3337-47ae-ab3c-1dc6768f0807" style={styles.ajouterUnLieux_groupe215_versa}/>
-          <Svg data-layer="1b6ce4e2-792b-46f8-8393-3cbcf340d2e7" style={styles.ajouterUnLieux_iconsearch} preserveAspectRatio="none" viewBox="-6682.8046875 1028.25 21.16064453125 24.499755859375" fill="rgba(31, 33, 40, 1)"><SvgPath d="M -6665.22265625 1051.338989257812 L -6668.296875 1047.379638671875 C -6668.78955078125 1046.677001953125 -6668.61865234375 1045.7060546875 -6667.91455078125 1045.213012695312 C -6667.2119140625 1044.719970703125 -6666.2421875 1044.890991210938 -6665.74951171875 1045.593627929688 L -6662.67529296875 1049.55126953125 C -6662.1826171875 1050.255615234375 -6662.353515625 1051.224975585938 -6663.0576171875 1051.718017578125 C -6663.32763671875 1051.9091796875 -6663.6396484375 1051.999755859375 -6663.9482421875 1051.999755859375 C -6664.43798828125 1051.999755859375 -6664.9208984375 1051.77001953125 -6665.22265625 1051.338989257812 Z M -6682.0546875 1037.18359375 C -6682.0546875 1032.6708984375 -6678.2626953125 1029 -6673.6044921875 1029 C -6668.94384765625 1029 -6665.15234375 1032.6708984375 -6665.15234375 1037.18359375 C -6665.15234375 1041.694702148438 -6668.94384765625 1045.365600585938 -6673.6044921875 1045.365600585938 C -6678.2626953125 1045.365600585938 -6682.0546875 1041.694702148438 -6682.0546875 1037.18359375 Z M -6678.84326171875 1037.18359375 C -6678.84326171875 1039.980834960938 -6676.4921875 1042.256469726562 -6673.6044921875 1042.256469726562 C -6670.71484375 1042.256469726562 -6668.36376953125 1039.980834960938 -6668.36376953125 1037.18359375 C -6668.36376953125 1034.386474609375 -6670.71484375 1032.11083984375 -6673.6044921875 1032.11083984375 C -6676.4921875 1032.11083984375 -6678.84326171875 1034.386474609375 -6678.84326171875 1037.18359375 Z"  /></Svg>
-          <Svg data-layer="81b3ea8b-6811-47dc-bdd0-dea2bf5e0179" style={styles.ajouterUnLieux_iconlocalisation} preserveAspectRatio="none" viewBox="-6414.75048828125 1233.250732421875 29.9033203125 29.901611328125" fill="rgba(31, 33, 40, 1)"><SvgPath d="M -6401.4462890625 1260.881103515625 L -6401.4462890625 1259.139404296875 C -6401.4462890625 1258.299194335938 -6400.765625 1257.61669921875 -6399.92529296875 1257.61669921875 C -6399.0849609375 1257.61669921875 -6398.404296875 1258.299194335938 -6398.404296875 1259.139404296875 L -6398.404296875 1260.881103515625 C -6398.404296875 1261.7197265625 -6399.0849609375 1262.40234375 -6399.92529296875 1262.40234375 C -6400.765625 1262.40234375 -6401.4462890625 1261.7197265625 -6401.4462890625 1260.881103515625 Z M -6407.3798828125 1248.21923828125 C -6407.3798828125 1244.109619140625 -6404.03662109375 1240.766235351562 -6399.9267578125 1240.766235351562 C -6395.8173828125 1240.766235351562 -6392.47412109375 1244.109619140625 -6392.47412109375 1248.21923828125 C -6392.47412109375 1252.3271484375 -6395.8173828125 1255.670532226562 -6399.9267578125 1255.670532226562 C -6404.03662109375 1255.670532226562 -6407.3798828125 1252.3271484375 -6407.3798828125 1248.21923828125 Z M -6404.3359375 1248.21923828125 C -6404.3359375 1250.64990234375 -6402.359375 1252.628173828125 -6399.9267578125 1252.628173828125 C -6397.49609375 1252.628173828125 -6395.51611328125 1250.64990234375 -6395.51611328125 1248.21923828125 C -6395.51611328125 1245.78857421875 -6397.49609375 1243.810180664062 -6399.9267578125 1243.810180664062 C -6402.359375 1243.810180664062 -6404.3359375 1245.78857421875 -6404.3359375 1248.21923828125 Z M -6388.92626953125 1249.72265625 C -6389.7666015625 1249.72265625 -6390.447265625 1249.041748046875 -6390.447265625 1248.201538085938 C -6390.447265625 1247.361206054688 -6389.7666015625 1246.680297851562 -6388.92626953125 1246.680297851562 L -6387.1201171875 1246.680297851562 C -6386.27978515625 1246.680297851562 -6385.59716796875 1247.361206054688 -6385.59716796875 1248.201538085938 C -6385.59716796875 1249.041748046875 -6386.27978515625 1249.72265625 -6387.1201171875 1249.72265625 L -6388.92626953125 1249.72265625 Z M -6412.4775390625 1249.72265625 C -6413.31787109375 1249.72265625 -6414.00048828125 1249.041748046875 -6414.00048828125 1248.201538085938 C -6414.00048828125 1247.361206054688 -6413.31787109375 1246.680297851562 -6412.4775390625 1246.680297851562 L -6410.671875 1246.680297851562 C -6409.83154296875 1246.680297851562 -6409.150390625 1247.361206054688 -6409.150390625 1248.201538085938 C -6409.150390625 1249.041748046875 -6409.83154296875 1249.72265625 -6410.671875 1249.72265625 L -6412.4775390625 1249.72265625 Z M -6401.4462890625 1237.263549804688 L -6401.4462890625 1235.521850585938 C -6401.4462890625 1234.680053710938 -6400.765625 1234.000732421875 -6399.92529296875 1234.000732421875 C -6399.0849609375 1234.000732421875 -6398.404296875 1234.680053710938 -6398.404296875 1235.521850585938 L -6398.404296875 1237.263549804688 C -6398.404296875 1238.102172851562 -6399.0849609375 1238.784790039062 -6399.92529296875 1238.784790039062 C -6400.765625 1238.784790039062 -6401.4462890625 1238.102172851562 -6401.4462890625 1237.263549804688 Z"  /></Svg>
-          <Text style={{color: '#BCBCBC', fontSize: 22, "width": 375,height: 131,left: '32%',top: 299}}>Aucun résultat</Text>
+        <View style={styles.container}>
+          <View style={styles.bgStack}>
+            <Bg style={styles.bg}></Bg>
+            <AdMobBanner
+              style={styles.admob}
+              bannerSize="smartBannerPortrait"
+              adUnitID={Platform.OS === 'ios' ? "ca-app-pub-8614556057049331/5612210449" : "ca-app-pub-8614556057049331/8209974696"}
+              servePersonalizedAds={true}
+              setTestDeviceID="EMULATOR"
+              didFailToReceiveAdWithError={error => console.log(error + 'error')}
+            />
+              <FlatList
+                bounces={false}
+                data={listCity.items}
+                keyExtractor={(item) => item.id.toString()}
+                contentContainerStyle={{height : 80}}
+                renderItem={({item}) => (<TouchableOpacity onPress={() => {_setInput(item)}}><ListComponent aucun={true}/></TouchableOpacity>)}
+                initialNumToRender={5}
+              />
+            <View style={styles.rect2}>
+              <View style={styles.rectangle}>
+                <View style={styles.iconesLoupeRow}>
+                  <IconesLoupe style={styles.iconesLoupe}></IconesLoupe>
+                  <View style={styles.verStack}>
+                    <TextInput keyboardType={'web-search'} id={'searchbar'} autoFocus={true} blurOnSubmit={true} onChangeText={text => _searching(text)} onFocus={()=> toogleHide(true)} onSubmitEditing={() =>  _searchByCity(search)} value={search} placeholder={'Ville'}  style={styles.ver}/>
+                  </View>
+                  <IconesLocaliser style={styles.iconesLocaliser}></IconesLocaliser>
+                </View>
+              </View>
+            </View>
+          </View>
         </View>
-        {search == '' ? null :
-        (<FlatList
-          bounces={false}
-          style={styles.ajouterUnLieux_rectangle283}
-          data={listCity}
-          keyExtractor={(item) => item.idVilles.toString()}
-          renderItem={({item}) => <TouchableOpacity onLonPress={() => {_setInput(item)}}><ListComponent name={item.name} admin2_code={item.admin2_code} country_code={item.country_code}/></TouchableOpacity>}
-          initialNumToRender={10}
-        />)
-        }
-      </SafeAreaView>
       )
     }
   }else{
@@ -334,8 +340,6 @@ export default function SearchView({props, navigation}) {
   }
 }
 var {height, width} = Dimensions.get('window');
-var ratio = PixelRatio.get()
-var indiceScreen = ratio <= 3 ? 1 : ratio > 3 ? 1.2 : 0.2;
 
 const styles = StyleSheet.create({
   container: {
@@ -364,14 +368,14 @@ const styles = StyleSheet.create({
   resultatsDeRecherche: {
     position: "absolute",
     top: 132,
-    left: 11,
+    marginLeft: 11,
     height: 'auto',
-    width: 353,
+    width: width-22,
     opacity: 1
   },
   rectangleBlanc: {
     height: 'auto',
-    width: 353,
+    width: width-22,
     borderRadius: 28,
     backgroundColor: "rgba(255,255,255,1)"
   },
@@ -612,14 +616,14 @@ const styles = StyleSheet.create({
   rect2: {
     position: "absolute",
     top: 132,
-    left: 11,
+    marginLeft: 11,
     height: 63,
-    width: 353,
+    width: width -22,
     opacity: 1
   },
   rectangle: {
     height: 63,
-    width: 353,
+    width: width -22,
     borderRadius: 31.5,
     shadowColor: "rgba(0,0,0,0.06924715909090909)",
     shadowOffset: {
@@ -643,11 +647,11 @@ const styles = StyleSheet.create({
     top: 5,
     left: 0,
     height: 26,
-    width: 250,
+    width: width/1.45,
     opacity: 1,
     backgroundColor: "transparent",
     color: "rgba(66,77,88,1)",
-    fontSize: 21
+    fontSize: 21,
   },
   line2: {
     position: "absolute",
@@ -668,7 +672,7 @@ const styles = StyleSheet.create({
     width: 24,
     opacity: 1,
     backgroundColor: "transparent",
-    marginLeft: 185,
+    marginLeft: width / 1.90,
     marginTop: 6
   },
   iconesLoupeRow: {

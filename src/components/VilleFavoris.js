@@ -424,7 +424,7 @@ function VilleFavoris(props, navigation) {
       <View style={styles.villeRecherche01}>
         <View style={styles.villeRow1}>
           <View style={styles.ville}>
-            <Text style={styles.versailles}>{propsState.ville}</Text>
+            <Text style={styles.versailles1}>{propsState.ville}</Text>
             <Text style={styles.yvelinesFrance}>{propsState.pays}</Text>
           </View>
           <View style={styles.iconesCouvert}>
@@ -464,6 +464,8 @@ function VilleFavoris(props, navigation) {
   }
 }
 
+var {height, width} = Dimensions.get('window');
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -495,7 +497,7 @@ const styles = StyleSheet.create({
   },
   versailles1: {
     height: 23,
-    width: 154,
+    width: width / 2.8,
     opacity: 1,
     backgroundColor: "transparent",
     color: "rgba(66,77,88,1)",
@@ -522,7 +524,7 @@ const styles = StyleSheet.create({
     height: 44,
     width: 49,
     opacity: 1,
-    marginLeft: 5
+    marginLeft: width / 65
   },
   cCopy2: {
     height: 22,
@@ -547,7 +549,7 @@ const styles = StyleSheet.create({
     width: 34,
     opacity: 1,
     backgroundColor: "transparent",
-    marginLeft: 20
+    marginLeft: width /11
   },
   villeRow: {
     height: 44,
@@ -708,10 +710,10 @@ const styles = StyleSheet.create({
   },
   indiceAir3: {
     height: 44,
-    width: 34,
+    width: width / 10.67,
     opacity: 1,
     backgroundColor: "transparent",
-    marginLeft: 20
+    marginLeft: width / 10
   },
   ville1Row: {
     height: 44,

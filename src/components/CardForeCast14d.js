@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react';
-import { StyleSheet, View, Text, ImageBackground, TouchableOpacity, FlatList } from "react-native";
+import { StyleSheet, View, Text, ImageBackground, TouchableOpacity, FlatList, Dimensions } from "react-native";
 import IconesChevronGauche from "./IconesChevronGauche";
 import Fade from "react-native-fade";
 import IconesCouvert from "./IconesCouvert";
@@ -548,13 +548,15 @@ function CardForeCast14d(props) {
   }
 }
 
+var {height, width} = Dimensions.get('window');
+
 const styles = StyleSheet.create({
   container: {
     opacity: 1
   },
   rectangleBlanc1: {
     height: 'auto',
-    width: 353,
+    width: width - 22,
     borderRadius: 28,
     shadowColor: "rgba(0,0,0,0.1115876311188811)",
     shadowOffset: {
@@ -571,7 +573,7 @@ const styles = StyleSheet.create({
     top: 27,
     left: 0,
     height: 19,
-    width: 150,
+    width: width / 1.3,
     opacity: 1,
     backgroundColor: "transparent",
     color: "rgba(127,141,154,1)",
@@ -582,17 +584,18 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     height: 36,
-    width: 150,
+    width: width / 1.3,
     opacity: 1,
     backgroundColor: "transparent",
     color: "rgba(66,77,88,1)",
     fontSize: 20
   },
   previsions1Stack: {
-    width: 150,
+    width: width / 1.3,
     height: 46,
     marginTop: 24,
-    marginLeft: 20
+    marginLeft: 20,
+    borderWidth: 1
   },
   previsionsJours1: {
     height: 'auto',
@@ -602,12 +605,12 @@ const styles = StyleSheet.create({
   jourSemaine21: {
     position: 'relative',
     height: "auto",
-    width: 353,
+    width: width - 22,
     opacity: 1
   },
   jourSemaine13: {
     height: 44,
-    width: 264,
+    width: width / 1.375,
     opacity: 1
   },
   jour13: {
@@ -627,7 +630,7 @@ const styles = StyleSheet.create({
     fontSize: 12
   },
   jour13Column: {
-    width: 154,
+    width: width / 2.35,
     marginTop: 2
   },
   iconesCouvert5: {
@@ -690,13 +693,13 @@ const styles = StyleSheet.create({
   },
   infosDetails: {
     height: 'auto',
-    width: 353,
+    width: width - 22,
     opacity: 1,
     marginTop: 13,
   },
   rectangleDegradeGris: {
     height: 159,
-    width: 353,
+    width: width - 22,
     backgroundColor: "transparent",
     flexDirection: "row"
   },
@@ -728,5 +731,6 @@ const styles = StyleSheet.create({
     marginTop: 17
   }
 });
+
 
 export default CardForeCast14d;

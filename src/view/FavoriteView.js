@@ -193,10 +193,6 @@ FavoriteView.defaultProps = {
 }
 
 var {height, width} = Dimensions.get('window');
-var indiceHeight = width < height ? 812/height : 375/height
-var indiceWidth = width < height ? 375/width : 812/width
-var ratio = PixelRatio.get()
-var indiceScreen = ratio <= 3 ? 1 : ratio > 3 ? 1.2 : 0.2;
 
 const styles = StyleSheet.create({
   container: {
@@ -250,14 +246,14 @@ const styles = StyleSheet.create({
   listeDesVilles: {
     position: "absolute",
     top: 132,
-    left: 11,
-    height: 'auto',
-    width: 353,
+    marginLeft: 11,
+    height: height - 138,
+    width: width - 22,
     opacity: 1,
   },
   villeFavoris1: {
     height: 93,
-    width: 353,
+    width: width - 22,
     opacity: 1,
     backgroundColor: "transparent"
   },

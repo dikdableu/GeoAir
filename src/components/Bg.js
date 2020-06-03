@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { StyleSheet, View, ImageBackground } from "react-native";
+import { StyleSheet, View, ImageBackground, Dimensions } from "react-native";
 import Svg, { Path  } from "react-native-svg";
 
 
@@ -37,19 +37,19 @@ function Bg(props) {
     </View>
   );
 }
-
+var {height, width} = Dimensions.get('window');
 const styles = StyleSheet.create({
   container: {
     flex: 1
   },
   bgBleu: {
     height: 812,
-    width: 375,
+    width: width,
     opacity: 1
   },
   mask: {
     height: 812,
-    width: 375,
+    width: width,
     overflow: "hidden",
     backgroundColor: "transparent"
   },

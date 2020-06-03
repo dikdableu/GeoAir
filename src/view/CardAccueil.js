@@ -95,18 +95,20 @@ const CardAccueil = props => {
   );
 }
 
+var {height, width} = Dimensions.get('window');
+
 const styles = StyleSheet.create({
   cardContenu: {
     position: "absolute",
     top: 100,
-    left: 11,
+    marginLeft: 11,
     height: 348,
-    width: 353,
+    width: width - 22,
     opacity: 1
   },
   rectangleBlanc: {
     height: 348,
-    width: 353,
+    width: width - 22,
     borderRadius: 28,
     shadowColor: "rgba(0,0,0,0.1115876311188811)",
     shadowOffset: {
@@ -119,7 +121,7 @@ const styles = StyleSheet.create({
   },
   ville: {
     height: 93,
-    width: 353,
+    width: width - 22,
     opacity: 1
   },
   rectangle: {

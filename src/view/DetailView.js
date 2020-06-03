@@ -521,7 +521,7 @@ async function inter() {
         <View style={styles.container}>
           <View style={styles.bgStack}>
             <Bg style={styles.bg}></Bg>
-            <ScrollView style={{ top: 40, height: height-250}} >
+            <ScrollView style={{ top: 70, height: height/1.35}} >
               <CardAccueil responseApiMeteo={responseApiMeteo}  responseApiAir={responseApiAir} responseApiWeatherHour={responseApiWeatherHour} style={styles.cardAccueil}></CardAccueil>
               <AdMobBanner
                 style={{marginTop: 5, marginBottom: 5}}
@@ -578,10 +578,6 @@ DetailView.defaultProps = {
 }
 
 var {height, width} = Dimensions.get('window');
-var indiceHeight = width < height ? 812/height : 375/height
-var indiceWidth = width < height ? 375/width : 812/width
-var ratio = PixelRatio.get()
-var indiceScreen = ratio <= 3 ? 1 : ratio > 3 ? 1.2 : 0.2;
 
 
 const styles = StyleSheet.create({
