@@ -1,4 +1,4 @@
-import { AppRegistry, Image, Platform, StatusBar, RefreshControl, Dimensions, ActivityIndicator, TouchableOpacity, Button, Alert, StyleSheet, Text, View, TextInput, FlatList, Picker, ScrollView, TouchableHighlight, PixelRatio, SafeAreaView, ImageBackground } from 'react-native';
+import { AppRegistry, Image, Platform, StatusBar, RefreshControl, Dimensions, ActivityIndicator, TouchableOpacity, Button, Alert, StyleSheet, Text, View, TextInput, Vibration, FlatList, Picker, ScrollView, TouchableHighlight, PixelRatio, SafeAreaView, ImageBackground } from 'react-native';
 import React, { useState, useEffect, useMemo } from 'react';
 import {Image as ReactImage} from 'react-native';
 import { useDispatch, useSelector } from 'react-redux'
@@ -43,6 +43,8 @@ import IconesBrume from "../components/IconesBrume";
 import IconesPluie from "../components/IconesPluie";
 import IconesSoleil from "../components/IconesSoleil";
 import IconesNuages from "../components/IconesNuages";
+import { Notifications } from 'expo';
+import * as InAppPurchases from 'expo-in-app-purchases';
 
 import * as DBLocal from '../../db/DBLocal.js'
 import * as SQLite from "expo-sqlite";
@@ -458,8 +460,35 @@ function HomeView() {
          },
         ]
   )
+  const [item, setItem] = useState(null)
+
+  const items = Platform.select({
+  ios: [
+    'com.geoair.onemonth'
+  ],
+  android: [''],
+});
+
+  const _getHistory = async function(){
+    const history = await InAppPurchases.connectAsync();
+    if (history.responseCode === InAppPurchases.IAPResponseCode.OK) {
+      history.results.forEach(result => {
+        console.log(result)
+      });
+    }
+  }
+
+  const _getSubscribtion = async function(){
+    const { responseCode, results } = await InAppPurchases.getProductsAsync(items);
+    if (responseCode === InAppPurchases.IAPResponseCode.OK) {
+      setItem(results);
+      console.log(results)
+    }
+  }
 
   useEffect(() => {
+    _getHistory()
+    _getSubscribtion()
   _getLocationAsync()
     db.transaction(tx => {
       tx.executeSql(
@@ -490,7 +519,6 @@ function HomeView() {
       })
     }
   }, [responseApiMeteo])
-
 
   const _getLocationAsync = async () => {
 
@@ -609,6 +637,35 @@ function HomeView() {
     })
   }
 
+  const setPurchaseListener = ({ responseCode, results, errorCode }) => {
+    // Purchase was successful
+    if (responseCode === IAPResponseCode.OK) {
+      results.forEach(purchase => {
+        console.log()
+        if (!purchase.acknowledged) {
+          console.log(`Successfully purchased ${purchase.productId}`);
+          // Process transaction here and unlock content...
+
+          // Then when you're done
+          finishTransactionAsync(purchase, true);
+        }
+      });
+    }
+
+    // Else find out what went wrong
+    if (responseCode === IAPResponseCode.USER_CANCELED) {
+      console.log('User canceled the transaction');
+    } else if (responseCode === IAPResponseCode.DEFERRED) {
+      console.log('User does not have permissions to buy but requested parental approval (iOS only)');
+    } else {
+      console.warn(`Something went wrong with the purchase. Received errorCode ${errorCode}`);
+    }
+  };
+
+    const _subscribe = async function(){
+      await InAppPurchases.purchaseItemAsync('com.geoair.onemonth');
+    }
+
     if(loading){
       return (
       <View style={styles.container}>
@@ -631,6 +688,7 @@ function HomeView() {
               setTestDeviceID="EMULATOR"
               didFailToReceiveAdWithError={error => console.log(error + 'error')}
             />
+            <Button onPress={() => {_subscribe()}} title='Suscribe'/>
             <View style={styles.cardContenu}>
               <View style={styles.rectangleBlanc}>
                 <View style={styles.ville}>

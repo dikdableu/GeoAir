@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import PropTypes from "prop-types";
-import {StyleSheet, Text, View, TextInput, FlatList, Picker, ScrollView, TouchableHighlight, TouchableOpacity, Dimensions, PixelRatio} from 'react-native';
+import {StyleSheet, Text, View, TextInput, FlatList, Picker, ScrollView, TouchableHighlight, TouchableOpacity, Dimensions, PixelRatio, Button, Vibration,} from 'react-native';
 import {Image as ReactImage} from 'react-native';
 import Svg, {Defs, Pattern} from 'react-native-svg';
 import {Path as SvgPath} from 'react-native-svg';
@@ -14,7 +14,6 @@ import {
   AdMobRewarded
 } from 'expo-ads-admob';
 import AddComponent from './Icones/Add.js'
-
 import SoleilComponent from './Icones/01d.js'
 import CouldsSunComponent from './Icones/02d.js'
 import CloudComponent from './Icones/03d.js'
@@ -428,6 +427,13 @@ export default function DetailView({props, navigation}) {
          },
         ]
   )
+  const [responseApiWeatherHour, setResponseApiWeatherHour] = useState({})
+  const [responseApiMeteo, setResponseApiMeteo] = useState(navigation.state.params.responseApiMeteo)
+  const [responseApiAir, setResponseApiAir] = useState(navigation.state.params.responseApiAir)
+  const [charged, setCharged] = useState(false)
+  const [color, setColor] = useState('')
+  const [colorText, setColorText] = useState('')
+  const [text, setText] = useState('')
 
   const _iconMeteo = (responseApiMeteo) => {
     conditionWeather.forEach( value => {
@@ -443,43 +449,64 @@ export default function DetailView({props, navigation}) {
     })
   }
 
-  const _addFavorite = () => {
-    if(user.length > 0){
-      var userInfos = user[0].username
+async function inter() {
 
-      fetch('http:/3.126.246.233:3000/addFavorite?username='+ userInfos+'&villes='+responseApiMeteo.name+'&latitude='+responseApiMeteo.coord.lat+'&longitude='+responseApiMeteo.coord.lon+'&pays='+ responseApiMeteo.sys.country, {
-        method: 'get'
-      })
-      .then((response) => response.json())
-      .then((resultat) => {
-        dispatch({type: "ADD_FAVORITE", listFavorite: resultat})
-        return resultat
-      })
-      .catch( error => {
-        setErrorFetch(error)
-        console.error(error);
-      });
+  var capp = Platform.OS === 'ios' ? "ca-app-pub-8614556057049331/2396540078" : "ca-app-pub-8614556057049331/6805191398"
+  await AdMobInterstitial.setAdUnitID(capp); // Test ID, Replace with your-admob-unit-id
+  await AdMobInterstitial.requestAdAsync({ servePersonalizedAds: true});
+  await AdMobInterstitial.showAdAsync()
 
-      Toast.show('Ajouté aux favoris', {
-        duration: Toast.durations.SHORT,
-        position: Toast.positions.CENTER,
-        shadow: true,
-        animation: true,
-        hideOnPress: true,
-        delay: 0,
-      });
-    }
-  }
+}
 
+    useMemo(()=>{
+      inter()
+      if(typeof navigation.state.params.responseApiWeatherHour == 'undefined' || !navigation.state.params.responseApiWeatherHour ){
+        console.log('favoris')
+        fetch('https://api.openweathermap.org/data/2.5/onecall?lat='+responseApiMeteo.coord.lat+'&lon='+responseApiMeteo.coord.lon+'&appid=505c84426a182da1a7178151dccdb616', {method: "GET"})
+        .then((responsWeatherHour) => responsWeatherHour.json())
+        .then((responseJsonWeatherHour) => {
+          var tmpTextColor
+          var tmpColor
+          var tmpText
+          if (responseApiAir.data.aqi >= 0 && responseApiAir.data.aqi <= 50){
+            setColor("#DCFFF9")
+            setColorText("#00EBD3")
+            setText("Bonne")
+            tmpColor = "#DCFFF9"
+            tmpTextColor = "#00EBD3"
+            tmpText = "Bonne"
 
+          }
+          if (responseApiAir.data.aqi >= 51 && responseApiAir.data.aqi <= 150){
+            setColor("#FFF3E3")
+            setColorText("#FFB553")
+            setText("Moyenne")
+            tmpColor = "#FFF3E3"
+            tmpTextColor = "#FFB553"
+            tmpText = "Moyenne"
+          }
+          if (responseApiAir.data.aqi >= 151){
+            setColor("#FFEDEC")
+            setColorText("#FF6B53")
+            setText("Mauvaise")
+            tmpColor = "#FFEDEC"
+            tmpTextColor = "#FF6B53"
+            tmpText = "Mauvaise"
+          }
 
-
-    const color = navigation.state.params.color
-    const responseApiAir = navigation.state.params.responseApiAir
-    const responseApiMeteo = navigation.state.params.responseApiMeteo
-    const responseApiWeatherHour = navigation.state.params.responseApiWeatherHour
-    const textColor = navigation.state.params.textColor
-    const text = navigation.state.params.textIndex
+          setResponseApiWeatherHour(responseJsonWeatherHour)
+          setCharged(true)
+          return responseJsonWeatherHour
+        })
+      }else {
+        console.log('search')
+        setCharged(true)
+        setColor(navigation.state.params.color)
+        setColorText(navigation.state.params.textColor)
+        setText(navigation.state.params.textIndex)
+        setResponseApiWeatherHour(navigation.state.params.responseApiWeatherHour)
+      }
+    }, [])
 
     var dateSunSet = new Date(responseApiMeteo.sys.sunrise * 1000)
     var dateSunRise = new Date(responseApiMeteo.sys.sunset * 1000)
@@ -489,51 +516,56 @@ export default function DetailView({props, navigation}) {
     const sunset = dateSunSet.getHours() + 'h' + minuteSunSet.substr(-2)
     const sunrise = dateSunRise.getHours() + 'h' + minuteSunRise.substr(-2)
 
-    return (
-      <View style={styles.container}>
-        <View style={styles.bgStack}>
-          <Bg style={styles.bg}></Bg>
-          <ScrollView style={{ top: 40, height: height-250}}>
-            <CardAccueil responseApiMeteo={responseApiMeteo}  responseApiAir={responseApiAir} responseApiWeatherHour={responseApiWeatherHour} style={styles.cardAccueil}></CardAccueil>
-            <AdMobBanner
-              style={{marginTop: 5, marginBottom: 5}}
-              bannerSize="smartBannerPortrait"
-              adUnitID={Platform.OS === 'ios' ? "ca-app-pub-8614556057049331/5612210449" : "ca-app-pub-8614556057049331/8209974696"}
-              servePersonalizedAds={true}
-              setTestDeviceID="EMULATOR"
-              didFailToReceiveAdWithError={error => console.log(error + 'error')}
-            />
-            <UntitledComponent responseApiMeteo={responseApiMeteo} sunset={sunset} sunrise={sunrise} responseApiAir={responseApiAir} responseApiWeatherHour={responseApiWeatherHour} textColor={textColor} text={text} style={styles.untitledComponent}></UntitledComponent>
-            <AdMobBanner
-              style={{marginTop: 5, marginBottom: 5}}
-              bannerSize="smartBannerPortrait"
-              adUnitID={Platform.OS === 'ios' ? "ca-app-pub-8614556057049331/5612210449" : "ca-app-pub-8614556057049331/8209974696"}
-              servePersonalizedAds={true}
-              setTestDeviceID="EMULATOR"
-              didFailToReceiveAdWithError={error => console.log(error + 'error')}
-            />
-            <CardForeCast7d style={styles.cardForeCast7D}></CardForeCast7d>
-            <AdMobBanner
-              style={{marginTop: 5, marginBottom: 5}}
-              bannerSize="smartBannerPortrait"
-              adUnitID={Platform.OS === 'ios' ? "ca-app-pub-8614556057049331/5612210449" : "ca-app-pub-8614556057049331/8209974696"}
-              servePersonalizedAds={true}
-              setTestDeviceID="EMULATOR"
-              didFailToReceiveAdWithError={error => console.log(error + 'error')}
-            />
-            <CardForeCast14d style={styles.cardForeCast14D}></CardForeCast14d>
-            <AdMobBanner
-              style={{marginTop: 5, marginBottom: 20}}
-              bannerSize="smartBannerPortrait"
-              adUnitID={Platform.OS === 'ios' ? "ca-app-pub-8614556057049331/5612210449" : "ca-app-pub-8614556057049331/8209974696"}
-              servePersonalizedAds={true}
-              setTestDeviceID="EMULATOR"
-              didFailToReceiveAdWithError={error => console.log(error + 'error')}
-            />
-          </ScrollView>
+    if(charged){
+      return (
+        <View style={styles.container}>
+          <View style={styles.bgStack}>
+            <Bg style={styles.bg}></Bg>
+            <ScrollView style={{ top: 40, height: height-250}} >
+              <CardAccueil responseApiMeteo={responseApiMeteo}  responseApiAir={responseApiAir} responseApiWeatherHour={responseApiWeatherHour} style={styles.cardAccueil}></CardAccueil>
+              <AdMobBanner
+                style={{marginTop: 5, marginBottom: 5}}
+                bannerSize="smartBannerPortrait"
+                adUnitID={Platform.OS === 'ios' ? "ca-app-pub-8614556057049331/5612210449" : "ca-app-pub-8614556057049331/8209974696"}
+                servePersonalizedAds={true}
+                setTestDeviceID="EMULATOR"
+                didFailToReceiveAdWithError={error => console.log(error + 'error')}
+              />
+              <UntitledComponent responseApiMeteo={responseApiMeteo} sunset={sunset} sunrise={sunrise} responseApiAir={responseApiAir} responseApiWeatherHour={responseApiWeatherHour} textColor={colorText} text={text} style={styles.untitledComponent}></UntitledComponent>
+              <AdMobBanner
+                style={{marginTop: 55, marginBottom: 5}}
+                bannerSize="smartBannerPortrait"
+                adUnitID={Platform.OS === 'ios' ? "ca-app-pub-8614556057049331/5612210449" : "ca-app-pub-8614556057049331/8209974696"}
+                servePersonalizedAds={true}
+                setTestDeviceID="EMULATOR"
+                didFailToReceiveAdWithError={error => console.log(error + 'error')}
+              />
+              <CardForeCast7d responseApiMeteo={responseApiMeteo} style={styles.cardForeCast7D}></CardForeCast7d>
+              <AdMobBanner
+                style={{marginTop: 5, marginBottom: 5}}
+                bannerSize="smartBannerPortrait"
+                adUnitID={Platform.OS === 'ios' ? "ca-app-pub-8614556057049331/5612210449" : "ca-app-pub-8614556057049331/8209974696"}
+                servePersonalizedAds={true}
+                setTestDeviceID="EMULATOR"
+                didFailToReceiveAdWithError={error => console.log(error + 'error')}
+              />
+              <CardForeCast14d responseApiMeteo={responseApiMeteo} style={styles.cardForeCast14D}></CardForeCast14d>
+              <AdMobBanner
+                style={{marginTop: 5, marginBottom: 20}}
+                bannerSize="smartBannerPortrait"
+                adUnitID={Platform.OS === 'ios' ? "ca-app-pub-8614556057049331/5612210449" : "ca-app-pub-8614556057049331/8209974696"}
+                servePersonalizedAds={true}
+                setTestDeviceID="EMULATOR"
+                didFailToReceiveAdWithError={error => console.log(error + 'error')}
+              />
+            </ScrollView>
+          </View>
         </View>
-      </View>
-    );
+      );
+    }else{
+      return null
+    }
+
 
 }
 

@@ -92,7 +92,7 @@ const FavoriteView = ({props, navigation}) => {
             aqi: responseJsonWaqi.data.aqi,
             temperature: (resultat.main.temp - 273.15).toFixed(1) + "°C",
             temperatureFeel: (resultat.main.feels_like - 273.15).toFixed(1) + "°C",
-            idMeteo: 200,
+            idMeteo: resultat.weather[0].id,
             ville: resultat.name,
             color: tmpColor,
             textColor: tmpTextColor,
@@ -160,25 +160,15 @@ const FavoriteView = ({props, navigation}) => {
                     <FlatList
                       data={listSearch}
                       contentContainerStyle={{ paddingBottom: 20}}
-                      style={{height: 500}}
+                      style={{height: height - 180}}
                       keyExtractor={item => item.id.toString()}
-                      renderItem={({item}) =>  <View><Swipeout onOpen={() => {setRowOpen(item.id)}} right={swipeBtns}
+                      renderItem={({item}) =>  <View style={{ marginTop: 5, marginBottom: 5}}><Swipeout onOpen={() => {setRowOpen(item.id)}} right={swipeBtns}
                       backgroundColor= 'transparent'
+                      showsVerticalScrollIndicator ={false}
                       >
                         <TouchableOpacity onPress={() => navigation.navigate('Detail', {responseApiAir: item.responseApiAir, responseApiMeteo: item.responseApiMeteo, color: item.color})}><VilleFavoris icon={item.idMeteo} aqi={item.aqi} textColor={item.textColor} color={item.color} temp={item.temperature} tr={item.temperatureFeel} ville={item.ville} pays={item.country} style={styles.villeFavoris1} /></TouchableOpacity>
-                      </Swipeout><AdMobBanner
-                        style={{ marginBottom: 5, marginTop: 5}}
-                        bannerSize="smartBannerPortrait"
-                        adUnitID={Platform.OS === 'ios' ? "ca-app-pub-8614556057049331/5612210449" : "ca-app-pub-8614556057049331/8209974696"}
-                        servePersonalizedAds={true}
-                        setTestDeviceID="EMULATOR"
-                        didFailToReceiveAdWithError={error => console.log(error + 'error')}
-                      /></View>
+                      </Swipeout></View>
                     }/>
-                    <View style={styles.ajouterUnLieu}>
-                      <IconesAjouter style={styles.iconesAjouter}></IconesAjouter>
-                      <Text style={styles.ajouterUnLieu1}>Ajouter un lieu</Text>
-                    </View>
                 </View>
             </View>
           </View>

@@ -39,7 +39,7 @@ function UntitledComponent(props) {
                 {"\n"}Visibilité{"\n"}{"\n"}Lever du soleil{"\n"}{"\n"}Coucher du soleil{"\n"}
               </Text>
               <Text style={styles.mS931027HPa1}>
-                {(props.responseApiMeteo.wind.speed) * 3.6} km/h{"\n"}
+                {(props.responseApiMeteo.wind.speed *3.6).toFixed(2)} km/h{"\n"}
                 {"\n"}{props.responseApiMeteo.main.humidity}%{"\n"}
                 {"\n"}{props.responseApiMeteo.main.pressure} hPa{"\n"}
                 {"\n"}{props.responseApiMeteo.visibility} m{"\n"}{"\n"}{props.sunset}{"\n"}{"\n"}{props.sunrise}{"\n"}
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 0,
     left: 0,
-    height: 320,
+    height: 350,
     width: 353,
   },
   details: {
@@ -156,7 +156,7 @@ const styles = StyleSheet.create({
   },
   cardAirStack: {
     width: 353,
-    height: 300
+    height: 300,
   }
 });
 

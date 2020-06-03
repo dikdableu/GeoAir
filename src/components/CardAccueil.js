@@ -1,5 +1,5 @@
 import React, { Component, useState, useEffect } from "react";
-import { StyleSheet, View, Text, ImageBackground, FlatList } from "react-native";
+import { StyleSheet, View, Text, ImageBackground, FlatList, TouchableOpacity } from "react-native";
 
 import IconesCouvert from "../components/IconesCouvert";
 import IconesNeige from "../components/IconesNeige";
@@ -10,6 +10,13 @@ import IconesSoleil from "../components/IconesSoleil";
 import IconesNuages from "../components/IconesNuages";
 import IconesAjouter from "../components/IconesAjouter";
 import Heure01 from "./Heure01";
+import Toast from 'react-native-root-toast';
+import { useDispatch, useSelector } from 'react-redux'
+
+import * as DBLocal from '../../db/DBLocal.js'
+import * as SQLite from "expo-sqlite";
+
+const db = SQLite.openDatabase("db.db");
 
 function CardAccueil(props) {
 
@@ -403,23 +410,66 @@ function CardAccueil(props) {
         ]
   )
   const [condition, setCondition] = useState(null)
+  const dispatch = useDispatch()
 
   useEffect(() => {
     if(typeof props.responseApiMeteo != 'undefined' && Object.keys(props.responseApiMeteo).length !== 0 && props.responseApiMeteo && props.responseApiMeteo != null){
       conditionWeather.forEach( value => {
-          if(props.responseApiMeteo.weather[0].id == value.id){
-            var cond = {
-                description: value.description,
-                icon: "http://openweathermap.org/img/wn/"+ value.icon +"@2x.png",
-                id: value.id,
-                main: value.main,
-                path: value.path
-            }
-            setCondition(cond)
+        if(props.responseApiMeteo.weather[0].id == value.id){
+          var cond = {
+              description: value.description,
+              icon: "http://openweathermap.org/img/wn/"+ value.icon +"@2x.png",
+              id: value.id,
+              main: value.main,
+              path: value.path
           }
+          setCondition(cond)
+        }
       })
     }
   }, [])
+
+
+    _addFavorite = () => {
+      db.transaction(tx => {
+          tx.executeSql(
+            `select * from Favoris`,[],
+            (_, { rows: { _array } }) => {
+              var i = 0
+              _array.map((item) => {
+                if(_array.villes == props.responseApiMeteo.name){
+                  i++
+                }
+              })
+              if(i == 0){
+                tx.executeSql( `insert into Favoris(villes, pays, latitude, longitude) values(?, ?, ?, ?)`, [props.responseApiMeteo.name, props.responseApiMeteo.sys.country, props.responseApiMeteo.coord.lat, props.responseApiMeteo.coord.lon], db.transaction(tx => {
+                  tx.executeSql(
+                    `select * from Favoris`,[],
+                    (_, { rows: { _array } }) => {
+                      dispatch({type: "INIT_FAVORITE", data: _array })
+                      Toast.show('Ajouté aux favoris', {
+                        duration: Toast.durations.SHORT,
+                        position: Toast.positions.CENTER,
+                        shadow: true,
+                        animation: true,
+                        hideOnPress: true,
+                        delay: 0,
+                      });
+                    }, (transaction, e) => console.log(e))
+                }), (transaction, e) => console.log(e, transaction))
+              }else{
+                Toast.show('Existe déjà dans les favoris', {
+                  duration: Toast.durations.SHORT,
+                  position: Toast.positions.CENTER,
+                  shadow: true,
+                  animation: true,
+                  hideOnPress: true,
+                  delay: 0,
+                });
+              }
+            }, (transaction, e) => console.log(e))
+      })
+    }
 
   const _convertDate = (dt) => {
     var date = new Date(dt * 1000);
@@ -441,7 +491,9 @@ function CardAccueil(props) {
                   <Text style={styles.versailles}>{props.responseApiMeteo.name}</Text>
                 </View>
               </View>
-              <IconesAjouter style={styles.iconesAjouter}></IconesAjouter>
+              <TouchableOpacity style={{width: 40}} onPress={() => {_addFavorite()}} >
+                <IconesAjouter style={styles.iconesAjouter}></IconesAjouter>
+              </TouchableOpacity>
             </View>
           </View>
         </View>
@@ -541,7 +593,7 @@ const styles = StyleSheet.create({
     top: 27,
     left: 0,
     height: 19,
-    width: 150,
+    width: 250,
     opacity: 1,
     backgroundColor: "transparent",
     color: "rgba(127,141,154,1)",
@@ -682,7 +734,7 @@ const styles = StyleSheet.create({
   cCopy29: {
     position: "absolute",
     top: 24,
-    left: 15,
+    left: 34,
     height: 21,
     width: 46,
     opacity: 1,
@@ -699,24 +751,24 @@ const styles = StyleSheet.create({
     height: 80,
     width: 104,
     opacity: 1,
-    marginLeft: 47,
-    marginTop: 2
+    marginLeft: 35,
+    marginTop: 0
   },
   nuageux: {
     position: "relative",
     top: 62,
     left: 0,
-    height: 18,
+    height: 30,
     width: 104,
     opacity: 1,
     backgroundColor: "transparent",
     textAlign: "center",
     color: "rgba(127,141,154,1)",
-    fontSize: 13,
+    fontSize: 11,
   },
   iconesCouvert6: {
     position: "relative",
-    top: 0,
+    top: -10,
     left: '30%',
     height: 70,
     width: 70,
@@ -725,7 +777,7 @@ const styles = StyleSheet.create({
   },
   nuageuxStack: {
     width: 104,
-    height: 80
+    height: 90
   },
   temperatureRow: {
     height: 94,

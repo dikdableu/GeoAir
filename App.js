@@ -18,6 +18,7 @@ import { createBottomTabNavigator } from "react-navigation-tabs";
 import * as Font from 'expo-font';
 import { AppLoading } from 'expo';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { Notifications } from 'expo';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
@@ -36,7 +37,6 @@ import * as SQLite from "expo-sqlite";
 var {height, width} = Dimensions.get('window');
 var ratio = PixelRatio.get()
 var indiceScreen = ratio <= 3 ? 1 : ratio > 3 ? 1.2 : 0.2;
-
 
 const Home = createStackNavigator(
   {

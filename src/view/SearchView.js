@@ -257,7 +257,7 @@ export default function SearchView({props, navigation}) {
                 <View style={styles.iconesLoupeRow}>
                   <IconesLoupe style={styles.iconesLoupe}></IconesLoupe>
                   <View style={styles.verStack}>
-                    <TextInput keyboardType={'web-search'} id={'searchbar'} onFocus={() => vider()} blurOnSubmit={true} onChangeText={text => _searching(text)} onFocus={()=> toogleHide(true)} onSubmitEditing={() =>  _searchByCity(search)} value={search} placeholder={'Ville'}  style={styles.ver}/>
+                    <TextInput keyboardType={'web-search'} id={'searchbar'} onChange={() => vider()} blurOnSubmit={true} onChangeText={text => _searching(text)} onFocus={()=> toogleHide(true)} onSubmitEditing={() =>  _searchByCity(search)} value={search} placeholder={'Ville'}  style={styles.ver}/>
                   </View>
                   <IconesLocaliser style={styles.iconesLocaliser}></IconesLocaliser>
                 </View>
