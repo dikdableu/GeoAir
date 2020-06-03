@@ -549,7 +549,7 @@ const styles = StyleSheet.create({
     width: 34,
     opacity: 1,
     backgroundColor: "transparent",
-    marginLeft: width /11
+    marginLeft: width /24
   },
   villeRow: {
     height: 44,

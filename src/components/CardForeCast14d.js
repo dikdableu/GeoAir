@@ -595,7 +595,6 @@ const styles = StyleSheet.create({
     height: 46,
     marginTop: 24,
     marginLeft: 20,
-    borderWidth: 1
   },
   previsionsJours1: {
     height: 'auto',
