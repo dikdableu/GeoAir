@@ -66,16 +66,6 @@ export default function SearchView({props, navigation}) {
 
     useEffect(() => {
       if(!search){
-        fetch('https://discover.search.hereapi.com/v1/geocode?q=Paris&?limit=5&apiKey=yN093DXh0b8DQHeIrjf2tSefHybxmX16RMDWqROw65M', {
-          method: 'get'
-        })
-        .then((response) => response.json())
-        .then((resultat) => {
-          console.log(resultat.items.id)
-          setListCity(resultat)
-          return resultat
-        })
-      }else {
         fetch('https://discover.search.hereapi.com/v1/geocode?q='+ search+'&?limit=5&apiKey=yN093DXh0b8DQHeIrjf2tSefHybxmX16RMDWqROw65M', {
           method: 'get'
         })
@@ -86,7 +76,6 @@ export default function SearchView({props, navigation}) {
           return resultat
         })
       }
-
     }, [search])
 
     const _searchByCity = (city) => {
@@ -142,7 +131,7 @@ export default function SearchView({props, navigation}) {
               aqi: responseJsonWaqi.data.aqi,
               temperature: (resultat.main.temp - 273.15).toFixed(1) + "°C",
               temperatureFeel: (resultat.main.feels_like - 273.15).toFixed(1) + "°C",
-              idMeteo: 200,
+              idMeteo: resultat.weather[0].id,
               ville: resultat.name,
               color: tmpColor,
               textColor: tmpTextColor,

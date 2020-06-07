@@ -15,7 +15,7 @@ import {Collapse,CollapseHeader, CollapseBody, AccordionList} from 'accordion-co
 
 function CardForeCast14d(props) {
 
-  const [responseApiWeather7d , setResponseApiWeather7d] = useState({})
+  const [responseApiWeather14d , setResponseApiWeather14d] = useState({})
   const [charged, setCharged] = useState(false)
   const [conditionWeather, setConditionWeather] = useState(
     [
@@ -408,12 +408,12 @@ function CardForeCast14d(props) {
   )
 
   useEffect(()=>{
-    fetch('https://api.openweathermap.org/data/2.5/forecast/daily?cnt=14&lon=1.51&lat=48.76&appid=505c84426a182da1a7178151dccdb616', {method: "GET"})
-    .then(responsWeather7d => responsWeather7d.json())
-    .then((responseJsonWeather7d) => {
-      setResponseApiWeather7d(responseJsonWeather7d)
+    fetch('https://api.openweathermap.org/data/2.5/forecast/daily?cnt=14&lon=' + responseApiMeteo.coord.lon + '&lat='+ responseApiMeteo.coord.lat +'&appid=505c84426a182da1a7178151dccdb616', {method: "GET"})
+    .then(responsWeather14d => responsWeather14d.json())
+    .then((responseJsonWeather14d) => {
+      setResponseApiWeather14d(responseJsonWeather14d)
       setCharged(true)
-      return responseJsonWeather7d
+      return responseJsonWeather14d
     })
   }, [])
 
@@ -475,7 +475,7 @@ function CardForeCast14d(props) {
           </View>
           <View style={styles.previsionsJours1}>
             <FlatList
-              data={responseApiWeather7d.list}
+              data={responseApiWeather14d.list}
               keyExtractor={(item, index) => index.toString()}
               backgroundColor= 'transparent'
               renderItem={({item}) => (
