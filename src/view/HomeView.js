@@ -44,7 +44,7 @@ import IconesPluie from "../components/IconesPluie";
 import IconesSoleil from "../components/IconesSoleil";
 import IconesNuages from "../components/IconesNuages";
 import { Notifications } from 'expo';
-import * as InAppPurchases from 'expo-in-app-purchases';
+
 
 import * as DBLocal from '../../db/DBLocal.js'
 import * as SQLite from "expo-sqlite";
