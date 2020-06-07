@@ -563,7 +563,14 @@ async function inter() {
         </View>
       );
     }else{
-      return null
+      return (
+        <View style={styles.container}>
+          <View style={styles.bgStack}>
+            <Bg style={styles.bg}></Bg>
+            
+          </View>
+        </View>
+      )
     }
 
 

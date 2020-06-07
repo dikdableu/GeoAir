@@ -408,7 +408,7 @@ function CardForeCast7d(props) {
   )
 
   useEffect(()=>{
-    fetch('https://api.openweathermap.org/data/2.5/forecast/daily?cnt=7&lon=' + responseApiMeteo.coord.lon + '&lat=' + responseApiMeteo.coord.lat + '&appid=505c84426a182da1a7178151dccdb616', {method: "GET"})
+    fetch('https://api.openweathermap.org/data/2.5/forecast/daily?cnt=7&lon=' + props.responseApiMeteo.coord.lon + '&lat=' + props.responseApiMeteo.coord.lat + '&appid=505c84426a182da1a7178151dccdb616', {method: "GET"})
     .then(responsWeather7d => responsWeather7d.json())
     .then((responseJsonWeather7d) => {
       setResponseApiWeather7d(responseJsonWeather7d)
@@ -544,7 +544,13 @@ function CardForeCast7d(props) {
       </View>
     );
   }else {
-    return null
+    return (
+      <View style={[styles.container, props.style]}>
+        <View style={styles.rectangleBlanc1}>
+        
+        </View>
+      </View>
+    )
   }
 }
 

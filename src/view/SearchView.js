@@ -7,8 +7,6 @@ import Svg, {Defs, Pattern, Path} from 'react-native-svg';
 import {Path as SvgPath} from 'react-native-svg';
 import {Text as SvgText} from 'react-native-svg';
 import {Image as SvgImage} from 'react-native-svg';
-import City from "./city.js"
-import Connexion from "./connexion.js"
 import * as Font from 'expo-font';
 import { AppLoading} from 'expo';
 
@@ -65,7 +63,7 @@ export default function SearchView({props, navigation}) {
   const [charged, setCharged] = useState('')
 
     useEffect(() => {
-      if(!search){
+      if(search){
         fetch('https://discover.search.hereapi.com/v1/geocode?q='+ search+'&?limit=5&apiKey=yN093DXh0b8DQHeIrjf2tSefHybxmX16RMDWqROw65M', {
           method: 'get'
         })

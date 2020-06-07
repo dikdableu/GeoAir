@@ -177,8 +177,13 @@ const FavoriteView = ({props, navigation}) => {
     )
   }else {
     return (
-        <SafeAreaView style={styles.favoris}>
-
+      <SafeAreaView style={{flex:1, borderWidth: 0}} forceInset={{ bottom: 'never'}}>
+        <View style={styles.container}>
+            <View style={styles.bgStack}>
+              <Bg style={styles.bg}></Bg>
+                
+            </View>
+          </View>
         </SafeAreaView>
       )
   }
