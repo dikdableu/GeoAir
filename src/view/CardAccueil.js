@@ -22,7 +22,7 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Timestamp from 'react-timestamp';
 import * as Font from 'expo-font';
 import { AppLoading, Svg } from 'expo';
-import { Auth } from 'aws-amplify';
+
 
 const CardAccueil = props => {
 

@@ -11,7 +11,7 @@ import City from "./city.js"
 import Connexion from "./connexion.js"
 import * as Font from 'expo-font';
 import { AppLoading} from 'expo';
-import { Auth } from 'aws-amplify';
+
 import Toast from 'react-native-root-toast';
 import * as data from '../../db/favorite.json';
 import { connect } from 'react-redux'
