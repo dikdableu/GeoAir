@@ -165,10 +165,10 @@ const TabNavigator = createBottomTabNavigator({
     tabStyle: {
       flex:1,
       justifyContent:"center",
-      alignItems:"center"
+      alignItems:"center",
     },
     style:{
-      height: 50,
+      height: height / 14,
       width: 'auto',
       flexDirection:'row',
       borderTopLeftRadius: 44,
@@ -186,6 +186,7 @@ const TabNavigator = createBottomTabNavigator({
     },
   }
 })
+console.log(height)
 
 const fetchFonts = () => {
   return Font.loadAsync({

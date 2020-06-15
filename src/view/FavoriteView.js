@@ -221,10 +221,8 @@ const styles = StyleSheet.create({
   },
   bg: {
     position: "absolute",
-    top: 0,
-    left: 0,
-    height: 812,
-    width: 375,
+    height: height,
+    width: width,
     opacity: 1,
     backgroundColor: "transparent"
   },
@@ -341,8 +339,8 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent"
   },
   bgStack: {
-    width: 376,
-    height: 812
+    width: width,
+    height: height
   }
 });
 

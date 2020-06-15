@@ -40,6 +40,12 @@
         "WRITE_EXTERNAL_STORAGE",
         "com.android.launcher.permission.INSTALL_SHORTCUT"
       ]
+    },
+    "androidStatusBar": {
+      "barStyle": "light-content",
+    },
+    "androidNavigationBar": {
+      "visible": "immersive",
     }
   }
 }

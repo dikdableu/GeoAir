@@ -45,7 +45,6 @@ import IconesSoleil from "../components/IconesSoleil";
 import IconesNuages from "../components/IconesNuages";
 import { Notifications } from 'expo';
 
-
 import * as DBLocal from '../../db/DBLocal.js'
 import * as SQLite from "expo-sqlite";
 
@@ -806,7 +805,7 @@ const styles = StyleSheet.create({
   bg: {
     position: "absolute",
     top: -100,
-    height: 812,
+    height: height,
     width: 375,
     opacity: 1,
     backgroundColor: "transparent"
@@ -1110,6 +1109,8 @@ const styles = StyleSheet.create({
     letterSpacing: 1.788888888888888
   },
   btnActualiser: {
+    flex: 1,
+    alignItems: 'flex-end',
     height: 36,
     width: 130,
     opacity: 1,
@@ -1194,7 +1195,7 @@ const styles = StyleSheet.create({
   },
   bgStack: {
     width: width,
-    height: 812
+    height: height
   }
 });
 
