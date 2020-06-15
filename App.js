@@ -186,7 +186,6 @@ const TabNavigator = createBottomTabNavigator({
     },
   }
 })
-console.log(height)
 
 const fetchFonts = () => {
   return Font.loadAsync({

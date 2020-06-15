@@ -451,7 +451,6 @@ export default function DetailView({props, navigation}) {
   }
 
 async function inter() {
-  console.log(count)
   if(count === 2){
     var capp = Platform.OS === 'ios' ? "ca-app-pub-8614556057049331/2396540078" : "ca-app-pub-8614556057049331/6805191398"
     await AdMobInterstitial.setAdUnitID(capp); // Test ID, Replace with your-admob-unit-id
@@ -463,7 +462,6 @@ async function inter() {
     useMemo(()=>{
       inter()
       if(typeof navigation.state.params.responseApiWeatherHour == 'undefined' || !navigation.state.params.responseApiWeatherHour ){
-        console.log('favoris')
         fetch('https://api.openweathermap.org/data/2.5/onecall?lat='+responseApiMeteo.coord.lat+'&lon='+responseApiMeteo.coord.lon+'&appid=505c84426a182da1a7178151dccdb616', {method: "GET"})
         .then((responsWeatherHour) => responsWeatherHour.json())
         .then((responseJsonWeatherHour) => {
@@ -501,7 +499,6 @@ async function inter() {
           return responseJsonWeatherHour
         })
       }else {
-        console.log('search')
         setCharged(true)
         setColor(navigation.state.params.color)
         setColorText(navigation.state.params.textColor)

@@ -69,7 +69,6 @@ export default function SearchView({props, navigation}) {
         })
         .then((response) => response.json())
         .then((resultat) => {
-          console.log(resultat)
           setListCity(resultat)
           return resultat
         })

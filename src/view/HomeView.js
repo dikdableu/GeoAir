@@ -472,7 +472,6 @@ function HomeView() {
     const history = await InAppPurchases.connectAsync();
     if (history.responseCode === InAppPurchases.IAPResponseCode.OK) {
       history.results.forEach(result => {
-        console.log(result)
       });
     }
   }
@@ -481,7 +480,6 @@ function HomeView() {
     const { responseCode, results } = await InAppPurchases.getProductsAsync(items);
     if (responseCode === InAppPurchases.IAPResponseCode.OK) {
       setItem(results);
-      console.log(results)
     }
   }
 
