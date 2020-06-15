@@ -13,7 +13,6 @@ function UntitledComponent(props) {
           <View style={styles.qualiteDeLair}>
             <View style={styles.bonneStackRow}>
               <View style={styles.bonneStack}>
-              {console.log(props.text)}
                 <Text style={[styles.bonne, {color: props.textColor}]}>{props.text}</Text>
                 <Text style={styles.qualiteDeLair1}>Qualité de l’air</Text>
               </View>
