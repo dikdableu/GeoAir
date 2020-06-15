@@ -46,11 +46,6 @@ const Home = createStackNavigator(
         headerTitle: (
           <GeoAirLogo/>
         ),
-        headerRight: (
-          <TouchableOpacity onPress={() => alert('test')} style={{width: 30, marginRight: 20, zIndex: 10}}>
-            <IconesMenu/>
-          </TouchableOpacity>
-        ),
         headerStyle: {
           backgroundColor: 'transparent',
           zIndex: 100,
@@ -74,11 +69,6 @@ const Search = createStackNavigator({
       headerTitle: (
         <GeoAirLogo/>
       ),
-      headerRight: (
-        <TouchableOpacity onPress={() => alert('test')} style={{width: 15, marginRight: 20}}>
-          <IconesMenu/>
-        </TouchableOpacity>
-      ),
       headerStyle: {
         backgroundColor: 'transparent',
         zIndex: 100,
@@ -96,11 +86,6 @@ const Search = createStackNavigator({
       ),
       headerTitle: (
         <GeoAirLogo/>
-      ),
-      headerRight: (
-        <TouchableOpacity onPress={() => alert('test')} style={{width: 15, marginRight: 20, zIndex: 10}}>
-          <IconesMenu/>
-        </TouchableOpacity>
       ),
       headerStyle: {
         backgroundColor: 'transparent',
@@ -125,11 +110,6 @@ const Favoris = createStackNavigator({
       headerTitle: (
         <GeoAirLogo/>
       ),
-      headerRight: (
-        <TouchableOpacity onPress={() => alert('test')} style={{width: 15, marginRight: 20}}>
-          <IconesMenu/>
-        </TouchableOpacity>
-      ),
       headerStyle: {
         backgroundColor: 'transparent',
         zIndex: 100,
@@ -147,11 +127,6 @@ const Favoris = createStackNavigator({
       ),
       headerTitle: (
         <GeoAirLogo/>
-      ),
-      headerRight: (
-        <TouchableOpacity onPress={() => alert('test')} style={{width: 15, marginRight: 20}}>
-          <IconesMenu/>
-        </TouchableOpacity>
       ),
       headerStyle: {
         backgroundColor: 'transparent',

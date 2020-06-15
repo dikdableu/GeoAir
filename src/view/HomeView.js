@@ -673,6 +673,21 @@ function HomeView() {
         <View style={styles.bgStack}>
           <Bg style={styles.bg}></Bg>
           <ActivityIndicator style={{flex:1, alignItems: "center", justifyContent: "center", backgroundColor: "transparent" }} size="large" color="#0000ff" />
+          <View style={styles.aProximite}>
+            <View style={styles.lieuxAProximiteRow}>
+              <Text style={styles.lieuxAProximite}>LIEUX À PROXIMITÉ</Text>
+              <View style={styles.btnActualiser}>
+                <View style={styles.rectangle1}>
+                  <TouchableOpacity style={{width: 130}} onPress={() => {_getLocationAsync()}} >
+                    <View style={styles.actualiserRow}>
+                      <Text style={styles.actualiser}>Actualiser</Text>
+                      <IconesActualiser style={styles.iconesActualiser}></IconesActualiser>
+                    </View>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </View>
+          </View>
         </View>
       </View>
     );
