@@ -54,6 +54,7 @@ const FavoriteView = ({props, navigation}) => {
   const [errorFetch, setErrorFetch] = useState(null)
   const [tmpId, setTmpId] = useState(null)
   const [rowOpen, setRowOpen] = useState(null)
+  let [count, setCount] = useState(0)
 
   useMemo(() => {
     if(typeof listFavorite != "undefined" && listFavorite.length > 0){
@@ -151,6 +152,19 @@ const FavoriteView = ({props, navigation}) => {
         onPress: () => { deleteFav() }
       }];
 
+  const _pressAction = (item) => {
+    if(count >= 2){
+      setCount(0)
+      navigation.navigate('Detail', {responseApiAir: item.responseApiAir, responseApiMeteo: item.responseApiMeteo, color: item.color, count: 0})
+    }else {
+      var tmpCount = count + 1
+      setCount(tmpCount);
+      navigation.navigate('Detail', {responseApiAir: item.responseApiAir, responseApiMeteo: item.responseApiMeteo, color: item.color, count: tmpCount})
+    }
+
+
+  }
+
     return (
       <SafeAreaView style={{flex:1, borderWidth: 0}} forceInset={{ bottom: 'never'}}>
         <View style={styles.container}>
@@ -166,7 +180,7 @@ const FavoriteView = ({props, navigation}) => {
                       backgroundColor= 'transparent'
                       showsVerticalScrollIndicator ={false}
                       >
-                        <TouchableOpacity onPress={() => navigation.navigate('Detail', {responseApiAir: item.responseApiAir, responseApiMeteo: item.responseApiMeteo, color: item.color})}><VilleFavoris icon={item.idMeteo} aqi={item.aqi} textColor={item.textColor} color={item.color} temp={item.temperature} tr={item.temperatureFeel} ville={item.ville} pays={item.country} style={styles.villeFavoris1} /></TouchableOpacity>
+                        <TouchableOpacity onPress={() => _pressAction(item)}><VilleFavoris icon={item.idMeteo} aqi={item.aqi} textColor={item.textColor} color={item.color} temp={item.temperature} tr={item.temperatureFeel} ville={item.ville} pays={item.country} style={styles.villeFavoris1} /></TouchableOpacity>
                       </Swipeout></View>
                     }/>
                 </View>
@@ -181,7 +195,7 @@ const FavoriteView = ({props, navigation}) => {
         <View style={styles.container}>
             <View style={styles.bgStack}>
               <Bg style={styles.bg}></Bg>
-                
+
             </View>
           </View>
         </SafeAreaView>

@@ -521,6 +521,7 @@ function HomeView() {
   }, [responseApiMeteo])
 
   const _getLocationAsync = async () => {
+    setLoading(true)
 
     let { status } = await Permissions.askAsync(Permissions.LOCATION);
     if (status !== 'granted'){
@@ -742,7 +743,7 @@ function HomeView() {
                     ></ImageBackground>
                     <FlatList
                       horizontal={true}
-                      data={responseApiWeatherHour.hourly.slice(0,23)}
+                      data={responseApiWeatherHour.hourly.slice(0,25)}
                       renderItem={({item}) => (<Heure01 style={styles.heure01} time={_convertDate(item.dt)} id={item.weather[0].id} temp={(item.temp - 273.15).toFixed(1)}/>)}
                       keyExtractor={(item, index) => index.toString()}
                       showsHorizontalScrollIndicator={false}

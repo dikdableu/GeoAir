@@ -430,6 +430,7 @@ export default function DetailView({props, navigation}) {
   const [responseApiWeatherHour, setResponseApiWeatherHour] = useState({})
   const [responseApiMeteo, setResponseApiMeteo] = useState(navigation.state.params.responseApiMeteo)
   const [responseApiAir, setResponseApiAir] = useState(navigation.state.params.responseApiAir)
+  const [count, setCount] = useState(navigation.state.params.count)
   const [charged, setCharged] = useState(false)
   const [color, setColor] = useState('')
   const [colorText, setColorText] = useState('')
@@ -450,12 +451,13 @@ export default function DetailView({props, navigation}) {
   }
 
 async function inter() {
-
-  var capp = Platform.OS === 'ios' ? "ca-app-pub-8614556057049331/2396540078" : "ca-app-pub-8614556057049331/6805191398"
-  await AdMobInterstitial.setAdUnitID(capp); // Test ID, Replace with your-admob-unit-id
-  await AdMobInterstitial.requestAdAsync({ servePersonalizedAds: true});
-  await AdMobInterstitial.showAdAsync()
-
+  console.log(count)
+  if(count === 2){
+    var capp = Platform.OS === 'ios' ? "ca-app-pub-8614556057049331/2396540078" : "ca-app-pub-8614556057049331/6805191398"
+    await AdMobInterstitial.setAdUnitID(capp); // Test ID, Replace with your-admob-unit-id
+    await AdMobInterstitial.requestAdAsync({ servePersonalizedAds: true});
+    await AdMobInterstitial.showAdAsync()
+  }
 }
 
     useMemo(()=>{
@@ -567,7 +569,7 @@ async function inter() {
         <View style={styles.container}>
           <View style={styles.bgStack}>
             <Bg style={styles.bg}></Bg>
-            
+
           </View>
         </View>
       )
