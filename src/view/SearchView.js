@@ -69,7 +69,6 @@ export default function SearchView({props, navigation}) {
         })
         .then((response) => response.json())
         .then((resultat) => {
-          console.log(resultat)
           setListCity(resultat)
           return resultat
         })
@@ -246,8 +245,9 @@ export default function SearchView({props, navigation}) {
                   <View style={styles.verStack}>
                     <TextInput keyboardType={'web-search'} id={'searchbar'} onChange={() => vider()} blurOnSubmit={true} onChangeText={text => _searching(text)} onFocus={()=> toogleHide(true)} onSubmitEditing={() =>  _searchByCity(search)} value={search} placeholder={'Ville'}  style={styles.ver}/>
                   </View>
-                  <IconesLocaliser style={styles.iconesLocaliser}></IconesLocaliser>
+
                 </View>
+
               </View>
             </View>
           </View>
@@ -281,8 +281,9 @@ export default function SearchView({props, navigation}) {
                   <View style={styles.verStack}>
                     <TextInput keyboardType={'web-search'} id={'searchbar'} autoFocus={true} blurOnSubmit={true} onChangeText={text => _searching(text)} onFocus={()=> toogleHide(true)} onSubmitEditing={() =>  _searchByCity(search)} value={search} placeholder={'Ville'}  style={styles.ver}/>
                   </View>
-                  <IconesLocaliser style={styles.iconesLocaliser}></IconesLocaliser>
+
                 </View>
+
               </View>
             </View>
           </View>
@@ -317,8 +318,9 @@ export default function SearchView({props, navigation}) {
                 <View style={styles.verStack}>
                   <TextInput keyboardType={'web-search'} id={'searchbar'} autoFocus={true} blurOnSubmit={true} onChangeText={text => _searching(text)} onFocus={()=> toogleHide(true)} onSubmitEditing={() =>  _searchByCity(search)} value={search} placeholder={'Ville'}  style={styles.ver}/>
                 </View>
-                <IconesLocaliser style={styles.iconesLocaliser}></IconesLocaliser>
+
               </View>
+
             </View>
           </View>
         </View>
@@ -364,7 +366,7 @@ const styles = StyleSheet.create({
     height: 'auto',
     width: width-22,
     borderRadius: 28,
-    backgroundColor: "rgba(255,255,255,1)"
+    backgroundColor: "rgba(255,255,255,1)",
   },
   villeRecherche01: {
     height: 69,
@@ -655,20 +657,21 @@ const styles = StyleSheet.create({
     marginLeft: 14
   },
   iconesLocaliser: {
-    height: 24,
+    height: 38,
     width: 24,
+    marginRight: 18,
     opacity: 1,
     backgroundColor: "transparent",
-    marginLeft: width / 1.90,
-    marginTop: 6
+    borderWidth: 1,
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   iconesLoupeRow: {
-    height: 38,
+    alignItems: 'center',
     flexDirection: "row",
-    flex: 1,
+    flex: 6,
     marginRight: 26,
     marginLeft: 17,
-    marginTop: 14
   },
   nav: {
     position: "absolute",

@@ -43,12 +43,12 @@ const styles = StyleSheet.create({
     flex: 1
   },
   bgBleu: {
-    height: 812,
+    height: height + 110,
     width: width,
     opacity: 1
   },
   mask: {
-    height: 812,
+    height: height + 110,
     width: width,
     overflow: "hidden",
     backgroundColor: "transparent"

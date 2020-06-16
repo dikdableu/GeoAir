@@ -487,11 +487,11 @@ function CardAccueil(props) {
             <View style={styles.ville1Row}>
               <View style={styles.ville1}>
                 <View style={styles.yvelinesFranceStack}>
-                  <Text style={styles.yvelinesFrance}>{props.responseApiMeteo.sys.country}</Text>
                   <Text style={styles.versailles}>{props.responseApiMeteo.name}</Text>
+                  <Text style={styles.yvelinesFrance}>{props.responseApiMeteo.sys.country}</Text>
                 </View>
               </View>
-              <TouchableOpacity style={{width: 40}} onPress={() => {_addFavorite()}} >
+              <TouchableOpacity style={{flex: 1, marginRight: 10}} onPress={() => {_addFavorite()}} >
                 <IconesAjouter style={styles.iconesAjouter}></IconesAjouter>
               </TouchableOpacity>
             </View>
@@ -535,7 +535,7 @@ function CardAccueil(props) {
             ></ImageBackground>
             <FlatList
               horizontal={true}
-              data={props.responseApiWeatherHour.hourly.slice(0,23)}
+              data={props.responseApiWeatherHour.hourly.slice(0,25)}
               renderItem={({item}) => (<Heure01 style={styles.heure01} time={_convertDate(item.dt)} id={item.weather[0].id} temp={(item.temp - 273.15).toFixed(1)}/>)}
               keyExtractor={(item, index) => index.toString()}
               showsHorizontalScrollIndicator={false}
@@ -567,13 +567,13 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(255,255,255,1)"
   },
   ville: {
+    flex: 1,
     height: 93,
-    width: 353,
-    opacity: 1
+    opacity: 1,
   },
   rectangle: {
+    flex: 1,
     height: 93,
-    width: width - 22,
     borderRadius: 28,
     shadowColor: "rgba(0,0,0,0.1115876311188811)",
     shadowOffset: {
@@ -583,54 +583,45 @@ const styles = StyleSheet.create({
     shadowRadius: 30,
     shadowOpacity: 1,
     backgroundColor: "rgba(255,255,255,1)",
-    flexDirection: "row"
+    flexDirection: "row",
   },
   ville1: {
-    height: 46,
-    width: width / 2.3,
-    opacity: 1
+    flex: 5,
+    opacity: 1,
+    alignContent: 'center',
+    justifyContent: 'center'
   },
   yvelinesFrance: {
-    position: "absolute",
-    top: 27,
-    left: 0,
-    height: 19,
-    width: 250,
+    flex: 1,
     opacity: 1,
     backgroundColor: "transparent",
     color: "rgba(127,141,154,1)",
-    fontSize: 14
+    fontSize: 14,
   },
   versailles: {
-    position: "absolute",
-    top: 0,
-    left: 0,
+    flex: 1,
     height: 36,
-    width: 150,
     opacity: 1,
     backgroundColor: "transparent",
     color: "rgba(66,77,88,1)",
-    fontSize: 20
+    fontSize: 20,
   },
   yvelinesFranceStack: {
-    width: 150,
-    height: 46
+    flex: 1,
+    justifyContent: 'space-around',
+    marginLeft: 25,
+    marginTop: 25,
   },
   iconesAjouter: {
-    height: 38,
-    width: 38,
     opacity: 1,
     backgroundColor: "transparent",
-    marginLeft: 122,
-    marginTop: 4
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   ville1Row: {
-    height: 46,
+    height: 93,
     flexDirection: "row",
     flex: 1,
-    marginRight: 23,
-    marginLeft: 20,
-    marginTop: 24
   },
   infosEcranDetails: {
     height: 94,

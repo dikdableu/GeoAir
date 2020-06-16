@@ -46,7 +46,6 @@ import IconesNuages from "../components/IconesNuages";
 
 import { Notifications } from 'expo';
 
-
 import * as DBLocal from '../../db/DBLocal.js'
 import * as SQLite from "expo-sqlite";
 
@@ -474,7 +473,6 @@ function HomeView() {
     const history = await InAppPurchases.connectAsync();
     if (history.responseCode === InAppPurchases.IAPResponseCode.OK) {
       history.results.forEach(result => {
-        console.log(result)
       });
     }
   }
@@ -483,7 +481,6 @@ function HomeView() {
     const { responseCode, results } = await InAppPurchases.getProductsAsync(items);
     if (responseCode === InAppPurchases.IAPResponseCode.OK) {
       setItem(results);
-      console.log(results)
     }
   }
 
@@ -522,6 +519,7 @@ function HomeView() {
   }, [responseApiMeteo])
 
   const _getLocationAsync = async () => {
+    setLoading(true)
 
     let { status } = await Permissions.askAsync(Permissions.LOCATION);
     if (status !== 'granted'){
@@ -673,6 +671,21 @@ function HomeView() {
         <View style={styles.bgStack}>
           <Bg style={styles.bg}></Bg>
           <ActivityIndicator style={{flex:1, alignItems: "center", justifyContent: "center", backgroundColor: "transparent" }} size="large" color="#0000ff" />
+          <View style={styles.aProximite}>
+            <View style={styles.lieuxAProximiteRow}>
+              <Text style={styles.lieuxAProximite}>LIEUX À PROXIMITÉ</Text>
+              <View style={styles.btnActualiser}>
+                <View style={styles.rectangle1}>
+                  <TouchableOpacity style={{width: 130}} onPress={() => {_getLocationAsync()}} >
+                    <View style={styles.actualiserRow}>
+                      <Text style={styles.actualiser}>Actualiser</Text>
+                      <IconesActualiser style={styles.iconesActualiser}></IconesActualiser>
+                    </View>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </View>
+          </View>
         </View>
       </View>
     );
@@ -743,7 +756,7 @@ function HomeView() {
                     ></ImageBackground>
                     <FlatList
                       horizontal={true}
-                      data={responseApiWeatherHour.hourly.slice(0,23)}
+                      data={responseApiWeatherHour.hourly.slice(0,25)}
                       renderItem={({item}) => (<Heure01 style={styles.heure01} time={_convertDate(item.dt)} id={item.weather[0].id} temp={(item.temp - 273.15).toFixed(1)}/>)}
                       keyExtractor={(item, index) => index.toString()}
                       showsHorizontalScrollIndicator={false}
@@ -791,7 +804,7 @@ const styles = StyleSheet.create({
   bg: {
     position: "absolute",
     top: -100,
-    height: 812,
+    height: height,
     width: 375,
     opacity: 1,
     backgroundColor: "transparent"
@@ -1095,6 +1108,8 @@ const styles = StyleSheet.create({
     letterSpacing: 1.788888888888888
   },
   btnActualiser: {
+    flex: 1,
+    alignItems: 'flex-end',
     height: 36,
     width: 130,
     opacity: 1,
@@ -1179,7 +1194,7 @@ const styles = StyleSheet.create({
   },
   bgStack: {
     width: width,
-    height: 812
+    height: height
   }
 });
 

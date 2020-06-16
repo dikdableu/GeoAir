@@ -424,7 +424,7 @@ function VilleFavoris(props, navigation) {
       <View style={styles.villeRecherche01}>
         <View style={styles.villeRow1}>
           <View style={styles.ville}>
-            <Text style={styles.versailles1}>{propsState.ville}</Text>
+            <Text style={styles.versailles1}>{propsState.ville.replace("Arrondissement de ", "")}</Text>
             <Text style={styles.yvelinesFrance}>{propsState.pays}</Text>
           </View>
           <View style={styles.iconesCouvert}>
@@ -445,7 +445,7 @@ function VilleFavoris(props, navigation) {
           <View style={styles.rectangle5}>
             <View style={styles.villeRow}>
               <View style={styles.ville}>
-                <Text style={styles.versailles1}>{propsState.ville}</Text>
+                <Text style={styles.versailles1}>{propsState.ville.replace("Arrondissement de ", "")}</Text>
                 <Text style={styles.yvelinesFrance1}>{propsState.pays}</Text>
               </View>
               <View style={styles.iconesCouvert}>
@@ -491,13 +491,14 @@ const styles = StyleSheet.create({
     flexDirection: "row"
   },
   ville: {
+    flex: 1,
     height: 44,
-    width: 154,
-    opacity: 1
+    opacity: 1,
   },
   versailles1: {
+    flex: 1,
     height: 23,
-    width: width / 2.8,
+    marginRight: 5,
     opacity: 1,
     backgroundColor: "transparent",
     color: "rgba(66,77,88,1)",
@@ -510,14 +511,6 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent",
     color: "rgba(132,154,165,1)",
     fontSize: 12,
-    marginTop: 2
-  },
-  iconesCouvert: {
-    height: 40,
-    width: 40,
-    opacity: 1,
-    backgroundColor: "transparent",
-    marginLeft: 13,
     marginTop: 2
   },
   temperatures1: {
@@ -574,11 +567,14 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(255,255,255,1)"
   },
   villeRecherche01: {
+    flex: 1,
     height: 69,
-    width: 315,
     opacity: 1,
     marginTop: 86,
-    marginLeft: 18
+    marginLeft: 18,
+    marginRight: 18,
+    alignContent: 'center',
+    justifyContent: 'center',
   },
   ville2: {
     height: 44,
@@ -603,12 +599,12 @@ const styles = StyleSheet.create({
     marginTop: 2
   },
   iconesCouvert: {
+    flex: 1,
+    justifyContent: 'space-around',
     height: 40,
     width: 40,
     opacity: 1,
     backgroundColor: "transparent",
-    marginLeft: 16,
-    marginTop: 2
   },
   temperatures2: {
     height: 44,
@@ -621,9 +617,9 @@ const styles = StyleSheet.create({
     width: 49,
     opacity: 1,
     backgroundColor: "transparent",
-    textAlign: "right",
     color: "rgba(66,77,88,1)",
-    fontSize: 16
+    fontSize: 16,
+    textAlign: "right",
   },
   cCopy1: {
     height: 22,
@@ -709,11 +705,13 @@ const styles = StyleSheet.create({
     fontSize: 16
   },
   indiceAir3: {
+    flex: 1,
+    justifyContent: 'space-around',
     height: 44,
     width: width / 10.67,
     opacity: 1,
     backgroundColor: "transparent",
-    marginLeft: width / 10
+    marginLeft: width / 10,
   },
   ville1Row: {
     height: 44,
@@ -766,10 +764,11 @@ const styles = StyleSheet.create({
     marginTop: 2
   },
   temperatures: {
+    flex: 1,
+    justifyContent: 'space-around',
     height: 44,
     width: 49,
     opacity: 1,
-    marginLeft: 2
   },
   c: {
     height: 22,
@@ -799,7 +798,9 @@ const styles = StyleSheet.create({
   villeRow1: {
     height: 44,
     flexDirection: "row",
-    flex: 1
+    flex: 1,
+    alignContent: 'center',
+    justifyContent: 'center',
   },
   rect2: {
     position: "absolute",

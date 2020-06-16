@@ -5898,11 +5898,6 @@ domutils@^1.5.1, domutils@^1.7.0:
     dom-serializer "0"
     domelementtype "1"
 
-dooboolab-welcome@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/dooboolab-welcome/-/dooboolab-welcome-1.2.0.tgz#295818ce85a8e97dc90c0ec0510b4008e2d722dc"
-  integrity sha512-XgEbjJHAsKLge/e8jtuHsv84Ovg1Gx0GvnOTOmOlVGV1643nduTAkT3fyo/mxKbzvyXBr47RHaJAY4R2toI0UA==
-
 dot-prop@^4.1.0:
   version "4.2.0"
   resolved "https://registry.yarnpkg.com/dot-prop/-/dot-prop-4.2.0.tgz#1f19e0c2e1aa0e32797c49799f2837ac6af69c57"
@@ -12001,13 +11996,6 @@ react-native-hr@^1.1.4:
   resolved "https://registry.yarnpkg.com/react-native-hr/-/react-native-hr-1.1.4.tgz#8079783adfc3cc3eb0923ada397523e050a719f7"
   integrity sha512-Gi+MJPW73/mXTFjLkFf0vbWTTltyKbYdnSUNn2H8yt9m7NKPzrJp4TlCm8TqIsRsAMCaa55BGv3Z+i/cD9O69g==
 
-react-native-iap@^4.4.9:
-  version "4.4.9"
-  resolved "https://registry.yarnpkg.com/react-native-iap/-/react-native-iap-4.4.9.tgz#dec82b12fd3165e8a86bd87c8b15fd8b510685aa"
-  integrity sha512-Ptz4kUgTzIROt+N3m1Z6xgN/FfjPN3nBEkw475SQaj62dfuGB+fY66LqASM7woetvn65lolr6VEh1OsT2nbqyQ==
-  dependencies:
-    dooboolab-welcome "^1.2.0"
-
 react-native-ionicons@^4.6.3:
   version "4.6.3"
   resolved "https://registry.yarnpkg.com/react-native-ionicons/-/react-native-ionicons-4.6.3.tgz#989886f1a9af61cf7a5a8b2c81a86bafd6718061"
@@ -12025,6 +12013,11 @@ react-native-keyboard-aware-scroll-view@0.9.1:
   dependencies:
     prop-types "^15.6.2"
     react-native-iphone-x-helper "^1.0.3"
+
+react-native-navigation-bar-color@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/react-native-navigation-bar-color/-/react-native-navigation-bar-color-2.0.1.tgz#ee2be25cc37105f7da355717b0a9a32c9c059ae6"
+  integrity sha512-1kE/oxWt+HYjRxdZdvke9tJ365xaee5n3+euOQA1En8zQuSbOxiE4SYEGM7TeaWnmLJ0l37mRnPHaB2H4mGh0A==
 
 react-native-pull-to-refresh@^2.1.3:
   version "2.1.3"

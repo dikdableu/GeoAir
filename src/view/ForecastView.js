@@ -25,7 +25,7 @@ import { SearchBar } from 'react-native-elements';
 import CardForecast from './CardForecast'
 
 class ForecastView extends React.Component {
-  
+
    state = {
     search: '',
     listSearch: [],
@@ -35,7 +35,6 @@ class ForecastView extends React.Component {
   };
 
   componentWillMount() {
-    console.log(this.props.navigation.state.data)
     if (Platform.OS === 'android' && !Constants.isDevice) {
       this.setState({
         errorMessage: 'Oops, this will not work on Sketch in an Android emulator. Try it on your device!',
@@ -53,15 +52,15 @@ class ForecastView extends React.Component {
         errorMessage: 'Permission to access location was denied',
       });
     }
-    
-   
+
+
 
     var location = await Location.getCurrentPositionAsync({});
     this.setState({ location: location });
     this._apiForecast(this.state.location.coords.latitude,this.state.location.coords.longitude)
-    
+
   };
-  
+
   _apiForecast = (lat, long) => {
     this.setState({loading: true, charged: false, listSearch: {}})
     fetch('https://api.openweathermap.org/data/2.5/forecast?lat='+ lat +'&lon='+ long +'&APPID=505c84426a182da1a7178151dccdb616', {
@@ -75,7 +74,7 @@ class ForecastView extends React.Component {
       console.error(error);
     });
   }
-  
+
   render() {
       const platform = Platform.OS
       if(this.state.charged){
@@ -94,7 +93,7 @@ class ForecastView extends React.Component {
       }else {
         return(
           <SafeAreaView style={{flex: 1}}>
-            
+
           </SafeAreaView>
         )
       }
