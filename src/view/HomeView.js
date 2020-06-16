@@ -43,6 +43,7 @@ import IconesBrume from "../components/IconesBrume";
 import IconesPluie from "../components/IconesPluie";
 import IconesSoleil from "../components/IconesSoleil";
 import IconesNuages from "../components/IconesNuages";
+
 import { Notifications } from 'expo';
 
 
