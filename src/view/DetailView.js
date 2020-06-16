@@ -530,7 +530,7 @@ async function inter() {
                 setTestDeviceID="EMULATOR"
                 didFailToReceiveAdWithError={error => console.log(error + 'error')}
               />
-              <UntitledComponent responseApiMeteo={responseApiMeteo} sunset={sunset} sunrise={sunrise} responseApiAir={responseApiAir} responseApiWeatherHour={responseApiWeatherHour} textColor={colorText} text={text} style={styles.untitledComponent}></UntitledComponent>
+              <UntitledComponent responseApiMeteo={responseApiMeteo} sunset={sunset} sunrise={sunrise} responseApiWeatherHour={responseApiWeatherHour} responseApiAir={responseApiAir} responseApiWeatherHour={responseApiWeatherHour} textColor={colorText} text={text} style={styles.untitledComponent}></UntitledComponent>
               <AdMobBanner
                 style={{marginTop: 55, marginBottom: 5}}
                 bannerSize="smartBannerPortrait"

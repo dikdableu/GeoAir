@@ -419,10 +419,37 @@ function CardForeCast14d(props) {
 
   const _convertDate = (dt) => {
     var date = new Date(dt * 1000);
+    var tmpJour = date.getDay()
+    var jour
+
+    switch (tmpJour) {
+      case 0:
+        jour = 'Dimanche '
+      break;
+      case 1:
+        jour = 'Lundi '
+      break;
+      case 2:
+        jour = 'Mardi '
+      break;
+      case 3:
+        jour = 'Mercredi '
+      break;
+      case 4:
+        jour = 'Jeudi '
+      break;
+      case 5:
+        jour = 'Vendredi '
+      break;
+      case 6:
+        jour = 'Samedi '
+      break;
+    }
+
     var day = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
     var month = date.getMonth()+1
     var monthformat = month < 10 ? "0" + month : month;
-    var formattedTime = day + '/' + monthformat ;
+    var formattedTime = jour + day + '/' + monthformat ;
     return formattedTime
   }
 
@@ -510,28 +537,40 @@ function CardForeCast14d(props) {
                           imageStyle={styles.rectangleDegradeGris_imageStyle}
                           source={require("../assets/images/Gradient_DhBx3n5.png")}
                         >
-                          <View style={styles.vitesseDuVentHumiRow}>
-                            <View style={{flex: 1, flexDirection: 'row'}}>
-                              <Text style={styles.vitesseDuVentHumi}>Vitesse du vent</Text>
-                              <Text style={styles.mS931027HPa}>{(item.speed *3.6).toFixed(2)} km/h</Text>
-                            </View>
-                            <View style={{flex: 1, flexDirection: 'row'}}>
-                              <Text style={styles.vitesseDuVentHumi}>Humidité</Text>
-                              <Text style={styles.mS931027HPa}>{item.humidity}%</Text>
-                            </View>
-                            <View style={{flex: 1, flexDirection: 'row'}}>
-                              <Text style={styles.vitesseDuVentHumi}>Pression</Text>
-                              <Text style={styles.mS931027HPa}>{item.pressure} hPa</Text>
-                            </View>
-                            <View style={{flex: 1, flexDirection: 'row'}}>
-                              <Text style={styles.vitesseDuVentHumi}>Lever du soleil</Text>
-                              <Text style={styles.mS931027HPa}>{_identifySunset(item.sunrise)}</Text>
-                            </View>
-                            <View style={{flex: 1, flexDirection: 'row'}}>
-                              <Text style={styles.vitesseDuVentHumi}>Coucher du soleil</Text>
-                              <Text style={styles.mS931027HPa}>{_identifySunrise(item.sunset)}</Text>
-                            </View>
+                        <View style={styles.vitesseDuVentHumiRow}>
+                          <View style={{flex: 1, flexDirection: 'row', marginTop: 4, marginBottom: 4}}>
+                            <Text style={styles.vitesseDuVentHumi}>Vitesse du vent</Text>
+                            <Text style={styles.mS931027HPa}>{(item.speed *3.6).toFixed(2)} km/h</Text>
                           </View>
+                          <View style={{flex: 1, flexDirection: 'row', marginTop: 4, marginBottom: 4}}>
+                            <Text style={styles.vitesseDuVentHumi}>Humidité</Text>
+                            <Text style={styles.mS931027HPa}>{item.humidity}%</Text>
+                          </View>
+                          <View style={{flex: 1, flexDirection: 'row', marginTop: 4, marginBottom: 4}}>
+                            <Text style={styles.vitesseDuVentHumi}>Pression</Text>
+                            <Text style={styles.mS931027HPa}>{item.pressure} hPa</Text>
+                          </View>
+                          <View style={{flex: 1, flexDirection: 'row', marginTop: 4, marginBottom: 4}}>
+                            <Text style={styles.vitesseDuVentHumi}>Température ressentie matin</Text>
+                            <Text style={styles.mS931027HPa}>{(item.feels_like.morn - 273.15).toFixed(2)} °C</Text>
+                          </View>
+                          <View style={{flex: 1, flexDirection: 'row', marginTop: 4, marginBottom: 4}}>
+                            <Text style={styles.vitesseDuVentHumi}>Température ressentie jour</Text>
+                            <Text style={styles.mS931027HPa}>{(item.feels_like.day - 273.15).toFixed(2)} °C</Text>
+                          </View>
+                          <View style={{flex: 1, flexDirection: 'row', marginTop: 4, marginBottom: 4}}>
+                            <Text style={styles.vitesseDuVentHumi}>Température ressentie nuit</Text>
+                            <Text style={styles.mS931027HPa}>{(item.feels_like.night - 273.15).toFixed(2)} °C</Text>
+                          </View>
+                          <View style={{flex: 1, flexDirection: 'row', marginTop: 4, marginBottom: 4}}>
+                            <Text style={styles.vitesseDuVentHumi}>Lever du soleil</Text>
+                            <Text style={styles.mS931027HPa}>{_identifySunset(item.sunrise)}</Text>
+                          </View>
+                          <View style={{flex: 1, flexDirection: 'row', marginTop: 4, marginBottom: 4}}>
+                            <Text style={styles.vitesseDuVentHumi}>Coucher du soleil</Text>
+                            <Text style={styles.mS931027HPa}>{_identifySunrise(item.sunset)}</Text>
+                          </View>
+                        </View>
                         </ImageBackground>
                       </View>
                     </CollapseBody>
@@ -547,7 +586,7 @@ function CardForeCast14d(props) {
     return (
       <View style={[styles.container, props.style]}>
         <View style={styles.rectangleBlanc1}>
-        
+
         </View>
       </View>
     )
@@ -703,7 +742,8 @@ const styles = StyleSheet.create({
     marginTop: 13,
   },
   rectangleDegradeGris: {
-    height: 159,
+    height: 210,
+    marginBottom: 20,
     width: width - 22,
     backgroundColor: "transparent",
     flexDirection: "row"

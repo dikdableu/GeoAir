@@ -35,13 +35,13 @@ function UntitledComponent(props) {
                 Vitesse du vent{"\n"}
                 {"\n"}Humidité{"\n"}
                 {"\n"}Pression{"\n"}
-                {"\n"}Visibilité{"\n"}{"\n"}Lever du soleil{"\n"}{"\n"}Coucher du soleil{"\n"}
+                {"\n"}Visibilité{"\n"}{"\n"}Indice UV{"\n"}{"\n"}Température ressentie{"\n"}{"\n"}Lever du soleil{"\n"}{"\n"}Coucher du soleil{"\n"}
               </Text>
               <Text style={styles.mS931027HPa1}>
                 {(props.responseApiMeteo.wind.speed *3.6).toFixed(2)} km/h{"\n"}
                 {"\n"}{props.responseApiMeteo.main.humidity}%{"\n"}
                 {"\n"}{props.responseApiMeteo.main.pressure} hPa{"\n"}
-                {"\n"}{props.responseApiMeteo.visibility} m{"\n"}{"\n"}{props.sunset}{"\n"}{"\n"}{props.sunrise}{"\n"}
+                {"\n"}{props.responseApiWeatherHour.current.visibility ? props.responseApiWeatherHour.current.visibility + ' m' : 'N/A'}{"\n"}{"\n"}{props.responseApiWeatherHour.current.uvi.toFixed(0)}{"\n"}{"\n"}{(props.responseApiWeatherHour.current.feels_like - 273.15).toFixed(1)} °C{"\n"}{"\n"}{props.sunset}{"\n"}{"\n"}{props.sunrise}{"\n"}
               </Text>
             </View>
           </View>
@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 0,
     left: 0,
-    height: 350,
+    height: 390,
     width: width - 22,
   },
   details: {

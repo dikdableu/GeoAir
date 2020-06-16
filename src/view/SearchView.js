@@ -206,6 +206,7 @@ export default function SearchView({props, navigation}) {
 
   const _searching = (text) => {
     setSearch(text)
+    setCharged(false)
   }
 
   const vider = () => {
