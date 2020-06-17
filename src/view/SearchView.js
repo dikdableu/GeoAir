@@ -61,6 +61,7 @@ export default function SearchView({props, navigation}) {
   const [colorText, setColorText] = useState('')
   const [text, setText] = useState('')
   const [charged, setCharged] = useState('')
+  let [count, setCount] = useState(0)
 
     useEffect(() => {
       if(search){
@@ -214,6 +215,18 @@ export default function SearchView({props, navigation}) {
     setSearch('')
     setListSearch([])
   }
+
+  const _pressAction = () => {
+    if(count >= 2){
+      setCount(0)
+      navigation.navigate('Detail', {responseApiAir: responseApiAir, responseApiMeteo: responseApiMeteo, responseApiWeatherHour: responseApiWeatherHour, color: color, textColor: colorText, textIndex: text, count: 0})
+    }else {
+      var tmpCount = count + 1
+      setCount(tmpCount);
+      navigation.navigate('Detail', {responseApiAir: responseApiAir, responseApiMeteo: responseApiMeteo, responseApiWeatherHour: responseApiWeatherHour, color: color, textColor: colorText, textIndex: text, count: tmpCount})
+    }
+  }
+
   if(!vide && charged && listCity){
     if(error == false){
       return (
@@ -225,7 +238,7 @@ export default function SearchView({props, navigation}) {
               bannerSize="smartBannerPortrait"
               adUnitID={Platform.OS === 'ios' ? "ca-app-pub-8614556057049331/5612210449" : "ca-app-pub-8614556057049331/8209974696"}
               servePersonalizedAds={true}
-              setTestDeviceID="EMULATOR"
+
               didFailToReceiveAdWithError={error => console.log(error + 'error')}
             /><View style={styles.resultatsDeRecherche}>
                 <View style={styles.rectangleBlanc}>
@@ -233,7 +246,7 @@ export default function SearchView({props, navigation}) {
                     bounces={false}
                     data={listSearch}
                     keyExtractor={(item) => item.id.toString()}
-                    renderItem={({item}) =>   <TouchableOpacity onPress={() => navigation.navigate('Detail', {responseApiAir: responseApiAir, responseApiMeteo: responseApiMeteo, responseApiWeatherHour: responseApiWeatherHour, color: color, textColor: colorText, textIndex: text})} onLongPress={() => {_addFavorite()}}>
+                    renderItem={({item}) =>   <TouchableOpacity onPress={() => _pressAction()}>
                         <VilleFavoris search={true} icon={item.idMeteo} aqi={item.aqi} textColor={item.textColor} color={item.color} temp={item.temperature} tr={item.temperatureFeel} ville={item.ville} pays={item.country} /></TouchableOpacity>}
                     initialNumToRender={5}
                   />
@@ -264,7 +277,7 @@ export default function SearchView({props, navigation}) {
               bannerSize="smartBannerPortrait"
               adUnitID={Platform.OS === 'ios' ? "ca-app-pub-8614556057049331/5612210449" : "ca-app-pub-8614556057049331/8209974696"}
               servePersonalizedAds={true}
-              setTestDeviceID="EMULATOR"
+
               didFailToReceiveAdWithError={error => console.log(error + 'error')}
             />
               <FlatList
@@ -301,12 +314,13 @@ export default function SearchView({props, navigation}) {
             bannerSize="smartBannerPortrait"
             adUnitID={Platform.OS === 'ios' ? "ca-app-pub-8614556057049331/5612210449" : "ca-app-pub-8614556057049331/8209974696"}
             servePersonalizedAds={true}
-            setTestDeviceID="EMULATOR"
+
             didFailToReceiveAdWithError={error => console.log(error + 'error')}
           />
             <FlatList
               bounces={false}
               data={listCity.items}
+              style={{width: width}}
               keyExtractor={(item) => item.id.toString()}
               contentContainerStyle={{height : 80}}
               renderItem={({item}) => (<TouchableOpacity onPress={() => {_setInput(item)}}><ListComponent name={item.address.city} admin2_code={item.address.postalCode} country_code={item.address.countryName}/></TouchableOpacity>)}

@@ -536,7 +536,6 @@ function CardAccueil(props) {
             <FlatList
               horizontal={true}
               data={props.responseApiWeatherHour.hourly.slice(0,25)}
-              style={{width: '96%', marginLeft: '2%'}}
               renderItem={({item}) => (<Heure01 style={styles.heure01} time={_convertDate(item.dt)} id={item.weather[0].id} temp={(item.temp - 273.15).toFixed(1)}/>)}
               keyExtractor={(item, index) => index.toString()}
               showsHorizontalScrollIndicator={false}
@@ -779,7 +778,7 @@ const styles = StyleSheet.create({
     flex: 1
   },
   journee: {
-    height: 105,
+    height: 125,
     width: width - 22,
     opacity: 1,
     marginTop: 16
@@ -801,7 +800,7 @@ const styles = StyleSheet.create({
     height: 94,
     width: 41,
     opacity: 1,
-    marginLeft: 14,
+    marginLeft: 16,
     marginRight: 12,
     backgroundColor: "transparent"
   },
@@ -843,7 +842,7 @@ const styles = StyleSheet.create({
   },
   rectangleDegradeGris1Stack: {
     width: width - 22,
-    height: 105
+    height: 125
   }
 });
 

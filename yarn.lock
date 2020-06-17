@@ -6392,6 +6392,11 @@ expo-constants@~8.0.0:
   dependencies:
     ua-parser-js "^0.7.19"
 
+expo-constants@~9.0.0:
+  version "9.0.0"
+  resolved "https://registry.yarnpkg.com/expo-constants/-/expo-constants-9.0.0.tgz#35c600079ee91d38fe4f56375caae6e90f122fdd"
+  integrity sha512-1kqZMM8Ez5JT3sTEx8I69fP6NYFLOJjeM6Z63dD/m2NiwvzSADiO5+BhghnWNGN1L3bxbgOjXS6EHtS7CdSfxA==
+
 expo-error-recovery@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/expo-error-recovery/-/expo-error-recovery-1.0.0.tgz#2ca9d59fcd16c5c881af877993731056f2d46afe"
@@ -6416,6 +6421,11 @@ expo-in-app-purchases@^8.1.0:
   resolved "https://registry.yarnpkg.com/expo-in-app-purchases/-/expo-in-app-purchases-8.1.0.tgz#12e94257d1256e1b8eff5cba71319f1244eff09d"
   integrity sha512-w6QD2HPJJyIaTBqK/Ro6s6DDk34u6HMqPuMiGcfYiclxbDz102SbR5RH8jDzoXEOuNnmJGqI6jTXaZ5ol5OPcg==
 
+expo-intent-launcher@^8.1.0:
+  version "8.1.0"
+  resolved "https://registry.yarnpkg.com/expo-intent-launcher/-/expo-intent-launcher-8.1.0.tgz#cbd3ee4c497d4856827037922c494a68634a0373"
+  integrity sha512-rSS50BEWA3p4Ws9unaKD8QHj8r7xOH1bmPjYZ2gtt1XvsFeDrJQtlrRhVRD+kQnYebBTwV8ncf4NG5yD5vkYRA==
+
 expo-keep-awake@~8.0.0:
   version "8.0.0"
   resolved "https://registry.yarnpkg.com/expo-keep-awake/-/expo-keep-awake-8.0.0.tgz#f9200a876a5db86e3f0aec8843428a918cdc08d6"
@@ -6425,6 +6435,15 @@ expo-linear-gradient@~8.0.0:
   version "8.0.0"
   resolved "https://registry.yarnpkg.com/expo-linear-gradient/-/expo-linear-gradient-8.0.0.tgz#972d33e92714d4a4485635683b5bfa357ecec41b"
   integrity sha512-5G3ePGAHUoyBWbGITw5RtdJpssH8TXhCgt55cV+5LTTFjr51OZcuOmGua1vRoVFKBC/9ibLW465GEx9H/HS07Q==
+
+expo-linking@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/expo-linking/-/expo-linking-1.0.1.tgz#2c1b6e68f8d5f4e54add5670290a4eacb263199d"
+  integrity sha512-PZNT/1dJv7ZBAXxUFzcvQ5MN74E/yOPrk4UwnxvLoNOmo5fyXcP3BJJPQSIKFGLvVtzl71KJJxYtb+KsR4JvNQ==
+  dependencies:
+    expo-constants "~9.0.0"
+    qs "^6.5.0"
+    url-parse "^1.4.4"
 
 expo-location@~8.0.0:
   version "8.0.0"

@@ -153,7 +153,8 @@ const styles = StyleSheet.create({
   vitesseDuVentHumi1Row: {
     height: 'auto',
     flexDirection: "row",
-    flex: 1
+    flex: 1,
+    marginTop: 5,
   },
   cardAirStack: {
     width: width - 22,

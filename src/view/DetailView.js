@@ -527,16 +527,16 @@ async function inter() {
                 bannerSize="smartBannerPortrait"
                 adUnitID={Platform.OS === 'ios' ? "ca-app-pub-8614556057049331/5612210449" : "ca-app-pub-8614556057049331/8209974696"}
                 servePersonalizedAds={true}
-                setTestDeviceID="EMULATOR"
+
                 didFailToReceiveAdWithError={error => console.log(error + 'error')}
               />
               <UntitledComponent responseApiMeteo={responseApiMeteo} sunset={sunset} sunrise={sunrise} responseApiWeatherHour={responseApiWeatherHour} responseApiAir={responseApiAir} responseApiWeatherHour={responseApiWeatherHour} textColor={colorText} text={text} style={styles.untitledComponent}></UntitledComponent>
               <AdMobBanner
-                style={{marginTop: 55, marginBottom: 5}}
+                style={{marginTop: 95, marginBottom: 5}}
                 bannerSize="smartBannerPortrait"
                 adUnitID={Platform.OS === 'ios' ? "ca-app-pub-8614556057049331/5612210449" : "ca-app-pub-8614556057049331/8209974696"}
                 servePersonalizedAds={true}
-                setTestDeviceID="EMULATOR"
+
                 didFailToReceiveAdWithError={error => console.log(error + 'error')}
               />
               <CardForeCast7d responseApiMeteo={responseApiMeteo} style={styles.cardForeCast7D}></CardForeCast7d>
@@ -545,7 +545,7 @@ async function inter() {
                 bannerSize="smartBannerPortrait"
                 adUnitID={Platform.OS === 'ios' ? "ca-app-pub-8614556057049331/5612210449" : "ca-app-pub-8614556057049331/8209974696"}
                 servePersonalizedAds={true}
-                setTestDeviceID="EMULATOR"
+
                 didFailToReceiveAdWithError={error => console.log(error + 'error')}
               />
               <CardForeCast14d responseApiMeteo={responseApiMeteo} style={styles.cardForeCast14D}></CardForeCast14d>
@@ -554,7 +554,7 @@ async function inter() {
                 bannerSize="smartBannerPortrait"
                 adUnitID={Platform.OS === 'ios' ? "ca-app-pub-8614556057049331/5612210449" : "ca-app-pub-8614556057049331/8209974696"}
                 servePersonalizedAds={true}
-                setTestDeviceID="EMULATOR"
+
                 didFailToReceiveAdWithError={error => console.log(error + 'error')}
               />
             </ScrollView>

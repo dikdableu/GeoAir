@@ -44,6 +44,9 @@ import IconesPluie from "../components/IconesPluie";
 import IconesSoleil from "../components/IconesSoleil";
 import IconesNuages from "../components/IconesNuages";
 
+import * as IntentLauncher from 'expo-intent-launcher';
+import * as Linking from 'expo-linking';
+
 import { Notifications } from 'expo';
 
 import * as DBLocal from '../../db/DBLocal.js'
@@ -462,31 +465,8 @@ function HomeView() {
   )
   const [item, setItem] = useState(null)
 
-  const items = Platform.select({
-  ios: [
-    'com.geoair.onemonth'
-  ],
-  android: [''],
-});
-
-  const _getHistory = async function(){
-    const history = await InAppPurchases.connectAsync();
-    if (history.responseCode === InAppPurchases.IAPResponseCode.OK) {
-      history.results.forEach(result => {
-      });
-    }
-  }
-
-  const _getSubscribtion = async function(){
-    const { responseCode, results } = await InAppPurchases.getProductsAsync(items);
-    if (responseCode === InAppPurchases.IAPResponseCode.OK) {
-      setItem(results);
-    }
-  }
 
   useEffect(() => {
-    _getHistory()
-    _getSubscribtion()
   _getLocationAsync()
     db.transaction(tx => {
       tx.executeSql(
@@ -522,11 +502,28 @@ function HomeView() {
     setLoading(true)
 
     let { status } = await Permissions.askAsync(Permissions.LOCATION);
-    if (status !== 'granted'){
-      console.log('Permission to access location was denied');
+    if (status !== 'granted') {
+      if (Platform.OS == 'ios') {
+        Alert.alert("Vous n'avez pas les droits ?","L'application n'a pas les droits d'accès à votre position.",[{text: 'Fermer', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},{ text: 'Paramètres', onPress: () => Linking.openURL('app-settings:')}]);
+      } else {
+        Alert.alert("Vous n'avez pas les droits ?","L'application n'a pas les droits d'accès à votre position.",[{text: 'Fermer', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},{ text: 'Paramètres', onPress: () => IntentLauncher.startActivityAsync(IntentLauncher.ACTION_MANAGE_ALL_APPLICATIONS_SETTINGS)}]);
+      }
+
+    }else{
+      try{
+        setLocation(await Location.getCurrentPositionAsync({}))
+        // do something with location
+      }catch(e){
+        console.log('Error while trying to get location: ', e);
+        if (Platform.OS == 'ios') {
+          Alert.alert("Mince une erreur est survenue !","L'application n'arrive pas à trouver votre position. \nVeuillez vérifier les autorisations et/ou si la localisation est bien activée.",[{text: 'Fermer', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},{ text: 'Paramètres', onPress: () => Linking.openURL('app-settings:')}]);
+
+        } else {
+          Alert.alert("Mince une erreur est survenue !","L'application n'arrive pas à trouver votre position. \nVeuillez vérifier les autorisations et/ou si la localisation est bien activée.",[{text: 'Fermer', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},{ text: 'Paramètres', onPress: () => IntentLauncher.startActivityAsync(IntentLauncher.ACTION_MANAGE_ALL_APPLICATIONS_SETTINGS)}]);
+        }
+      }
     }
 
-    setLocation(await Location.getCurrentPositionAsync({}))
   };
 
   const _apiAir = (lat, long) => {
@@ -699,7 +696,7 @@ function HomeView() {
               bannerSize="smartBannerPortrait"
               adUnitID={Platform.OS === 'ios' ? "ca-app-pub-8614556057049331/5612210449" : "ca-app-pub-8614556057049331/8209974696"}
               servePersonalizedAds={true}
-              setTestDeviceID="EMULATOR"
+
               didFailToReceiveAdWithError={error => console.log(error + 'error')}
             />
             <View style={styles.cardContenu}>

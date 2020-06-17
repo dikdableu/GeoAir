@@ -161,8 +161,6 @@ const FavoriteView = ({props, navigation}) => {
       setCount(tmpCount);
       navigation.navigate('Detail', {responseApiAir: item.responseApiAir, responseApiMeteo: item.responseApiMeteo, color: item.color, count: tmpCount})
     }
-
-
   }
 
     return (

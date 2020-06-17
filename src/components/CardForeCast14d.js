@@ -750,8 +750,9 @@ const styles = StyleSheet.create({
   },
   rectangleDegradeGris_imageStyle: {},
   vitesseDuVentHumi: {
+    flex: 3,
     height: 'auto',
-    width: 157,
+    justifyContent: 'center',
     opacity: 1,
     backgroundColor: "transparent",
     lineHeight: 16,
@@ -760,7 +761,7 @@ const styles = StyleSheet.create({
   },
   mS931027HPa: {
     height: 'auto',
-    width: 154,
+    flex: 1,
     opacity: 1,
     backgroundColor: "transparent",
     lineHeight: 16,
