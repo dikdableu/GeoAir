@@ -48,6 +48,9 @@
       "visible": false,
       "barStyle": "light-content",
       "backgroundColor": "#000"
-    }
-  }
+    },
+    "entryPoint": "node_modules/expo/AppEntry.js"
+  },
+  "displayName": "GeoAir",
+  "name": "GeoAir"
 }

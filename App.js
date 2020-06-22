@@ -9,8 +9,10 @@ import IconTab from './src/view/IconTab.js'
 import IconesHome from "./src/components/IconesHome";
 import IconesFavoris from "./src/components/IconesFavoris";
 import IconesLoupe from "./src/components/IconesLoupe";
-import IconesMenu from "./src/components/IconesMenu";
+import IconBag from "./src/components/IconBag";
 import GeoAirLogo from "./src/components/GeoAirLogo";
+import ModalPurchase from './src/components/ModalPurchase'
+
 
 import { createAppContainer } from "react-navigation";
 import { createStackNavigator } from 'react-navigation-stack'
@@ -38,22 +40,12 @@ var {height, width} = Dimensions.get('window');
 var ratio = PixelRatio.get()
 var indiceScreen = ratio <= 3 ? 1 : ratio > 3 ? 1.2 : 0.2;
 
+
+
 const Home = createStackNavigator(
   {
     Home: {
       screen:HomeView,
-      navigationOptions:{
-        headerTitle: (
-          <GeoAirLogo/>
-        ),
-        headerStyle: {
-          backgroundColor: 'transparent',
-          zIndex: 100,
-          elevation: 0,
-          shadowOpacity: 0,
-          borderBottomWidth: 0,
-        },
-      }
     },
   },
   {headerLayoutPreset: 'center'}
@@ -69,6 +61,11 @@ const Search = createStackNavigator({
       headerTitle: (
         <GeoAirLogo/>
       ),
+      headerRight: (
+        <TouchableOpacity onPress={() => <ModalPurchase/>}  >
+          <IconBag />
+        </TouchableOpacity>
+          ),
       headerStyle: {
         backgroundColor: 'transparent',
         zIndex: 100,
@@ -87,6 +84,11 @@ const Search = createStackNavigator({
       headerTitle: (
         <GeoAirLogo/>
       ),
+      headerRight: (
+        <TouchableOpacity onPress={() => <ModalPurchase/>}  >
+          <IconBag />
+        </TouchableOpacity>
+          ),
       headerStyle: {
         backgroundColor: 'transparent',
         zIndex: 100,
@@ -110,6 +112,11 @@ const Favoris = createStackNavigator({
       headerTitle: (
         <GeoAirLogo/>
       ),
+      headerRight: (
+        <TouchableOpacity onPress={() => <ModalPurchase/>}  >
+          <IconBag />
+        </TouchableOpacity>
+          ),
       headerStyle: {
         backgroundColor: 'transparent',
         zIndex: 100,
@@ -128,6 +135,11 @@ const Favoris = createStackNavigator({
       headerTitle: (
         <GeoAirLogo/>
       ),
+      headerRight: (
+        <TouchableOpacity onPress={() => <ModalPurchase/>}  >
+          <IconBag />
+        </TouchableOpacity>
+          ),
       headerStyle: {
         backgroundColor: 'transparent',
         zIndex: 100,
