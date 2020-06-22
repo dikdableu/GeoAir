@@ -10,7 +10,7 @@
       "android",
       "web"
     ],
-    "version": "1.0.42",
+    "version": "1.0.43",
     "orientation": "portrait",
     "splash": {
       "image": "./src/assets/splash.png",
@@ -26,11 +26,11 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.bastienchoisy.geoair",
-      "buildNumber": "1.0.42"
+      "buildNumber": "1.0.43"
     },
     "android": {
       "package": "com.bastienchoisy.geoair",
-      "versionCode": 31,
+      "versionCode": 32,
       "permissions": [
         "ACCESS_COARSE_LOCATION",
         "ACCESS_FINE_LOCATION",
