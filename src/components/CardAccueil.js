@@ -503,9 +503,8 @@ function CardAccueil(props) {
               <View style={styles.styleStackStack}>
                 <View style={styles.styleStack}>
                   <Text style={styles.style}>{(props.responseApiMeteo.main.temp - 273.15).toFixed(1)}</Text>
-                  <Text style={styles.style1}>°</Text>
+                  <Text style={styles.style1}>°C</Text>
                 </View>
-                <Text style={styles.c}>C</Text>
               </View>
             </View>
             <View style={styles.minMax}>
@@ -640,25 +639,25 @@ const styles = StyleSheet.create({
     left: 0,
     top: 12,
     height: 94,
-    width: width / 3.1,
+    width: width / 3,
     opacity: 1,
     backgroundColor: "transparent",
     textAlign: "center",
     color: "rgba(66,77,88,1)",
-    fontSize: 58,
+    fontSize: 53,
     letterSpacing: -7
   },
   style1: {
     position: "absolute",
     top: 12,
-    left: 104,
+    left: 108,
     height: 52,
     width: 19,
     opacity: 1,
     backgroundColor: "transparent",
     lineHeight: 39,
     color: "rgba(66,77,88,1)",
-    fontSize: 20
+    fontSize: 18
   },
   styleStack: {
     top: 5,
