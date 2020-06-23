@@ -14,6 +14,8 @@ import {
   AdMobRewarded
 } from 'expo-ads-admob';
 
+import * as InAppPurchases from 'expo-in-app-purchases';
+
 import PropTypes from "prop-types";
 import Svg, { Defs, ClipPath, Path, G } from "react-native-svg"
 import {Path as SvgPath} from 'react-native-svg';

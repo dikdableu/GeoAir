@@ -26,7 +26,9 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.bastienchoisy.geoair",
-      "buildNumber": "1.0.43"
+      "buildNumber": "1.0.43",
+      "publishBundlePath": "ios/geoair/Supporting/shell-app.bundle",
+      "publishManifestPath": "ios/geoair/Supporting/shell-app-manifest.json"
     },
     "android": {
       "package": "com.bastienchoisy.geoair",
@@ -39,7 +41,9 @@
         "WAKE_LOCK",
         "WRITE_EXTERNAL_STORAGE",
         "com.android.launcher.permission.INSTALL_SHORTCUT"
-      ]
+      ],
+      "publishBundlePath": "android/app/src/main/assets/shell-app.bundle",
+      "publishManifestPath": "android/app/src/main/assets/shell-app-manifest.json"
     },
     "androidStatusBar": {
       "barStyle": "light-content"
@@ -49,8 +53,11 @@
       "barStyle": "light-content",
       "backgroundColor": "#000"
     },
-    "entryPoint": "node_modules/expo/AppEntry.js"
-  },
-  "displayName": "GeoAir",
-  "name": "GeoAir"
+    "sdkVersion": "36.0.0",
+    "isDetached": true,
+    "detach": {
+      "iosExpoViewUrl": "https://s3.amazonaws.com/exp-exponent-view-code/ios-v2.14.6-sdk36.0.0-8ea388d1-463b-4e91-bbf7-2d95d0174c96.tar.gz",
+      "androidExpoViewUrl": "https://s3.amazonaws.com/exp-exponent-view-code/android-v2.14.2-sdk36.0.0-ce7e16db-fd5d-4fdd-bdeb-701ba94a04d1.tar.gz"
+    }
+  }
 }
